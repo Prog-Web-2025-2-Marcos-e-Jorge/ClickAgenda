@@ -19,19 +19,19 @@ O sistema é desenhado com três níveis de acesso principais:
 * **👤 Cadastro de Perfis:** Múltiplos perfis (Cliente, Profissional) com diferentes permissões.
 * **🔍 Busca de Profissionais:** Filtros por especialidade, localização e horários disponíveis.
 * **🗓️ Agenda Pessoal:** Cada profissional gerencia sua própria agenda, definindo horários de trabalho, pausas e bloqueios.
-* [cite_start]**🔐 Login com Controle de Acesso:** Separação clara do que cada perfil de usuário pode acessar e fazer[cite: 35].
+* **🔐 Login com Controle de Acesso:** Separação clara do que cada perfil de usuário pode acessar e fazer.
 
 ## 🛠️ Tecnologias Utilizadas
 
-* [cite_start]**Java 17+:** Linguagem principal da aplicação[cite: 37].
-* [cite_start]**Spring Boot 3.x:** Framework para aplicações web[cite: 38].
-* [cite_start]**Spring MVC:** Para construção dos controllers e rotas[cite: 39].
-* [cite_start]**Spring Data JPA:** Para persistência de dados e ORM[cite: 40].
-* [cite_start]**Thymeleaf:** Motor de templates para renderizar o HTML dinamicamente no servidor[cite: 41].
-* [cite_start]**HTML / CSS:** Estrutura e estilo das páginas[cite: 44].
-* **PostgreSQL (ou H2):** Banco de dados relacional.
-* [cite_start]**Jakarta Validation:** Para validação dos dados de entrada[cite: 42].
-* [cite_start]**Git:** Para versionamento de código[cite: 45].
+* **Java 17+:** Linguagem principal da aplicação.
+* **Spring Boot 3.x:** Framework para aplicações web.
+* **Spring MVC:** Para construção dos controllers e rotas.
+* **Spring Data JPA:** Para persistência de dados e ORM.
+* **Thymeleaf:** Motor de templates para renderizar o HTML dinamicamente no servidor.
+* **HTML / CSS:** Estrutura e estilo das páginas.
+* **MySQL:** Banco de dados relacional.
+* **Jakarta Validation:** Para validação dos dados de entrada.
+* **Git:** Para versionamento de código.
 
 ## 🚀 Como Executar o Projeto
 
@@ -40,9 +40,9 @@ O sistema é desenhado com três níveis de acesso principais:
 ### 1. Pré-requisitos
 
 Antes de começar, você vai precisar ter as seguintes ferramentas instaladas:
-* [cite_start]**Java 17 JDK** (Verifique com `java -version`)[cite: 48, 49].
-* [cite_start]**Git** (Verifique com `git --version`)[cite: 51, 52].
-* [cite_start]**VS Code** com o "Extension Pack for Java" (ou sua IDE Java preferida, como IntelliJ/Eclipse)[cite: 53, 54].
+* **Java 17 JDK** (Verifique com `java -version`).
+* **Git** (Verifique com `git --version`).
+* **VS Code** com o "Extension Pack for Java" (ou sua IDE Java preferida, como IntelliJ/Eclipse).
 
 ### 2. Clonar o Repositório
 
@@ -55,26 +55,26 @@ cd [repositorio]
 
 ### 3. Abrir no VS Code (ou IDE)
 
-* [cite_start]No VS Code, use "File > Open Folder" e selecione a pasta do projeto[cite: 62].
-* [cite_start]Aguarde a IDE indexar os arquivos e baixar as dependências do Java (Maven/Gradle)[cite: 63].
+* No VS Code, use "File > Open Folder" e selecione a pasta do projeto.
+* Aguarde a IDE indexar os arquivos e baixar as dependências do Java (Maven/Gradle).
 
 ### 4. Executar a Aplicação
 
 A forma mais simples de rodar um projeto Spring Boot é pela sua classe principal:
 
-1.  [cite_start]No explorador de arquivos, encontre a classe principal (que contém a anotação `@SpringBootApplication`, ex: `AgendamentoApplication.java`)[cite: 68].
-2.  [cite_start]Clique no botão "Run" que aparece acima do método `main`[cite: 69].
+1.  No explorador de arquivos, encontre a classe principal (que contém a anotação `@SpringBootApplication`, ex: `AgendamentoApplication.java`)[cite: 68].
+2.  Clique no botão "Run" que aparece acima do método `main`.
 3.  O servidor será iniciado.
 
 Quando a inicialização for concluída, você verá no terminal algo como:
-[cite_start]`Tomcat started on port(s): 8080 (http)` [cite: 73]
+`Tomcat started on port(s): 8080 (http)`
 
-[cite_start]**Acesse em:** [http://localhost:8080](http://localhost:8080) [cite: 74]
+**Acesse em:** [http://localhost:8080](http://localhost:8080)
 
 ### 5. Problemas Comuns
 
-* [cite_start]**Erro de versão do Java:** Garanta que sua IDE está configurada para usar o JDK 17[cite: 77].
-* [cite_start]**Porta 8080 em uso:** Se outra aplicação (como o `Mindly` [cite: 24][cite_start]!) já estiver usando a porta, mude-a no arquivo `application.properties` (ex: `server.port=8081`)[cite: 78].
+* **Erro de versão do Java:** Garanta que sua IDE está configurada para usar o JDK 17.
+* **Porta 8080 em uso:** Se outra aplicação (como o `Mindly` [cite: 24]!) já estiver usando a porta, mude-a no arquivo `application.properties` (ex: `server.port=8081`).
 
 ## 📸 Wireframes / Telas do Projeto
 
@@ -82,11 +82,11 @@ Quando a inicialização for concluída, você verá no terminal algo como:
 
 | Tela de Login | Busca de Profissionais | Agenda do Profissional |
 | :---: | :---: | :---: |
-| [cite_start]`[Link para Imagem]` [cite: 83] | `[Link para Imagem]` | `[Link para Imagem]` |
+| `[Link para Imagem]` | `[Link para Imagem]` | `[Link para Imagem]` |
 
 ## 📁 Estrutura de Pastas (Padrão Spring)
 
-[cite_start]Uma visão geral da organização do código-fonte (similar ao `Mindly`) [cite: 167-216]:
+Uma visão geral da organização do código-fonte (similar ao `Mindly`):
 
 ```
 /src/main/
@@ -99,12 +99,12 @@ Quando a inicialização for concluída, você verá no terminal algo como:
 │   └── AgendamentoApplication.java # Classe principal
 │
 └── resources/
-    ├── static/          # Arquivos CSS, JS e Imagens [cite: 218]
+    ├── static/          # Arquivos CSS, JS e Imagens
     │   ├── css/
     │   └── js/
     ├── templates/       # Arquivos HTML (Thymeleaf) [cite: 234]
-    │   ├── fragments/   # Pedaços de HTML reutilizáveis (navbar, footer) [cite: 242]
+    │   ├── fragments/   # Pedaços de HTML reutilizáveis (navbar, footer)
     │   ├── login.html
     │   └── index.html
-    └── application.properties   # Configurações (banco de dados, porta) [cite: 253]
+    └── application.properties   # Configurações (banco de dados, porta)
 ```
