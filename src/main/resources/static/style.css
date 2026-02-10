@@ -9,13 +9,11 @@ body {
   background: #f8fafc;
 }
 
-/* Layout geral */
 .app {
   display: flex;
   min-height: 100vh;
 }
 
-/* Sidebar */
 .sidebar {
   width: 220px;
   background: white;
@@ -47,14 +45,12 @@ body {
   font-weight: bold;
 }
 
-/* Área principal */
 .main {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-/* Header */
 .header {
   height: 60px;
   background: white;
@@ -66,7 +62,6 @@ body {
   padding: 0 20px;
 }
 
-/* Conteúdo */
 .content {
   padding: 40px;
 }
@@ -80,7 +75,6 @@ body {
   border: 1px solid #d1d5db;
 }
 
-/* Categorias */
 .categories {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
