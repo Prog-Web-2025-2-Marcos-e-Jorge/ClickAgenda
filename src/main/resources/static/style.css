@@ -1,0 +1,96 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f8fafc;
+}
+
+/* Layout geral */
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background: white;
+  border-right: 1px solid #e5e7eb;
+  padding: 20px;
+}
+
+.logo {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #1f2937;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.menu a:hover {
+  background: #d3e9ff;
+  color: rgb(0, 125, 228);
+  font-weight: bold;
+}
+
+/* Área principal */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.header {
+  height: 60px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+  padding: 0 20px;
+}
+
+/* Conteúdo */
+.content {
+  padding: 40px;
+}
+
+.search {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px 15px;
+  margin: 20px 0 40px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+}
+
+/* Categorias */
+.categories {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  text-align: center;
+}
