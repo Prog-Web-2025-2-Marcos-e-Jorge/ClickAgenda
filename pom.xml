@@ -9,9 +9,15 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.iff.edu.ccc</groupId>
+<<<<<<< HEAD
 	<artifactId>webdev</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>webdev</name>
+=======
+	<artifactId>multiagenda</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>MultiAgenda</name>
+>>>>>>> TR02-Preparacao-Ambiente
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -30,12 +36,15 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+<<<<<<< HEAD
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
+=======
+>>>>>>> TR02-Preparacao-Ambiente
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-h2console</artifactId>
