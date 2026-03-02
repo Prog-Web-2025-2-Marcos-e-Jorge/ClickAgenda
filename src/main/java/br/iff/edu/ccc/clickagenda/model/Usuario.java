@@ -1,5 +1,6 @@
 package br.iff.edu.ccc.clickagenda.model;
 
+import br.iff.edu.ccc.clickagenda.enums.Perfil;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +25,7 @@ public abstract class Usuario {
     protected String email;
     protected String telefone;
     protected String senha;
+    protected Perfil perfil;
 
     protected Usuario(String nome, String cpf, String email, String telefone, String senha) {
         this.nome = nome;

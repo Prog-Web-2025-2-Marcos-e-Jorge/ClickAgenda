@@ -18,7 +18,7 @@ public class ClienteRestController {
 
     @PostMapping
     public ResponseEntity<ClienteDTO> criarCliente(@RequestBody ClienteDTO dto) {
-        Cliente cliente = new Cliente(dto.getNome(), dto.getEmail(), dto.getTelefone(), dto.getSenha(), dto.getCpf());
+        Cliente cliente = new Cliente(dto.getNome(), dto.getCpf(), dto.getEmail(), dto.getTelefone(), dto.getSenha());
 
         Cliente salvo = clienteService.salvar(cliente);
 

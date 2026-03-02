@@ -26,6 +26,6 @@ public class Categoria {
     @Column(unique = true)
     private String nome;
 
-    @OneToMany
+    @OneToMany(mappedBy = "categoria")
     private List<Servico> servicos;
 }

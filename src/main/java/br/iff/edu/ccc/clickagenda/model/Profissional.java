@@ -2,6 +2,7 @@ package br.iff.edu.ccc.clickagenda.model;
 
 import java.util.List;
 
+import br.iff.edu.ccc.clickagenda.enums.Perfil;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class Profissional extends Usuario {
 
     public Profissional(String nome, String cpf, String email, String telefone, String senha, String endereco) {
         super(nome, cpf, email, telefone, senha);
-        this.cpf = cpf;
         this.endereco = endereco;
+        this.perfil = Perfil.PROFISSIONAL;
     }
 }
