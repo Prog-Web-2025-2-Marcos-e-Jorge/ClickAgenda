@@ -5,18 +5,20 @@ import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Profissional extends Usuario {
     private String cpf;
-    @OneToMany
+    @OneToMany(mappedBy = "profissional")
     private List<Servico> servicos;
-    @OneToMany
+    @OneToMany(mappedBy = "profissional")
     private List<Categoria> categorias;
-    @OneToMany
+    @OneToMany(mappedBy = "profissional")
     private List<HorarioTrabalho> horariosTrabalho;
     private String endereco;
 
@@ -24,5 +26,13 @@ public class Profissional extends Usuario {
         super(nome, email, telefone, senha);
         this.cpf = cpf;
         this.endereco = endereco;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getEmail() {
+        return this.email;
     }
 }
