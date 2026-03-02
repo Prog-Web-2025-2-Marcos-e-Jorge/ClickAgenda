@@ -1,4 +1,4 @@
-package br.iff.edu.ccc.clickagenda.model;
+package br.iff.edu.ccc.clickagenda.enums;
 
 public enum DiaSemana {
     SEGUNDA,

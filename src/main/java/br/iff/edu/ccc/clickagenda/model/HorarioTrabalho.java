@@ -2,6 +2,7 @@ package br.iff.edu.ccc.clickagenda.model;
 
 import java.time.LocalTime;
 
+import br.iff.edu.ccc.clickagenda.enums.DiaSemana;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -30,5 +31,5 @@ public class HorarioTrabalho {
     private boolean diaFolga;
 
     @ManyToOne
-    private Usuario profissional;
+    private Profissional profissional;
 }

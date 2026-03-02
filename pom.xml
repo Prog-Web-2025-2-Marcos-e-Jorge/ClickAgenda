@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.iff.edu.ccc</groupId>
-	<artifactId>multiagenda</artifactId>
+	<artifactId>clickagenda</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>MultiAgenda</name>
+	<name>ClickAgenda</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
