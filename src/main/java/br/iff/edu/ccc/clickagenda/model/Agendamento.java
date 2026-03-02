@@ -3,6 +3,7 @@ package br.iff.edu.ccc.clickagenda.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import br.iff.edu.ccc.clickagenda.enums.Status;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,4 +32,5 @@ public class Agendamento {
     private LocalDateTime dataHora;
     private String observacoes;
     private BigDecimal valor;
+    private Status status;
 }

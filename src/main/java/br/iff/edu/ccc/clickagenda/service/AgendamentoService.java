@@ -6,8 +6,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.iff.edu.ccc.clickagenda.enums.DiaSemana;
 import br.iff.edu.ccc.clickagenda.model.Agendamento;
+import br.iff.edu.ccc.clickagenda.model.HorarioTrabalho;
 import br.iff.edu.ccc.clickagenda.repository.AgendamentoRepository;
+import br.iff.edu.ccc.clickagenda.repository.HorarioTrabalhoRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -15,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class AgendamentoService {
 
     private final AgendamentoRepository agendamentoRepository;
+    private final HorarioTrabalhoRepository horarioTrabalhoRepository;
 
     @Transactional
     public Agendamento agendar(Agendamento agendamento) {
@@ -37,10 +41,27 @@ public class AgendamentoService {
         LocalDateTime inicioNovo = novoAgendamento.getDataHora();
         LocalDateTime fimNovo = inicioNovo.plusMinutes(novoAgendamento.getServico().getDuracaoMinutos());
 
-        List<Agendamento> agendamentosExistentes = agendamentoRepository
-                .findByProfissionalId(novoAgendamento.getProfissional().getId());
+        DiaSemana diaSemanaEnum = converterDayOfWeek(inicioNovo.getDayOfWeek());
+        HorarioTrabalho horarioTrabalho = horarioTrabalhoRepository
+                .findByProfissionalIdAndDiaSemana(novoAgendamento.getProfissional().getId(), diaSemanaEnum)
+                .orElseThrow(() -> new RuntimeException("O profissional não atende neste dia da semana."));
 
-        for (Agendamento existente : agendamentosExistentes) {
+        if (horarioTrabalho.isDiaFolga()) {
+            throw new RuntimeException("O profissional está de folga neste dia.");
+        }
+
+        if (inicioNovo.toLocalTime().isBefore(horarioTrabalho.getHorarioInicio()) ||
+                fimNovo.toLocalTime().isAfter(horarioTrabalho.getHorarioFim())) {
+            throw new RuntimeException("O horário solicitado está fora do expediente do profissional.");
+        }
+
+        LocalDateTime inicioDia = inicioNovo.toLocalDate().atStartOfDay();
+        LocalDateTime fimDia = inicioDia.plusDays(1);
+
+        List<Agendamento> agendamentosDoDia = agendamentoRepository.findAgendamentosDoDia(
+                novoAgendamento.getProfissional().getId(), inicioDia, fimDia);
+
+        for (Agendamento existente : agendamentosDoDia) {
             LocalDateTime inicioExistente = existente.getDataHora();
             LocalDateTime fimExistente = inicioExistente.plusMinutes(existente.getServico().getDuracaoMinutos());
 
@@ -71,5 +92,17 @@ public class AgendamentoService {
         }
 
         agendamentoRepository.delete(agendamento);
+    }
+
+    private DiaSemana converterDayOfWeek(java.time.DayOfWeek dayOfWeek) {
+        return switch (dayOfWeek) {
+            case MONDAY -> DiaSemana.SEGUNDA;
+            case TUESDAY -> DiaSemana.TERCA;
+            case WEDNESDAY -> DiaSemana.QUARTA;
+            case THURSDAY -> DiaSemana.QUINTA;
+            case FRIDAY -> DiaSemana.SEXTA;
+            case SATURDAY -> DiaSemana.SABADO;
+            case SUNDAY -> DiaSemana.DOMINGO;
+        };
     }
 }

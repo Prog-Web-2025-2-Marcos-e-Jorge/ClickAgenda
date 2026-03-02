@@ -3,6 +3,7 @@ package br.iff.edu.ccc.clickagenda.dto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import br.iff.edu.ccc.clickagenda.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,5 @@ public class AgendamentoDTO {
     private LocalDateTime dataHora;
     private BigDecimal valor;
     private String observacoes;
+    private Status status;
 }

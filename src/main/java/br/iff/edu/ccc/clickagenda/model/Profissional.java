@@ -13,7 +13,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Profissional extends Usuario {
-    private String cpf;
     @OneToMany(mappedBy = "profissional")
     private List<Servico> servicos;
     @OneToMany(mappedBy = "profissional")
@@ -22,17 +21,9 @@ public class Profissional extends Usuario {
     private List<HorarioTrabalho> horariosTrabalho;
     private String endereco;
 
-    public Profissional(String nome, String email, String telefone, String senha, String cpf, String endereco) {
-        super(nome, email, telefone, senha);
+    public Profissional(String nome, String cpf, String email, String telefone, String senha, String endereco) {
+        super(nome, cpf, email, telefone, senha);
         this.cpf = cpf;
         this.endereco = endereco;
-    }
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public String getEmail() {
-        return this.email;
     }
 }

@@ -13,16 +13,8 @@ public class Cliente extends Usuario {
 
     private String cpf;
 
-    public Cliente(String nome, String email, String telefone, String senha, String cpf) {
-        super(nome, email, telefone, senha);
+    public Cliente(String nome, String cpf, String email, String telefone, String senha) {
+        super(nome, cpf, email, telefone, senha);
         this.cpf = cpf;
-    }
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public String getEmail() {
-        return this.email;
     }
 }
