@@ -14,10 +14,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Profissional extends Usuario {
+
     @OneToMany(mappedBy = "profissional")
     private List<Servico> servicos;
     @OneToMany(mappedBy = "profissional")
     private List<Categoria> categorias;
+    @OneToMany(mappedBy = "profissional")
+    private List<Agendamento> agendamentos;
     @OneToMany(mappedBy = "profissional")
     private List<HorarioTrabalho> horariosTrabalho;
     private String endereco;
