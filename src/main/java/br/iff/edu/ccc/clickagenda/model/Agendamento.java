@@ -20,6 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Agendamento {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,4 +34,5 @@ public class Agendamento {
     private String observacoes;
     private BigDecimal valor;
     private Status status;
+    // PR da Camada de Persistência
 }
