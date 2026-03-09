@@ -10,7 +10,9 @@ import br.iff.edu.ccc.clickagenda.model.Cliente;
 import br.iff.edu.ccc.clickagenda.model.Profissional;
 import br.iff.edu.ccc.clickagenda.model.Servico;
 import br.iff.edu.ccc.clickagenda.service.AgendamentoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/agendamento")
@@ -20,7 +22,7 @@ public class AgendamentoRestController {
     private final AgendamentoService agendamentoService;
 
     @PostMapping
-    public ResponseEntity<AgendamentoDTO> agendar(@RequestBody AgendamentoDTO dto) {
+    public ResponseEntity<AgendamentoDTO> agendar(@Valid @RequestBody AgendamentoDTO dto) {
         Agendamento agendamento = new Agendamento();
         agendamento.setDataHora(dto.getDataHora());
         agendamento.setObservacoes(dto.getObservacoes());
@@ -50,6 +52,44 @@ public class AgendamentoRestController {
         responseDTO.setObservacoes(salvo.getObservacoes());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Agendamento>> listarTodos() {
+        List<Agendamento> agendamentos = agendamentoService.listarTodos();
+        return ResponseEntity.ok(agendamentos);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Agendamento> buscarPorId(@PathVariable Long id) {
+        Agendamento agendamento = agendamentoService.buscarPorId(id);
+        return ResponseEntity.ok(agendamento);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Agendamento> atualizar(@PathVariable Long id, @Valid @RequestBody AgendamentoDTO dto) {
+        Agendamento agendamentoAtualizado = new Agendamento();
+        agendamentoAtualizado.setDataHora(dto.getDataHora());
+        agendamentoAtualizado.setObservacoes(dto.getObservacoes());
+
+        if (dto.getCliente() != null) {
+            Cliente cliente = new Cliente();
+            cliente.setId(dto.getCliente().getId());
+            agendamentoAtualizado.setCliente(cliente);
+        }
+        if (dto.getProfissional() != null) {
+            Profissional prof = new Profissional();
+            prof.setId(dto.getProfissional().getId());
+            agendamentoAtualizado.setProfissional(prof);
+        }
+        if (dto.getServico() != null) {
+            Servico serv = new Servico();
+            serv.setId(dto.getServico().getId());
+            agendamentoAtualizado.setServico(serv);
+        }
+
+        Agendamento atualizado = agendamentoService.atualizar(id, agendamentoAtualizado);
+        return ResponseEntity.ok(atualizado);
     }
 
     @DeleteMapping("/{id}")

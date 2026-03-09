@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.iff.edu.ccc.clickagenda.enums.Perfil;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,12 +18,16 @@ public class Profissional extends Usuario {
 
     @OneToMany(mappedBy = "profissional")
     private List<Servico> servicos;
-    @OneToMany(mappedBy = "profissional")
+
+    @ManyToMany
     private List<Categoria> categorias;
+
     @OneToMany(mappedBy = "profissional")
     private List<Agendamento> agendamentos;
+
     @OneToMany(mappedBy = "profissional")
     private List<HorarioTrabalho> horariosTrabalho;
+
     private String endereco;
 
     public Profissional(String nome, String cpf, String email, String telefone, String senha, String endereco) {

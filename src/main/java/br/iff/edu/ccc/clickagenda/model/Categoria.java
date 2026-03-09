@@ -7,8 +7,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,12 +25,13 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Em Categoria.java
-    @ManyToOne
-    private Profissional profissional;
-
+    @NotBlank(message = "Nome da categoria não pode ser vazio")
+    @Size(min = 3, max = 100, message = "Nome deve ter entre 3 e 100 caracteres")
     @Column(unique = true)
     private String nome;
+
+    @ManyToMany(mappedBy = "categorias")
+    private List<Profissional> profissionais;
 
     @OneToMany(mappedBy = "categoria")
     private List<Servico> servicos;

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import br.iff.edu.ccc.clickagenda.model.Categoria;
 import br.iff.edu.ccc.clickagenda.service.CategoriaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -23,8 +24,26 @@ public class CategoriaRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> criarCategoria(@RequestBody Categoria categoria) {
+    public ResponseEntity<Categoria> criarCategoria(@Valid @RequestBody Categoria categoria) {
         Categoria novaCategoria = categoriaService.salvar(categoria);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaCategoria);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Categoria> buscarPorId(@PathVariable Long id) {
+        Categoria categoria = categoriaService.buscarPorId(id);
+        return ResponseEntity.ok(categoria);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Categoria> atualizar(@PathVariable Long id, @Valid @RequestBody Categoria categoria) {
+        Categoria atualizada = categoriaService.atualizar(id, categoria);
+        return ResponseEntity.ok(atualizada);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        categoriaService.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 }
