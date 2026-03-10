@@ -1,0 +1,17 @@
+$kind: http-request
+description: Atualizar dados de um profissional
+url: http://localhost:8080/api/profissional/1
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nome": "João Silva Barbeiro Jr.",
+      "cpf": "11144477735",
+      "email": "joao.junior@barber.com",
+      "telefone": "11998888888",
+      "senha": "NovaSenh@123456"
+    }
+order: 4000

@@ -1,0 +1,17 @@
+$kind: http-request
+description: Atualizar dados de um serviço
+url: http://localhost:8080/api/servico/3
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nome": "Corte + Barba Completa",
+      "valor": 95.00,
+      "duracaoMinutos": 75,
+      "profissionalId": 1,
+      "categoriaId": 1
+    }
+order: 4000

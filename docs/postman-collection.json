@@ -1,0 +1,816 @@
+{
+  "info": {
+    "_postman_id": "multiagenda-api-collection-2024",
+    "name": "MultiAgenda API Collection",
+    "description": "Coleção completa de requisições para testar a API MultiAgenda (Spring Boot 4.0.2)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "1234567"
+  },
+  "item": [
+    {
+      "name": "🏥 Health Check",
+      "item": [
+        {
+          "name": "GET Health Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api"]
+            },
+            "description": "Verifica se a API está ativa e retorna estrutura de recursos disponíveis"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "👨‍⚕️ Profissional",
+      "item": [
+        {
+          "name": "POST - Criar Profissional",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"João Silva Barbeiro\",\n  \"cpf\": \"11144477735\",\n  \"email\": \"joao.silva@barber.com\",\n  \"telefone\": \"11999999999\",\n  \"senha\": \"Senha@123456\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/profissional",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "profissional"]
+            },
+            "description": "Criar um novo profissional (barbeiro/cabeleireiro)"
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Listar Todos Profissionais",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/profissional",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "profissional"]
+            },
+            "description": "Lista todos os profissionais cadastrados"
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Buscar Profissional por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/profissional/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "profissional", "1"]
+            },
+            "description": "Busca um profissional específico por ID"
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Atualizar Profissional",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"João Silva Barbeiro Jr.\",\n  \"cpf\": \"11144477735\",\n  \"email\": \"joao.junior@barber.com\",\n  \"telefone\": \"11998888888\",\n  \"senha\": \"NovaSenh@123456\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/profissional/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "profissional", "1"]
+            },
+            "description": "Atualizar dados de um profissional"
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE - Deletar Profissional",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/profissional/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "profissional", "1"]
+            },
+            "description": "Deletar um profissional"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "👤 Cliente",
+      "item": [
+        {
+          "name": "POST - Criar Cliente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Carlos José Santos\",\n  \"cpf\": \"98765432100\",\n  \"email\": \"carlos.santos@email.com\",\n  \"telefone\": \"11988888888\",\n  \"senha\": \"ClienteSenha@456\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/cliente",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "cliente"]
+            },
+            "description": "Criar um novo cliente"
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Listar Todos Clientes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/cliente",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "cliente"]
+            },
+            "description": "Lista todos os clientes cadastrados"
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Buscar Cliente por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/cliente/2",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "cliente", "2"]
+            },
+            "description": "Busca um cliente específico por ID"
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Atualizar Cliente",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Carlos Alberto José Santos\",\n  \"cpf\": \"98765432100\",\n  \"email\": \"carlos.alberto@email.com\",\n  \"telefone\": \"11987777777\",\n  \"senha\": \"NovaClienteSenha@789\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/cliente/2",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "cliente", "2"]
+            },
+            "description": "Atualizar dados de um cliente"
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE - Deletar Cliente",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/cliente/2",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "cliente", "2"]
+            },
+            "description": "Deletar um cliente"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🔧 Serviço",
+      "item": [
+        {
+          "name": "POST - Criar Serviço",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Corte + Barba\",\n  \"valor\": 85.50,\n  \"duracaoMinutos\": 60,\n  \"profissionalId\": 1,\n  \"categoriaId\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/servico",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "servico"]
+            },
+            "description": "Criar um novo serviço"
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Listar Todos Serviços",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/servico",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "servico"]
+            },
+            "description": "Lista todos os serviços cadastrados"
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Buscar Serviço por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/servico/3",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "servico", "3"]
+            },
+            "description": "Busca um serviço específico por ID"
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Atualizar Serviço",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Corte + Barba Completa\",\n  \"valor\": 95.00,\n  \"duracaoMinutos\": 75,\n  \"profissionalId\": 1,\n  \"categoriaId\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/servico/3",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "servico", "3"]
+            },
+            "description": "Atualizar dados de um serviço"
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE - Deletar Serviço",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/servico/3",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "servico", "3"]
+            },
+            "description": "Deletar um serviço"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "📂 Categoria",
+      "item": [
+        {
+          "name": "POST - Criar Categoria",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Serviços de Barba\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/categoria",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "categoria"]
+            },
+            "description": "Criar uma nova categoria"
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Listar Todas Categorias",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/categoria",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "categoria"]
+            },
+            "description": "Lista todas as categorias cadastradas"
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Buscar Categoria por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/categoria/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "categoria", "1"]
+            },
+            "description": "Busca uma categoria específica por ID"
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Atualizar Categoria",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Serviços Premium de Barba\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/categoria/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "categoria", "1"]
+            },
+            "description": "Atualizar dados de uma categoria"
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE - Deletar Categoria",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/categoria/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "categoria", "1"]
+            },
+            "description": "Deletar uma categoria"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "📅 Agendamento (Principal)",
+      "item": [
+        {
+          "name": "POST - Criar Agendamento",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"profissionalId\": 1,\n  \"clienteId\": 2,\n  \"servicoId\": 3,\n  \"dataHora\": \"2026-03-15T14:30:00\",\n  \"obs\": \"Corte tradicional com barba\",\n  \"valor\": 85.50\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/agendamento",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "agendamento"]
+            },
+            "description": "Criar um novo agendamento - OPERAÇÃO PRINCIPAL"
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Listar Todos Agendamentos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/agendamento",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "agendamento"]
+            },
+            "description": "Lista todos os agendamentos"
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Buscar Agendamento por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/agendamento/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "agendamento", "1"]
+            },
+            "description": "Busca um agendamento específico por ID"
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Atualizar Agendamento",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"profissionalId\": 1,\n  \"clienteId\": 2,\n  \"servicoId\": 3,\n  \"dataHora\": \"2026-03-16T15:00:00\",\n  \"obs\": \"Corte e barba com desenho\",\n  \"valor\": 95.50\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/agendamento/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "agendamento", "1"]
+            },
+            "description": "Atualizar dados de um agendamento"
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE - Cancelar Agendamento (SOFT DELETE)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/agendamento/1?idUsuarioSolicitante=2&tipoUsuario=CLIENTE",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "agendamento", "1"],
+              "query": [
+                {
+                  "key": "idUsuarioSolicitante",
+                  "value": "2"
+                },
+                {
+                  "key": "tipoUsuario",
+                  "value": "CLIENTE"
+                }
+              ]
+            },
+            "description": "Cancelar agendamento (marcar como CANCELADO, não deleta do BD). Requer idUsuarioSolicitante e tipoUsuario (CLIENTE ou PROFISSIONAL)"
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Confirmar Agendamento",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/agendamento/1/confirmar?idProfissional=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "agendamento", "1", "confirmar"],
+              "query": [
+                {
+                  "key": "idProfissional",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Profissional confirma um agendamento pendente (PENDENTE -> CONFIRMADO)"
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Recusar Agendamento",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/agendamento/1/recusar?idProfissional=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "agendamento", "1", "recusar"],
+              "query": [
+                {
+                  "key": "idProfissional",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Profissional recusa um agendamento pendente (PENDENTE -> CANCELADO)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "⏰ Horário Trabalho (Agenda Barbeiro)",
+      "item": [
+        {
+          "name": "POST - Criar Horário Trabalho",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"diaSemana\": \"SEGUNDA\",\n  \"horarioInicio\": \"08:00:00\",\n  \"horarioFim\": \"18:00:00\",\n  \"diaFolga\": false,\n  \"profissionalId\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/horario-trabalho",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "horario-trabalho"]
+            },
+            "description": "Criar um novo horário de trabalho. Validações: horarioInicio < horarioFim, mínimo 15 minutos, sem duplicatas por dia/profissional"
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Listar Todos Horários",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/horario-trabalho",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "horario-trabalho"]
+            },
+            "description": "Lista todos os horários de trabalho cadastrados"
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Buscar Horário por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/horario-trabalho/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "horario-trabalho", "1"]
+            },
+            "description": "Busca um horário específico por ID"
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Listar Horários por Profissional",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/horario-trabalho/profissional/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "horario-trabalho", "profissional", "1"]
+            },
+            "description": "Lista todos os horários de trabalho de um profissional específico (ordenados por dia da semana)"
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Atualizar Horário Trabalho",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"diaSemana\": \"SEGUNDA\",\n  \"horarioInicio\": \"09:00:00\",\n  \"horarioFim\": \"19:00:00\",\n  \"diaFolga\": false,\n  \"profissionalId\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/horario-trabalho/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "horario-trabalho", "1"]
+            },
+            "description": "Atualizar dados de um horário de trabalho"
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE - Deletar Horário Trabalho",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/horario-trabalho/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "horario-trabalho", "1"]
+            },
+            "description": "Deletar um horário de trabalho"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

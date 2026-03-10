@@ -1,0 +1,5 @@
+$kind: http-request
+description: Deletar um serviço
+url: http://localhost:8080/api/servico/3
+method: DELETE
+order: 5000

@@ -1,0 +1,19 @@
+$kind: http-request
+name: POST - Criar Agendamento
+description: Criar um novo agendamento - OPERAÇÃO PRINCIPAL
+url: http://localhost:8080/api/agendamento
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "profissionalId": 1,
+      "clienteId": 2,
+      "servicoId": 3,
+      "dataHora": "2026-03-15T14:30:00",
+      "obs": "Corte tradicional com barba",
+      "valor": 85.50
+    }
+order: 1000

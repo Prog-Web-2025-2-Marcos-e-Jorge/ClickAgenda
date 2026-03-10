@@ -1,0 +1,17 @@
+$kind: http-request
+description: Atualizar dados de um horário de trabalho
+url: http://localhost:8080/api/horario-trabalho/1
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "diaSemana": "SEGUNDA",
+      "horarioInicio": "09:00:00",
+      "horarioFim": "19:00:00",
+      "diaFolga": false,
+      "profissionalId": 1
+    }
+order: 5000

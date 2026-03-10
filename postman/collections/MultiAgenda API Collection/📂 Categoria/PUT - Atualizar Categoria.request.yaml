@@ -1,0 +1,13 @@
+$kind: http-request
+description: Atualizar dados de uma categoria
+url: http://localhost:8080/api/categoria/1
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nome": "Serviços Premium de Barba"
+    }
+order: 4000

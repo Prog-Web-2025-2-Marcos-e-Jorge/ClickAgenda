@@ -3,6 +3,8 @@ package br.iff.edu.ccc.clickagenda.service;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import br.iff.edu.ccc.clickagenda.dto.request.ClienteRequestDTO;
+import br.iff.edu.ccc.clickagenda.dto.response.ClienteResponseDTO;
 import br.iff.edu.ccc.clickagenda.exception.BadRequestException;
 import br.iff.edu.ccc.clickagenda.exception.NotFoundException;
 import br.iff.edu.ccc.clickagenda.model.Cliente;
@@ -18,49 +20,73 @@ public class ClienteService {
     private final UsuarioRepository usuarioRepository;
 
     @Transactional
-    public Cliente salvar(Cliente cliente) {
-        // Implementação da RN01: Unicidade de E-mail
-        if (usuarioRepository.existsByEmail(cliente.getEmail())) {
+    public ClienteResponseDTO salvar(ClienteRequestDTO dto) {
+        if (usuarioRepository.existsByEmail(dto.getEmail())) {
             throw new BadRequestException("O e-mail informado já está em uso na plataforma.");
         }
 
-        // TODO: adicionar criptografia de senha
+        Cliente cliente = new Cliente();
+        cliente.setNome(dto.getNome());
+        cliente.setCpf(dto.getCpf());
+        cliente.setEmail(dto.getEmail());
+        cliente.setTelefone(dto.getTelefone());
+        cliente.setSenha(dto.getSenha()); // TODO: adicionar criptografia de senha
 
-        return clienteRepository.save(cliente);
+        Cliente salvo = clienteRepository.save(cliente);
+        return converterResponseDTO(salvo);
     }
 
-    public Cliente buscarPorId(Long id) {
-        return clienteRepository.findById(id)
+    public ClienteResponseDTO buscarPorId(Long id) {
+        Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Cliente não encontrado com ID: " + id));
+        return converterResponseDTO(cliente);
     }
 
-    public List<Cliente> listarTodos() {
-        return clienteRepository.findAll();
+    public List<ClienteResponseDTO> listarTodos() {
+        return clienteRepository.findAll().stream()
+                .map(this::converterResponseDTO)
+                .toList();
     }
 
     @Transactional
-    public Cliente atualizar(Long id, Cliente clienteAtualizado) {
-        Cliente cliente = buscarPorId(id);
+    public ClienteResponseDTO atualizar(Long id, ClienteRequestDTO dto) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Cliente não encontrado com ID: " + id));
 
-        if (clienteAtualizado.getNome() != null) {
-            cliente.setNome(clienteAtualizado.getNome());
+        if (dto.getNome() != null) {
+            cliente.setNome(dto.getNome());
         }
-        if (clienteAtualizado.getEmail() != null && !clienteAtualizado.getEmail().equals(cliente.getEmail())) {
-            if (usuarioRepository.existsByEmail(clienteAtualizado.getEmail())) {
+        if (dto.getEmail() != null && !dto.getEmail().equals(cliente.getEmail())) {
+            if (usuarioRepository.existsByEmail(dto.getEmail())) {
                 throw new BadRequestException("O e-mail informado já está em uso na plataforma.");
             }
-            cliente.setEmail(clienteAtualizado.getEmail());
+            cliente.setEmail(dto.getEmail());
         }
-        if (clienteAtualizado.getTelefone() != null) {
-            cliente.setTelefone(clienteAtualizado.getTelefone());
+        if (dto.getTelefone() != null) {
+            cliente.setTelefone(dto.getTelefone());
+        }
+        if (dto.getSenha() != null) {
+            cliente.setSenha(dto.getSenha()); // TODO: adicionar criptografia de senha
         }
 
-        return clienteRepository.save(cliente);
+        Cliente atualizado = clienteRepository.save(cliente);
+        return converterResponseDTO(atualizado);
     }
 
     @Transactional
     public void deletar(Long id) {
-        Cliente cliente = buscarPorId(id);
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Cliente não encontrado com ID: " + id));
         clienteRepository.delete(cliente);
+    }
+
+    private ClienteResponseDTO converterResponseDTO(Cliente cliente) {
+        ClienteResponseDTO dto = new ClienteResponseDTO();
+        dto.setId(cliente.getId());
+        dto.setNome(cliente.getNome());
+        dto.setCpf(cliente.getCpf());
+        dto.setEmail(cliente.getEmail());
+        dto.setTelefone(cliente.getTelefone());
+        return dto;
     }
 }

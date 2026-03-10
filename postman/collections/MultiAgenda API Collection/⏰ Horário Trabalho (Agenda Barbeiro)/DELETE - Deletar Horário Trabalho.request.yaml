@@ -1,0 +1,5 @@
+$kind: http-request
+description: Deletar um horário de trabalho
+url: http://localhost:8080/api/horario-trabalho/1
+method: DELETE
+order: 6000

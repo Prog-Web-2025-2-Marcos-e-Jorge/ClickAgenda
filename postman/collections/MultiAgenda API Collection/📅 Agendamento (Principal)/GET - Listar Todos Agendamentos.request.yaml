@@ -1,0 +1,7 @@
+$kind: http-request
+description: Lista todos os agendamentos
+url: http://localhost:8080/api/agendamento
+method: GET
+headers:
+  Accept: application/json
+order: 2000

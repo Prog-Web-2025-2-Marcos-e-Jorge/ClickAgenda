@@ -1,0 +1,7 @@
+$kind: http-request
+description: Verifica se a API está ativa e retorna estrutura de recursos disponíveis
+url: http://localhost:8080/api
+method: GET
+headers:
+  Accept: application/json
+order: 1000

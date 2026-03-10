@@ -3,6 +3,8 @@ package br.iff.edu.ccc.clickagenda.service;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import br.iff.edu.ccc.clickagenda.dto.request.ProfissionalRequestDTO;
+import br.iff.edu.ccc.clickagenda.dto.response.ProfissionalResponseDTO;
 import br.iff.edu.ccc.clickagenda.exception.BadRequestException;
 import br.iff.edu.ccc.clickagenda.exception.NotFoundException;
 import br.iff.edu.ccc.clickagenda.model.Profissional;
@@ -18,50 +20,92 @@ public class ProfissionalService {
     private final UsuarioRepository usuarioRepository;
 
     @Transactional
-    public Profissional salvar(Profissional profissional) {
-        if (usuarioRepository.existsByEmail(profissional.getEmail())) {
+    public ProfissionalResponseDTO salvar(ProfissionalRequestDTO dto) {
+        if (usuarioRepository.existsByEmail(dto.getEmail())) {
             throw new BadRequestException("O e-mail informado já está em uso na plataforma.");
         }
 
-        return profissionalRepository.save(profissional);
+        Profissional profissional = new Profissional();
+        profissional.setNome(dto.getNome());
+        profissional.setCpf(dto.getCpf());
+        profissional.setEmail(dto.getEmail());
+        profissional.setTelefone(dto.getTelefone());
+        profissional.setSenha(dto.getSenha()); // TODO: adicionar criptografia de senha
+
+        Profissional salvo = profissionalRepository.save(profissional);
+        return converterResponseDTO(salvo);
     }
 
-    public Profissional buscarPorId(Long id) {
-        return profissionalRepository.findById(id)
+    public ProfissionalResponseDTO buscarPorId(Long id) {
+        Profissional profissional = profissionalRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Profissional não encontrado com ID: " + id));
+        return converterResponseDTO(profissional);
     }
 
-    public List<Profissional> listarTodos() {
-        return profissionalRepository.findAll();
+    public List<ProfissionalResponseDTO> listarTodos() {
+        return profissionalRepository.findAll().stream()
+                .map(this::converterResponseDTO)
+                .toList();
     }
 
     @Transactional
-    public Profissional atualizar(Long id, Profissional profissionalAtualizado) {
-        Profissional profissional = buscarPorId(id);
+    public ProfissionalResponseDTO atualizar(Long id, ProfissionalRequestDTO dto) {
+        Profissional profissional = profissionalRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Profissional não encontrado com ID: " + id));
 
-        if (profissionalAtualizado.getNome() != null) {
-            profissional.setNome(profissionalAtualizado.getNome());
+        if (dto.getNome() != null) {
+            profissional.setNome(dto.getNome());
         }
-        if (profissionalAtualizado.getEmail() != null
-                && !profissionalAtualizado.getEmail().equals(profissional.getEmail())) {
-            if (usuarioRepository.existsByEmail(profissionalAtualizado.getEmail())) {
+        if (dto.getEmail() != null && !dto.getEmail().equals(profissional.getEmail())) {
+            if (usuarioRepository.existsByEmail(dto.getEmail())) {
                 throw new BadRequestException("O e-mail informado já está em uso na plataforma.");
             }
-            profissional.setEmail(profissionalAtualizado.getEmail());
+            profissional.setEmail(dto.getEmail());
         }
-        if (profissionalAtualizado.getTelefone() != null) {
-            profissional.setTelefone(profissionalAtualizado.getTelefone());
+        if (dto.getTelefone() != null) {
+            profissional.setTelefone(dto.getTelefone());
         }
-        if (profissionalAtualizado.getEndereco() != null) {
-            profissional.setEndereco(profissionalAtualizado.getEndereco());
+        if (dto.getSenha() != null) {
+            profissional.setSenha(dto.getSenha()); // TODO: adicionar criptografia de senha
         }
 
-        return profissionalRepository.save(profissional);
+        Profissional atualizado = profissionalRepository.save(profissional);
+        return converterResponseDTO(atualizado);
     }
 
     @Transactional
     public void deletar(Long id) {
-        Profissional profissional = buscarPorId(id);
+        Profissional profissional = profissionalRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Profissional não encontrado com ID: " + id));
         profissionalRepository.delete(profissional);
+    }
+
+    private ProfissionalResponseDTO converterResponseDTO(Profissional profissional) {
+        ProfissionalResponseDTO dto = new ProfissionalResponseDTO();
+        dto.setId(profissional.getId());
+        dto.setNome(profissional.getNome());
+        dto.setCpf(profissional.getCpf());
+        dto.setEmail(profissional.getEmail());
+        dto.setTelefone(profissional.getTelefone());
+
+        // Converter horários de trabalho se existirem
+        if (profissional.getHorariosTrabalho() != null) {
+            dto.setHorariosTrabalho(
+                    profissional.getHorariosTrabalho().stream()
+                            .map(h -> {
+                                var horarioDTO = new br.iff.edu.ccc.clickagenda.dto.response.HorarioTrabalhoResponseDTO();
+                                horarioDTO.setId(h.getId());
+                                horarioDTO.setDiaSemana(h.getDiaSemana());
+                                horarioDTO.setHorarioInicio(h.getHorarioInicio());
+                                horarioDTO.setHorarioFim(h.getHorarioFim());
+                                horarioDTO.setDiaFolga(h.isDiaFolga());
+                                horarioDTO.setProfissionalId(h.getProfissional().getId());
+                                horarioDTO.setProfissionalNome(h.getProfissional().getNome());
+                                return horarioDTO;
+                            })
+                            .toList());
+        }
+
+        return dto;
     }
 }

@@ -1,0 +1,7 @@
+$kind: http-request
+description: Busca uma categoria específica por ID
+url: http://localhost:8080/api/categoria/1
+method: GET
+headers:
+  Accept: application/json
+order: 3000

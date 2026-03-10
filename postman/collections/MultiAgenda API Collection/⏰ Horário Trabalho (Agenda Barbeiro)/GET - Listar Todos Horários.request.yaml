@@ -1,0 +1,7 @@
+$kind: http-request
+description: Lista todos os horários de trabalho cadastrados
+url: http://localhost:8080/api/horario-trabalho
+method: GET
+headers:
+  Accept: application/json
+order: 2000

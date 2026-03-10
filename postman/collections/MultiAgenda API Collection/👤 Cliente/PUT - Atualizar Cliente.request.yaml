@@ -1,0 +1,17 @@
+$kind: http-request
+description: Atualizar dados de um cliente
+url: http://localhost:8080/api/cliente/2
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nome": "Carlos Alberto José Santos",
+      "cpf": "98765432100",
+      "email": "carlos.alberto@email.com",
+      "telefone": "11987777777",
+      "senha": "NovaClienteSenha@789"
+    }
+order: 4000

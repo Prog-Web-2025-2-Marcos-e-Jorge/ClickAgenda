@@ -1,0 +1,7 @@
+$kind: http-request
+description: Lista todos os profissionais cadastrados
+url: http://localhost:8080/api/profissional
+method: GET
+headers:
+  Accept: application/json
+order: 2000

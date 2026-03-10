@@ -1,0 +1,9 @@
+$kind: http-request
+description: Cancelar agendamento (marcar como CANCELADO, não deleta do BD).
+  Requer idUsuarioSolicitante e tipoUsuario (CLIENTE ou PROFISSIONAL)
+url: http://localhost:8080/api/agendamento/1?idUsuarioSolicitante=2&tipoUsuario=CLIENTE
+method: DELETE
+queryParams:
+  idUsuarioSolicitante: "2"
+  tipoUsuario: CLIENTE
+order: 5000

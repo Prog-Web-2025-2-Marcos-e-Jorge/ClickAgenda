@@ -1,0 +1,7 @@
+$kind: http-request
+description: Busca um cliente específico por ID
+url: http://localhost:8080/api/cliente/2
+method: GET
+headers:
+  Accept: application/json
+order: 3000

@@ -1,20 +1,15 @@
-package br.iff.edu.ccc.clickagenda.dto;
+package br.iff.edu.ccc.clickagenda.dto.request;
 
 import java.time.LocalTime;
 
 import br.iff.edu.ccc.clickagenda.enums.DiaSemana;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-public class HorarioTrabalhoDTO {
-    private Long id;
+public class HorarioTrabalhoRequestDTO {
 
     @NotNull(message = "Dia da semana é obrigatório")
     private DiaSemana diaSemana;
@@ -25,6 +20,8 @@ public class HorarioTrabalhoDTO {
     @NotNull(message = "Horário de fim é obrigatório")
     private LocalTime horarioFim;
 
+    private boolean diaFolga;
+
     @NotNull(message = "Profissional é obrigatório")
-    private ProfissionalDTO profissional;
+    private Long profissionalId;
 }

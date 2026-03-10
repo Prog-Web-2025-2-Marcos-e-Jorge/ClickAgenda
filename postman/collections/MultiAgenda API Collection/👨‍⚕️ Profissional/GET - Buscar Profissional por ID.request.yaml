@@ -1,0 +1,7 @@
+$kind: http-request
+description: Busca um profissional específico por ID
+url: http://localhost:8080/api/profissional/1
+method: GET
+headers:
+  Accept: application/json
+order: 3000

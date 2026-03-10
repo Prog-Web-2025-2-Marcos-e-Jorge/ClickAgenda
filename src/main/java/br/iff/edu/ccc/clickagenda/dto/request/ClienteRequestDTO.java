@@ -1,30 +1,22 @@
-package br.iff.edu.ccc.clickagenda.dto;
-
-import java.util.List;
+package br.iff.edu.ccc.clickagenda.dto.request;
 
 import org.hibernate.validator.constraints.br.CPF;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-public class ProfissionalDTO {
-    private Long id;
+public class ClienteRequestDTO {
 
     @NotBlank(message = "Nome é obrigatório")
     @Size(min = 3, max = 150, message = "Nome deve ter entre 3 e 150 caracteres")
     private String nome;
 
     @NotBlank(message = "CPF é obrigatório")
-    @CPF
+    @CPF(message = "CPF inválido")
     private String cpf;
 
     @NotBlank(message = "Email é obrigatório")
@@ -39,12 +31,4 @@ public class ProfissionalDTO {
     @Size(min = 8, message = "Senha deve ter no mínimo 8 caracteres")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
-
-    @JsonIgnoreProperties("profissional")
-    private List<ServicoDTO> servicos;
-
-    @JsonIgnoreProperties("profissional")
-    private List<HorarioTrabalhoDTO> horariosTrabalho;
-
-    private List<CategoriaDTO> categorias;
 }

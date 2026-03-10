@@ -1,19 +1,13 @@
-package br.iff.edu.ccc.clickagenda.dto;
+package br.iff.edu.ccc.clickagenda.dto.request;
 
 import java.math.BigDecimal;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-public class ServicoDTO {
-    private Long id;
+public class ServicoRequestDTO {
 
     @NotBlank(message = "Nome do serviço é obrigatório")
     @Size(min = 3, max = 100, message = "Nome deve ter entre 3 e 100 caracteres")
@@ -28,10 +22,8 @@ public class ServicoDTO {
     private Integer duracaoMinutos;
 
     @NotNull(message = "Profissional é obrigatório")
-    @JsonIgnoreProperties({ "servicos", "horariosTrabalho" })
-    private ProfissionalDTO profissional;
+    private Long profissionalId;
 
     @NotNull(message = "Categoria é obrigatória")
-    @JsonIgnoreProperties("servicos")
-    private CategoriaDTO categoria;
+    private Long categoriaId;
 }
