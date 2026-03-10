@@ -1,6 +1,7 @@
 $kind: http-request
+name: PUT - Atualizar Serviço
 description: Atualizar dados de um serviço
-url: http://localhost:8080/api/servico/3
+url: http://localhost:8080/api/servico/1
 method: PUT
 headers:
   Content-Type: application/json

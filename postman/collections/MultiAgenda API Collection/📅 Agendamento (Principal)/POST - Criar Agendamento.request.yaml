@@ -11,8 +11,8 @@ body:
     {
       "profissionalId": 1,
       "clienteId": 2,
-      "servicoId": 3,
-      "dataHora": "2026-03-15T14:30:00",
+      "servicoId": 1,
+      "dataHora": "2026-03-16T14:30:00",
       "obs": "Corte tradicional com barba",
       "valor": 85.50
     }

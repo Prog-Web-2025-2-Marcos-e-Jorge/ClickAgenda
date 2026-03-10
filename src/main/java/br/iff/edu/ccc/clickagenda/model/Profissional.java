@@ -7,13 +7,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 public class Profissional extends Usuario {
 
     @OneToMany(mappedBy = "profissional")
@@ -29,6 +27,10 @@ public class Profissional extends Usuario {
     private List<HorarioTrabalho> horariosTrabalho;
 
     private String endereco;
+
+    public Profissional() {
+        this.perfil = Perfil.PROFISSIONAL;
+    }
 
     public Profissional(String nome, String cpf, String email, String telefone, String senha, String endereco) {
         super(nome, cpf, email, telefone, senha);

@@ -36,7 +36,7 @@ O sistema é desenhado com três níveis de acesso principais:
 
 ## 🚀 Como Executar o Projeto
 
-_(Esta seção deve ser preenchida com os passos reais quando o projeto for iniciado)_
+Siga os passos em [Setup](/docs/SETUP.md)
 
 ### 1. Pré-requisitos
 
@@ -76,7 +76,7 @@ Quando a inicialização for concluída, você verá no terminal algo como:
 ### 5. Problemas Comuns
 
 - **Erro de versão do Java:** Garanta que sua IDE está configurada para usar o JDK 17.
-- **Porta 8080 em uso:** Se outra aplicação (como o `Mindly` [cite: 24]!) já estiver usando a porta, mude-a no arquivo `application.properties` (ex: `server.port=8081`).
+- **Porta 8080 em uso:** Se outra aplicação já estiver usando a porta, mude-a no arquivo `application.properties` (ex: `server.port=8081`).
 
 ## � Diagrama de Classes (Entity-Relationship)
 

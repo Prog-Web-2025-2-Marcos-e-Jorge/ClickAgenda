@@ -72,6 +72,10 @@ public class AgendamentoService {
     }
 
     private void validarDisponibilidade(Agendamento novoAgendamento) {
+        validarDisponibilidade(novoAgendamento, null);
+    }
+
+    private void validarDisponibilidade(Agendamento novoAgendamento, Long idAgendamentoExistente) {
         LocalDateTime inicioNovo = novoAgendamento.getDataHora();
         LocalDateTime fimNovo = inicioNovo.plusMinutes(novoAgendamento.getServico().getDuracaoMinutos());
 
@@ -96,6 +100,11 @@ public class AgendamentoService {
                 novoAgendamento.getProfissional().getId(), inicioDia, fimDia);
 
         for (Agendamento existente : agendamentosDoDia) {
+            // Excluir o próprio agendamento que está sendo atualizado da validação
+            if (idAgendamentoExistente != null && existente.getId().equals(idAgendamentoExistente)) {
+                continue;
+            }
+
             LocalDateTime inicioExistente = existente.getDataHora();
             LocalDateTime fimExistente = inicioExistente.plusMinutes(existente.getServico().getDuracaoMinutos());
 
@@ -143,8 +152,9 @@ public class AgendamentoService {
             agendamento.setValor(agendamentoRequest.getValor());
         }
 
-        // Validar disponibilidade após atualizar
-        validarDisponibilidade(agendamento);
+        // Validar disponibilidade após atualizar (excluindo o próprio agendamento da
+        // validação)
+        validarDisponibilidade(agendamento, id);
 
         Agendamento agendamentoAtualizado = agendamentoRepository.save(agendamento);
         return converterResponseDTO(agendamentoAtualizado);

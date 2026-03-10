@@ -810,7 +810,6 @@ curl -X POST http://localhost:8080/api/agendamento \
 
 ---
 
-**Última Atualização:** P1 - Primeira Entrega (Março 2026)
 **Versão API:** 1.0.0
 **Framework:** Spring Boot 4.0.2
 **Linguagem:** Java 17

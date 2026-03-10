@@ -1,6 +1,7 @@
 $kind: http-request
+name: GET - Buscar Serviço por ID
 description: Busca um serviço específico por ID
-url: http://localhost:8080/api/servico/3
+url: http://localhost:8080/api/servico/1
 method: GET
 headers:
   Accept: application/json

@@ -1,4 +1,5 @@
 $kind: http-request
+name: PUT - Atualizar Agendamento
 description: Atualizar dados de um agendamento
 url: http://localhost:8080/api/agendamento/1
 method: PUT
@@ -10,7 +11,7 @@ body:
     {
       "profissionalId": 1,
       "clienteId": 2,
-      "servicoId": 3,
+      "servicoId": 1,
       "dataHora": "2026-03-16T15:00:00",
       "obs": "Corte e barba com desenho",
       "valor": 95.50

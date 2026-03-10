@@ -126,7 +126,7 @@ curl http://localhost:8080/api/profissional
 # Criar um cliente
 curl -X POST http://localhost:8080/api/cliente \
   -H "Content-Type: application/json" \
-  -d '{"nome":"Maria","cpf":"111.222.333-44","email":"maria@test.com","telefone":"11987654321","senha":"Senha@123"}'
+  -d '{"nome":"Maria","cpf":"81172151016","email":"maria@test.com","telefone":"11987654321","senha":"Senha@123"}'
 ```
 
 ### Via Postman/Insomnia (Recomendado)
@@ -158,7 +158,7 @@ O projeto usa **H2 Database** (em memória - dados não persistem após reinicia
 ### Acessar H2 Console (Desenvolvimento)
 
 1. Acesse: `http://localhost:8080/h2-console`
-2. JDBC URL: `jdbc:h2:mem:testdb`
+2. JDBC URL: `jdbc:h2:mem:clickagenda`
 3. Clique em **Connect**
 4. Execute queries SQL conforme necessário
 
@@ -257,10 +257,10 @@ mvnw.cmd clean install
 
 **Solução:** Confirme que os dados enviados atendem às validações:
 
-- CPF: formato `123.456.789-00`
+- CPF: formato `12345678900`
 - Email: formato válido `nome@dominio.com`
 - Senha: mínimo 8 caracteres
-- Telefone: não vazio
+- Telefone: 10 ou 11 caracteres
 
 ---
 
@@ -308,7 +308,7 @@ server.port=8080
 server.servlet.context-path=/
 
 # Banco de Dados
-spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.url=jdbc:h2:mem:clickagenda
 spring.datasource.driverClassName=org.h2.Driver
 spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
 spring.jpa.hibernate.ddl-auto=create-drop
@@ -354,5 +354,4 @@ Se encontrar problemas:
 
 ---
 
-**Última Atualização:** P1 - Primeira Entrega
 **Versão:** 1.0.0
