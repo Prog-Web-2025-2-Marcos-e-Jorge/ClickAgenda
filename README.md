@@ -30,7 +30,7 @@ O sistema é desenhado com três níveis de acesso principais:
 - **Spring Data JPA:** Para persistência de dados e ORM.
 - **Thymeleaf:** Motor de templates para renderizar o HTML dinamicamente no servidor.
 - **HTML / CSS:** Estrutura e estilo das páginas.
-- **MySQL:** Banco de dados relacional.
+- **H2 Database:** Banco de dados em memória para desenvolvimento e testes.
 - **Jakarta Validation:** Para validação dos dados de entrada.
 - **Git:** Para versionamento de código.
 
@@ -99,7 +99,7 @@ Quando a inicialização for concluída, você verá no terminal algo como:
          ┌────┴──────────────┐      ┌──────────────────────────┐
          │   Profissional     │ 1..* │      Servico             │
          ├────────────────────┤◄─────┤──────────────────────────┤
-         │ - endereco         │      │ - id: Long               │
+         │ - servicos: List   │      │ - id: Long               │
          │ - servicos: List   │      │ - nome: String           │
          │ - categorias: List *─────►│ - valor: BigDecimal      │
          │ - agendamentos: List    * │ - duracaoMinutos: Int    │
@@ -185,7 +185,7 @@ Content-Type: application/json
   "profissional": {
     "id": 1,
     "nome": "João Silva Barbeiro",
-    "cpf": "123.456.789-00",
+    "cpf": "11144477735",
     "email": "joao@barber.com",
     "telefone": "11999999999",
     "horariosTrabalho": [

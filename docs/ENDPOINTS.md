@@ -53,11 +53,10 @@ http://localhost:8080/api
 ```json
 {
   "nome": "João Silva Barbeiro",
-  "cpf": "123.456.789-00",
-  "email": "joao@barber.com",
+  "cpf": "11144477735",
+  "email": "joao.silva@barber.com",
   "telefone": "11999999999",
-  "senha": "Senha@123",
-  "endereco": "Rua das Flores, 123"
+  "senha": "Senha@123456"
 }
 ```
 
@@ -67,10 +66,9 @@ http://localhost:8080/api
 {
   "id": 1,
   "nome": "João Silva Barbeiro",
-  "cpf": "123.456.789-00",
-  "email": "joao@barber.com",
+  "cpf": "11144477735",
+  "email": "joao.silva@barber.com",
   "telefone": "11999999999",
-  "endereco": "Rua das Flores, 123",
   "perfil": "PROFISSIONAL",
   "horariosTrabalho": []
 }
@@ -82,7 +80,6 @@ http://localhost:8080/api
 - ✅ Email válido e único
 - ✅ Senha com mínimo 8 caracteres
 - ✅ Telefone obrigatório
-- ✅ Endereço obrigatório
 
 ---
 
@@ -97,10 +94,9 @@ http://localhost:8080/api
   {
     "id": 1,
     "nome": "João Silva Barbeiro",
-    "cpf": "123.456.789-00",
-    "email": "joao@barber.com",
+    "cpf": "11144477735",
+    "email": "joao.silva@barber.com",
     "telefone": "11999999999",
-    "endereco": "Rua das Flores, 123",
     "perfil": "PROFISSIONAL",
     "horariosTrabalho": [
       {
@@ -156,11 +152,10 @@ http://localhost:8080/api
 ```json
 {
   "nome": "João Silva Barbeiro Jr.",
-  "cpf": "123.456.789-00",
-  "email": "joao.jr@barber.com",
+  "cpf": "11144477735",
+  "email": "joao.junior@barber.com",
   "telefone": "11998888888",
-  "senha": "Nova@Senha123",
-  "endereco": "Avenida Paulista, 1000"
+  "senha": "NovaSenh@123456"
 }
 ```
 
