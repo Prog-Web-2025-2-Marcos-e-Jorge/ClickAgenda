@@ -6,4 +6,4 @@ method: DELETE
 queryParams:
   idUsuarioSolicitante: "2"
   tipoUsuario: CLIENTE
-order: 5000
+order: 1000

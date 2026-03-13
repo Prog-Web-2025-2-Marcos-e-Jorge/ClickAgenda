@@ -1,5 +1,4 @@
 $kind: http-request
-name: POST - Criar Horário Trabalho
 description: "Criar um novo horário de trabalho. Validações: horarioInicio <
   horarioFim, mínimo 15 minutos, sem duplicatas por dia/profissional"
 url: http://localhost:8080/api/horario-trabalho
@@ -7,7 +6,7 @@ method: POST
 headers:
   Content-Type: application/json
 body:
-  type: json
+  type: text
   content: |-
     {
       "diaSemana": "SEGUNDA",

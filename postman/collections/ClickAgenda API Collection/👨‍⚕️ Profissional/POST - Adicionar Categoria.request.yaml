@@ -1,0 +1,22 @@
+$kind: http-request
+description: >-
+  Adicionar uma categoria ao profissional (declarar competência)
+
+
+  IMPORTANTE: Deve ser feito ANTES de criar serviços nesta categoria.
+
+  Ao criar um serviço, a categoria deve estar na lista de categorias do
+  profissional.
+
+
+  Exemplo: Se profissional (id=1) quer atender "Serviços de Barba" (id=1),
+
+  deve executar este endpoint primeiro, depois pode criar serviços nessa
+  categoria.
+url: http://localhost:8080/api/profissional/1/categorias?categoriaId=1
+method: POST
+headers:
+  Content-Type: application/json
+queryParams:
+  categoriaId: "1"
+order: 5000

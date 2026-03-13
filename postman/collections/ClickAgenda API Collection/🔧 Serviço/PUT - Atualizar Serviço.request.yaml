@@ -1,6 +1,9 @@
 $kind: http-request
-name: PUT - Atualizar Serviço
-description: Atualizar dados de um serviço
+description: |-
+  Atualizar dados de um serviço
+
+  VALIDAÇÃO: Se você alterar a categoria, o profissional DEVE estar habilitado
+  para atender a nova categoria. Caso contrário, retorna erro 400.
 url: http://localhost:8080/api/servico/1
 method: PUT
 headers:

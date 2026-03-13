@@ -1,5 +1,4 @@
 $kind: http-request
-name: PUT - Atualizar Agendamento
 description: Atualizar dados de um agendamento
 url: http://localhost:8080/api/agendamento/1
 method: PUT

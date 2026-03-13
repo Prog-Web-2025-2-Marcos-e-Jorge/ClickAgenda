@@ -1,12 +1,11 @@
 $kind: http-request
-name: POST - Criar Agendamento
 description: Criar um novo agendamento - OPERAÇÃO PRINCIPAL
 url: http://localhost:8080/api/agendamento
 method: POST
 headers:
   Content-Type: application/json
 body:
-  type: json
+  type: text
   content: |-
     {
       "profissionalId": 1,

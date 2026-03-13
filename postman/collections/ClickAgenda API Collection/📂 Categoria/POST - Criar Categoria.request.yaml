@@ -1,0 +1,19 @@
+$kind: http-request
+description: |-
+  Criar uma nova categoria de serviços
+
+  ⭐ PRIMEIRO PASSO do fluxo de trabalho!
+  Crie todas as categorias disponíveis na plataforma ANTES de criar serviços.
+
+  Exemplos: "Serviços de Barba", "Cortes Modernos", "Manutenção"
+url: http://localhost:8080/api/categoria
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nome": "Serviços de Barba"
+    }
+order: 1000

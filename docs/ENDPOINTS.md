@@ -42,7 +42,7 @@ http://localhost:8080/api
 
 ---
 
-## 👨‍⚕️ Profissional (6 Endpoints)
+## 👨‍⚕️ Profissional (7 Endpoints)
 
 ### POST /api/profissional
 
@@ -160,6 +160,60 @@ http://localhost:8080/api
 ```
 
 **Response (200 OK):** Retorna objeto profissional atualizado
+
+---
+
+### POST /api/profissional/{id}/categorias
+
+**Descrição:** Adicionar uma categoria ao profissional
+
+**Query Parameters:**
+
+- `categoriaId` (obrigatório) - ID da categoria a adicionar
+
+**Example:**
+
+```
+POST /api/profissional/1/categorias?categoriaId=2
+```
+
+**Response (200 OK):**
+
+```json
+{
+  "id": 1,
+  "nome": "João Silva Barbeiro",
+  "cpf": "11144477735",
+  "email": "joao.silva@barber.com",
+  "telefone": "11999999999",
+  "servicos": [...],
+  "horariosTrabalho": [...],
+  "categorias": [
+    {
+      "id": 1,
+      "nome": "Serviços de Barba"
+    },
+    {
+      "id": 2,
+      "nome": "Cortes Modernos"
+    }
+  ]
+}
+```
+
+**Validações:**
+
+- ✅ Profissional deve existir (404)
+- ✅ Categoria deve existir (404)
+- ✅ Profissional não pode ter a categoria duplicada (400)
+
+**Response (400 Bad Request):**
+
+```json
+{
+  "erro": "Profissional já atende à categoria indicada!"
+}
+```
 
 ---
 
@@ -293,6 +347,15 @@ http://localhost:8080/api
 - ✅ Duração em minutos > 0
 - ✅ Profissional deve existir
 - ✅ Categoria deve existir
+- ✅ **Profissional deve estar habilitado para atender a categoria** (400)
+
+**Response (400 Bad Request - Categoria não habilitada):**
+
+```json
+{
+  "erro": "O profissional não está habilitado para atender a categoria: Serviços de Barba"
+}
+```
 
 ---
 
@@ -319,6 +382,18 @@ http://localhost:8080/api
 **Request:** JSON com campos do serviço
 
 **Response (200 OK):** Objeto serviço atualizado
+
+**Validações especiais ao atualizar categoria:**
+
+- ✅ Se mudar a categoria, o profissional deve estar habilitado para atender a nova categoria (400)
+
+**Response (400 Bad Request - Categoria não habilitada):**
+
+```json
+{
+  "erro": "O profissional não está habilitado para atender a categoria: Nova Categoria"
+}
+```
 
 ---
 

@@ -1,0 +1,24 @@
+$kind: http-request
+description: |-
+  Criar um novo profissional (barbeiro/cabeleireiro)
+
+  ⭐ SEGUNDO PASSO do fluxo de trabalho!
+
+  Após criar, EXECUTE O PRÓXIMO PASSO:
+  POST /api/profissional/{id}/categorias?categoriaId={id}
+  para adicionar categorias que o profissional atende!
+url: http://localhost:8080/api/profissional
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nome": "João Silva Barbeiro",
+      "cpf": "11144477735",
+      "email": "joao.silva@barber.com",
+      "telefone": "11999999999",
+      "senha": "Senha@123456"
+    }
+order: 1000

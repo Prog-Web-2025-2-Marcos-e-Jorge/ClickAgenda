@@ -152,6 +152,31 @@ RELACIONAMENTOS:
 - Categoria (1) ────────→ (N) Servico
 ```
 
+### 🎯 Lógica de Categorias (Otimizada)
+
+A relação entre Profissional e Categoria foi desenhada para evitar redundância:
+
+1. **Profissional declara suas competências**: Usa `POST /api/profissional/{id}/categorias` para adicionar categorias que atende
+2. **Serviços herdam a validação**: Ao criar um Serviço, a categoria escolhida **deve estar na lista de categorias do profissional** (validação automática)
+3. **Sem duplicação**: Não há dados redundantes - a informação de qual categoria o profissional atende está apenas uma vez
+
+**Fluxo correto:**
+
+```
+1. Criar Profissional
+   ↓
+2. Adicionar Categorias ao Profissional (POST /profissional/{id}/categorias)
+   ↓
+3. Criar Serviços (apenas nas categorias habilitadas) ✅
+```
+
+**Tentativa inválida:**
+
+```
+Tentar criar Serviço em categoria NÃO habilitada
+→ Erro 400: "Profissional não está habilitado para atender a categoria"
+```
+
 ---
 
 ## 🔗 Exemplo de Requisição - Criar Agendamento (POST Principal)

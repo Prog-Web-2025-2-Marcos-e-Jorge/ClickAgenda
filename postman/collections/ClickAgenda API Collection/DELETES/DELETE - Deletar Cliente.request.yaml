@@ -2,4 +2,4 @@ $kind: http-request
 description: Deletar um cliente
 url: http://localhost:8080/api/cliente/2
 method: DELETE
-order: 5000
+order: 6000

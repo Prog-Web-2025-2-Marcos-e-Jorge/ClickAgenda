@@ -7,7 +7,9 @@ import br.iff.edu.ccc.clickagenda.dto.request.ProfissionalRequestDTO;
 import br.iff.edu.ccc.clickagenda.dto.response.ProfissionalResponseDTO;
 import br.iff.edu.ccc.clickagenda.exception.BadRequestException;
 import br.iff.edu.ccc.clickagenda.exception.NotFoundException;
+import br.iff.edu.ccc.clickagenda.model.Categoria;
 import br.iff.edu.ccc.clickagenda.model.Profissional;
+import br.iff.edu.ccc.clickagenda.repository.CategoriaRepository;
 import br.iff.edu.ccc.clickagenda.repository.ProfissionalRepository;
 import br.iff.edu.ccc.clickagenda.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ public class ProfissionalService {
 
     private final ProfissionalRepository profissionalRepository;
     private final UsuarioRepository usuarioRepository;
+    private final CategoriaRepository categoriaRepository;
 
     @Transactional
     public ProfissionalResponseDTO salvar(ProfissionalRequestDTO dto) {
@@ -74,6 +77,31 @@ public class ProfissionalService {
     }
 
     @Transactional
+    public ProfissionalResponseDTO adicionarCategoria(Long profId, Long catId) {
+        Profissional profissional = profissionalRepository.findById(profId)
+                .orElseThrow(() -> new NotFoundException("Profissional não encontrado com ID: " + profId));
+        Categoria categoria = categoriaRepository.findById(catId)
+                .orElseThrow(() -> new NotFoundException("Categoria não encontrada com ID: " + catId));
+
+        // Inicializar lista se nula
+        if (profissional.getCategorias() == null) {
+            profissional.setCategorias(List.of());
+        }
+
+        // Verificar se categoria já está associada
+        if (profissional.getCategorias().stream().anyMatch(c -> c.getId().equals(categoria.getId()))) {
+            throw new BadRequestException("Profissional já atende à categoria indicada!");
+        }
+
+        // Adicionar categoria
+        List<Categoria> categorias = profissional.getCategorias();
+        categorias.add(categoria);
+
+        Profissional atualizado = profissionalRepository.save(profissional);
+        return converterResponseDTO(atualizado);
+    }
+
+    @Transactional
     public void deletar(Long id) {
         Profissional profissional = profissionalRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Profissional não encontrado com ID: " + id));
@@ -102,6 +130,19 @@ public class ProfissionalService {
                                 horarioDTO.setProfissionalId(h.getProfissional().getId());
                                 horarioDTO.setProfissionalNome(h.getProfissional().getNome());
                                 return horarioDTO;
+                            })
+                            .toList());
+        }
+
+        // Converter categorias se existirem
+        if (profissional.getCategorias() != null) {
+            dto.setCategorias(
+                    profissional.getCategorias().stream()
+                            .map(c -> {
+                                var categoriaDTO = new br.iff.edu.ccc.clickagenda.dto.response.CategoriaResponseDTO();
+                                categoriaDTO.setId(c.getId());
+                                categoriaDTO.setNome(c.getNome());
+                                return categoriaDTO;
                             })
                             .toList());
         }

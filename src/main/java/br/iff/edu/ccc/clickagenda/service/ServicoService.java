@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import br.iff.edu.ccc.clickagenda.dto.request.ServicoRequestDTO;
 import br.iff.edu.ccc.clickagenda.dto.response.ServicoResponseDTO;
+import br.iff.edu.ccc.clickagenda.exception.BadRequestException;
 import br.iff.edu.ccc.clickagenda.exception.NotFoundException;
 import br.iff.edu.ccc.clickagenda.model.Categoria;
 import br.iff.edu.ccc.clickagenda.model.Profissional;
@@ -29,6 +30,14 @@ public class ServicoService {
 
         Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
                 .orElseThrow(() -> new NotFoundException("Categoria não encontrada"));
+
+        // Validar se profissional atende essa categoria
+        if (profissional.getCategorias() == null ||
+                profissional.getCategorias().stream()
+                        .noneMatch(c -> c.getId().equals(categoria.getId()))) {
+            throw new BadRequestException(
+                    "O profissional não está habilitado para atender a categoria: " + categoria.getNome());
+        }
 
         Servico servico = new Servico();
         servico.setNome(dto.getNome());
@@ -75,6 +84,16 @@ public class ServicoService {
         if (dto.getCategoriaId() != null) {
             Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
                     .orElseThrow(() -> new NotFoundException("Categoria não encontrada"));
+
+            // Validar se o profissional atende essa categoria
+            Profissional profissionalAtual = servico.getProfissional();
+            if (profissionalAtual.getCategorias() == null ||
+                    profissionalAtual.getCategorias().stream()
+                            .noneMatch(c -> c.getId().equals(categoria.getId()))) {
+                throw new BadRequestException(
+                        "O profissional não está habilitado para atender a categoria: " + categoria.getNome());
+            }
+
             servico.setCategoria(categoria);
         }
 

@@ -8,7 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,7 +31,4 @@ public class Categoria {
 
     @ManyToMany(mappedBy = "categorias")
     private List<Profissional> profissionais;
-
-    @OneToMany(mappedBy = "categoria")
-    private List<Servico> servicos;
 }

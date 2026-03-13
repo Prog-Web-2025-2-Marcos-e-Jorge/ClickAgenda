@@ -43,6 +43,13 @@ public class ProfissionalRestController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/{id}/categorias")
+    public ResponseEntity<ProfissionalResponseDTO> adicionarCategoria(@PathVariable Long id,
+            @RequestParam Long categoriaId) {
+        ProfissionalResponseDTO response = profissionalService.adicionarCategoria(id, categoriaId);
+        return ResponseEntity.ok(response);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         profissionalService.deletar(id);
