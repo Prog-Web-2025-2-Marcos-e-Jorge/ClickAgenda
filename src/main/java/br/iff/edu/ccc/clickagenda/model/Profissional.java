@@ -26,15 +26,12 @@ public class Profissional extends Usuario {
     @OneToMany(mappedBy = "profissional")
     private List<HorarioTrabalho> horariosTrabalho;
 
-    private String endereco;
-
     public Profissional() {
         this.perfil = Perfil.PROFISSIONAL;
     }
 
     public Profissional(String nome, String cpf, String email, String telefone, String senha, String endereco) {
         super(nome, cpf, email, telefone, senha);
-        this.endereco = endereco;
         this.perfil = Perfil.PROFISSIONAL;
     }
 }

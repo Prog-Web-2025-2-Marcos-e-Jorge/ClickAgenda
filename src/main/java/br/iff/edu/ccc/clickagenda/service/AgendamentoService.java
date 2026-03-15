@@ -40,7 +40,6 @@ public class AgendamentoService {
 
     @Transactional
     public AgendamentoResponseDTO agendar(AgendamentoRequestDTO agendamentoRequest) {
-        // Validação e busca das entidades relacionadas
         Profissional profissional = profissionalRepository.findById(agendamentoRequest.getProfissionalId())
                 .orElseThrow(() -> new NotFoundException(
                         "Profissional não encontrado com o ID: " + agendamentoRequest.getProfissionalId()));
@@ -53,7 +52,6 @@ public class AgendamentoService {
                 .orElseThrow(() -> new NotFoundException(
                         "Serviço não encontrado com o ID: " + agendamentoRequest.getServicoId()));
 
-        // Criar novo agendamento
         Agendamento agendamento = new Agendamento();
         agendamento.setProfissional(profissional);
         agendamento.setCliente(cliente);
@@ -61,12 +59,9 @@ public class AgendamentoService {
         agendamento.setDataHora(agendamentoRequest.getDataHora());
         agendamento.setObservacoes(agendamentoRequest.getObs());
         agendamento.setValor(agendamentoRequest.getValor());
-        agendamento.setStatus(Status.PENDENTE);
 
-        // Validar disponibilidade
         validarDisponibilidade(agendamento);
 
-        // Salvar e retornar DTO
         Agendamento agendamentoSalvo = agendamentoRepository.save(agendamento);
         return converterResponseDTO(agendamentoSalvo);
     }
@@ -100,7 +95,7 @@ public class AgendamentoService {
                 novoAgendamento.getProfissional().getId(), inicioDia, fimDia);
 
         for (Agendamento existente : agendamentosDoDia) {
-            // Excluir o próprio agendamento que está sendo atualizado da validação
+            // Exclui o próprio agendamento que está sendo atualizado da validação
             if (idAgendamentoExistente != null && existente.getId().equals(idAgendamentoExistente)) {
                 continue;
             }
@@ -121,7 +116,6 @@ public class AgendamentoService {
         Agendamento agendamento = agendamentoRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Agendamento não encontrado com ID: " + id));
 
-        // Buscar entidades relacionadas se forem fornecidas
         if (agendamentoRequest.getProfissionalId() != null) {
             Profissional profissional = profissionalRepository.findById(agendamentoRequest.getProfissionalId())
                     .orElseThrow(() -> new NotFoundException("Profissional não encontrado"));
@@ -152,8 +146,6 @@ public class AgendamentoService {
             agendamento.setValor(agendamentoRequest.getValor());
         }
 
-        // Validar disponibilidade após atualizar (excluindo o próprio agendamento da
-        // validação)
         validarDisponibilidade(agendamento, id);
 
         Agendamento agendamentoAtualizado = agendamentoRepository.save(agendamento);
@@ -165,19 +157,16 @@ public class AgendamentoService {
         Agendamento agendamento = agendamentoRepository.findById(idAgendamento)
                 .orElseThrow(() -> new NotFoundException("Agendamento não encontrado com ID: " + idAgendamento));
 
-        // Validar se o profissional é o dono do agendamento
         if (!agendamento.getProfissional().getId().equals(idProfissional)) {
             throw new ForbiddenException(
                     "Acesso negado: Um profissional só pode confirmar agendamentos de sua própria agenda.");
         }
 
-        // Validar se o agendamento está pendente
         if (!agendamento.getStatus().equals(Status.PENDENTE)) {
             throw new BadRequestException(
                     "Apenas agendamentos pendentes podem ser confirmados. Status atual: " + agendamento.getStatus());
         }
 
-        // Confirmar o agendamento
         agendamento.setStatus(Status.CONFIRMADO);
         Agendamento agendamentoConfirmado = agendamentoRepository.save(agendamento);
 
@@ -189,19 +178,16 @@ public class AgendamentoService {
         Agendamento agendamento = agendamentoRepository.findById(idAgendamento)
                 .orElseThrow(() -> new NotFoundException("Agendamento não encontrado com ID: " + idAgendamento));
 
-        // Validar se o profissional é o dono do agendamento
         if (!agendamento.getProfissional().getId().equals(idProfissional)) {
             throw new ForbiddenException(
                     "Acesso negado: Um profissional só pode recusar agendamentos de sua própria agenda.");
         }
 
-        // Validar se o agendamento está pendente
         if (!agendamento.getStatus().equals(Status.PENDENTE)) {
             throw new BadRequestException(
                     "Apenas agendamentos pendentes podem ser recusados. Status atual: " + agendamento.getStatus());
         }
 
-        // Recusar o agendamento (mudar status para CANCELADO)
         agendamento.setStatus(Status.CANCELADO);
         Agendamento agendamentoRecusado = agendamentoRepository.save(agendamento);
 
@@ -213,7 +199,6 @@ public class AgendamentoService {
         Agendamento agendamento = agendamentoRepository.findById(idAgendamento)
                 .orElseThrow(() -> new NotFoundException("Agendamento não encontrado com ID: " + idAgendamento));
 
-        // Validar permissão de cancelamento
         if ("CLIENTE".equalsIgnoreCase(tipoUsuario)) {
             if (!agendamento.getCliente().getId().equals(idUsuarioSolicitante)) {
                 throw new ForbiddenException("Acesso negado: Um cliente só pode cancelar seus próprios agendamentos.");
@@ -262,7 +247,6 @@ public class AgendamentoService {
         dto.setValor(agendamento.getValor());
         dto.setStatus(agendamento.getStatus());
 
-        // Converter relacionamentos apenas se existirem
         if (agendamento.getProfissional() != null) {
             dto.setProfissional(converterProfissionalResponseDTO(agendamento.getProfissional()));
         }
@@ -304,7 +288,6 @@ public class AgendamentoService {
         dto.setNome(servico.getNome());
         dto.setValor(servico.getValor());
         dto.setDuracaoMinutos(servico.getDuracaoMinutos());
-        // Não incluir profissional e categoria aqui para evitar referências circulares
         return dto;
     }
 }

@@ -12,14 +12,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 public class Agendamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,4 +46,8 @@ public class Agendamento {
     private BigDecimal valor;
 
     private Status status;
+
+    public Agendamento() {
+        this.status = Status.PENDENTE;
+    }
 }

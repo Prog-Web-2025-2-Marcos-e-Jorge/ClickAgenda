@@ -28,7 +28,6 @@ public class RestMainApiController {
         recursos.put("Horários de Trabalho", "/api/horario-trabalho");
 
         resposta.put("recursos", recursos);
-        resposta.put("documentacao", "/swagger-ui.html");
 
         return ResponseEntity.ok(resposta);
     }
