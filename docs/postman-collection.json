@@ -608,7 +608,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"profissionalId\": 1,\n  \"clienteId\": 2,\n  \"servicoId\": 1,\n  \"dataHora\": \"2026-03-16T14:30:00\",\n  \"obs\": \"Corte tradicional com barba\",\n  \"valor\": 85.50\n}"
+              "raw": "{\n  \"profissionalId\": 1,\n  \"clienteId\": 2,\n  \"servicoId\": 1,\n  \"dataHora\": \"2026-03-23T14:30:00\",\n  \"obs\": \"Corte tradicional com barba\",\n  \"valor\": 85.50\n}"
             },
             "url": {
               "raw": "http://localhost:8080/api/agendamento",
@@ -678,7 +678,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"profissionalId\": 1,\n  \"clienteId\": 2,\n  \"servicoId\": 1,\n  \"dataHora\": \"2026-03-16T15:00:00\",\n  \"obs\": \"Corte e barba com desenho\",\n  \"valor\": 95.50\n}"
+              "raw": "{\n  \"profissionalId\": 1,\n  \"clienteId\": 2,\n  \"servicoId\": 1,\n  \"dataHora\": \"2026-03-23T15:00:00\",\n  \"obs\": \"Corte e barba com desenho\",\n  \"valor\": 95.50\n}"
             },
             "url": {
               "raw": "http://localhost:8080/api/agendamento/1",
