@@ -78,41 +78,40 @@ Quando a inicialização for concluída, você verá no terminal algo como:
 - **Erro de versão do Java:** Garanta que sua IDE está configurada para usar o JDK 17.
 - **Porta 8080 em uso:** Se outra aplicação já estiver usando a porta, mude-a no arquivo `application.properties` (ex: `server.port=8081`).
 
-## � Diagrama de Classes (Entity-Relationship)
+## 🗺️ Diagrama de Classes (Entity-Relationship)
 
 ```
 ┌──────────────────────────────┐
-│         Usuario (Abstract)   │
+│        Usuario (Abstract)    │
 ├──────────────────────────────┤
-│ - id: Long                   │
-│ - nome: String               │
-│ - cpf: String                │
-│ - email: String              │
-│ - telefone: String           │
-│ - senha: String              │
-│ - perfil: Perfil             │
+│ # id: Long                   │
+│ # nome: String               │
+│ # cpf: String                │
+│ # email: String              │
+│ # telefone: String           │
+│ # senha: String              │
+│ # perfil: Perfil             │
 └──────────────────────────────┘
          △                △
          │                │
-         ├────┬──────────┤
+         ├────┬───────────┤
               │
          ┌────┴──────────────┐      ┌──────────────────────────┐
-         │   Profissional     │ 1..* │      Servico             │
-         ├────────────────────┤◄─────┤──────────────────────────┤
-         │ - servicos: List   │      │ - id: Long               │
-         │ - servicos: List   │      │ - nome: String           │
-         │ - categorias: List *─────►│ - valor: BigDecimal      │
-         │ - agendamentos: List    * │ - duracaoMinutos: Int    │
-         │ - horariosTrabalho: List│ - profissional: Profissional
-         └────────────────────┘      │ - categoria: Categoria
-                  │              └──────────────────────────┘
-                  │ 1..*                      △
-                  │                           │
-         ┌────────▼──────────────┐            │
-         │   Agendamento         │      ┌─────┴──────────────────┐
-         ├───────────────────────┤      │     Categoria          │
+         │   Profissional    │ 1    │      Servico             │
+         ├───────────────────┤◄─────┤──────────────────────────┤
+         │ - endereco: String│      │ - id: Long               │
+         │ - servicos: List  │      │ - nome: String           │
+         │ - categorias: List*─────►│ - valor: BigDecimal      │
+         │ - agendamentos:   * │ - duracaoMinutos: Int    │
+         │ - horariosTrab:   │      │ - agendamentos: List     │
+         └───────────────────┘      └──────────────────────────┘
+                  │                                △
+                  │ 1                              │
+         ┌────────▼──────────────┐                 │
+         │   Agendamento         │      ┌──────────┴─────────────┐
+         ├───────────────────────┤      │      Categoria         │
          │ - id: Long            │      ├────────────────────────┤
-         │ - dataHora: LocalDT   │      │ - id: Long             │
+         │ - dataHora: LocalDateT│      │ - id: Long             │
          │ - observacoes: String │      │ - nome: String         │
          │ - valor: BigDecimal   │      │ - profissionais: List *│
          │ - status: Status      │      └────────────────────────┘
@@ -128,28 +127,26 @@ Quando a inicialização for concluída, você verá no terminal algo como:
          │ - diaSemana: DiaSemana     │
          │ - horarioInicio: LocalTime │
          │ - horarioFim: LocalTime    │
-         │ - diaFolga: Boolean        │
+         │ - diaFolga: boolean        │
          │ - profissional: Profissional
          └────────────────────────────┘
 
 ┌─────────────────────────┐    ┌──────────────────────────┐
-│       Cliente           │    │      Admin (TBD)         │
+│        Cliente          │    │       Admin              │
 ├─────────────────────────┤    ├──────────────────────────┤
 │ (estende Usuario)       │    │ (estende Usuario)        │
 │                         │    │                          │
-│ - agendamentos: List 1..*───►│ - profissionais: List    │
-└─────────────────────────┘    │ - clientes: List         │
-                               │ - categorias: List       │
-                               └──────────────────────────┘
+│ - agendamentos: List 1..*───►│                          │
+└─────────────────────────┘    └──────────────────────────┘
 
 RELACIONAMENTOS:
-- Profissional (1) ──────→ (N) Servico
-- Profissional (1) ──────→ (N) Agendamento
-- Profissional (1) ──────→ (N) HorarioTrabalho
-- Profissional (N) ◄────► (N) Categoria
-- Cliente (1) ───────────→ (N) Agendamento
-- Servico (1) ───────────→ (N) Agendamento
-- Categoria (1) ────────→ (N) Servico
+- Profissional (1) ────────→ (N) Servico
+- Profissional (1) ────────→ (N) Agendamento
+- Profissional (1) ────────→ (N) HorarioTrabalho
+- Profissional (N) ◄──────► (N) Categoria (atua em)
+- Cliente (1) ─────────────→ (N) Agendamento
+- Servico (1) ─────────────→ (N) Agendamento
+- Servico (N) ─────────────→ (1) Categoria
 ```
 
 ### 🎯 Lógica de Categorias (Otimizada)
@@ -371,13 +368,14 @@ MultiAgenda/
 
 ### Profissional
 
-| Método | Endpoint                 | Descrição          |
-| ------ | ------------------------ | ------------------ |
-| POST   | `/api/profissional`      | Criar profissional |
-| GET    | `/api/profissional`      | Listar todos       |
-| GET    | `/api/profissional/{id}` | Buscar por ID      |
-| PUT    | `/api/profissional/{id}` | Atualizar          |
-| DELETE | `/api/profissional/{id}` | Deletar            |
+| Método | Endpoint                     | Descrição                           |
+| :----- | :--------------------------- | :---------------------------------- |
+| POST   | `/api/profissional`          | Criar profissional                  |
+| GET    | `/api/profissional`          | Listar todos                        |
+| GET    | `/api/profissional/{id}`     | Buscar por ID                       |
+| PUT    | `/api/profissional/{id}`     | Atualizar                           |
+| DELETE | `/api/profissional/{id}`     | Deletar                             |
+| POST   | `/api/profissional/{id}/categorias` | Vincular categorias ao profissional |
 
 ### Cliente
 
