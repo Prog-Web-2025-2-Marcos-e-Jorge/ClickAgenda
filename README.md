@@ -117,7 +117,7 @@ Content-Type: application/json
 {
   "profissionalId": 1,
   "clienteId": 2,
-  "servicoId": 3,
+  "servicoId": 1,
   "dataHora": "2026-03-15T14:30:00",
   "obs": "Corte tradicional com barba",
   "valor": 85.50
@@ -159,7 +159,7 @@ Content-Type: application/json
     "telefone": "11988888888"
   },
   "servico": {
-    "id": 3,
+    "id": 1,
     "nome": "Corte + Barba",
     "valor": 85.5,
     "duracaoMinutos": 60
@@ -194,7 +194,7 @@ Ou use este comando curl para testar:
 ```bash
 curl -X POST http://localhost:8080/api/agendamento \
   -H "Content-Type: application/json" \
-  -d '{"profissionalId":1,"clienteId":2,"servicoId":3,"dataHora":"2026-03-15T14:30:00","obs":"Corte","valor":85.50}'
+  -d '{"profissionalId":1,"clienteId":2,"servicoId":1,"dataHora":"2026-03-15T14:30:00","obs":"Corte","valor":85.50}'
 ```
 
 ---
