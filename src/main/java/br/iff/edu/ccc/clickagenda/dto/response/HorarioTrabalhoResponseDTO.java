@@ -1,21 +1,25 @@
-package br.iff.edu.ccc.clickagenda.dto;
+package br.iff.edu.ccc.clickagenda.dto.response;
 
 import java.time.LocalTime;
 
 import br.iff.edu.ccc.clickagenda.enums.DiaSemana;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-public class HorarioTrabalhoDTO {
+public class HorarioTrabalhoResponseDTO {
     private Long id;
+
     private DiaSemana diaSemana;
+
     private LocalTime horarioInicio;
+
     private LocalTime horarioFim;
-    private ProfissionalDTO profissional;
+
+    private boolean diaFolga;
+
+    private Long profissionalId;
+
+    private String profissionalNome;
 }

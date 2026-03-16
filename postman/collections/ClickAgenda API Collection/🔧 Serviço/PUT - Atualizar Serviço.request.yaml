@@ -1,0 +1,21 @@
+$kind: http-request
+description: |-
+  Atualizar dados de um serviço
+
+  VALIDAÇÃO: Se você alterar a categoria, o profissional DEVE estar habilitado
+  para atender a nova categoria. Caso contrário, retorna erro 400.
+url: http://localhost:8080/api/servico/1
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nome": "Corte + Barba Completa",
+      "valor": 95.00,
+      "duracaoMinutos": 75,
+      "profissionalId": 1,
+      "categoriaId": 1
+    }
+order: 4000

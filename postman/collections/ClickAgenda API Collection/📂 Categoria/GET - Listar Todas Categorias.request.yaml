@@ -1,0 +1,7 @@
+$kind: http-request
+description: Lista todas as categorias cadastradas
+url: http://localhost:8080/api/categoria
+method: GET
+headers:
+  Accept: application/json
+order: 2000

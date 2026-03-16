@@ -1,0 +1,8 @@
+$kind: http-request
+description: Lista todos os horários de trabalho de um profissional específico
+  (ordenados por dia da semana)
+url: http://localhost:8080/api/horario-trabalho/profissional/1
+method: GET
+headers:
+  Accept: application/json
+order: 4000

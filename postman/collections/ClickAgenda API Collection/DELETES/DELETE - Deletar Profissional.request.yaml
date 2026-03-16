@@ -1,0 +1,5 @@
+$kind: http-request
+description: Deletar um profissional
+url: http://localhost:8080/api/profissional/1
+method: DELETE
+order: 4000

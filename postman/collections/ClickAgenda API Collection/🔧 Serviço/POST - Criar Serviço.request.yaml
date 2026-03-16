@@ -1,0 +1,32 @@
+$kind: http-request
+description: >-
+  Criar um novo serviço
+
+
+  VALIDAÇÕES CRÍTICAS:
+
+  1. O profissional deve existir
+
+  2. A categoria deve existir
+
+  3. O profissional DEVE estar habilitado para a categoria
+     (adicione a categoria ao profissional primeiro via POST /profissional/{id}/categorias)
+
+  Se a categoria não estiver habilitada, retorna erro 400:
+
+  "O profissional não está habilitado para atender a categoria: [nome]"
+url: http://localhost:8080/api/servico
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nome": "Corte + Barba",
+      "valor": 85.50,
+      "duracaoMinutos": 60,
+      "profissionalId": 1,
+      "categoriaId": 1
+    }
+order: 1000

@@ -1,0 +1,17 @@
+$kind: http-request
+description: Criar um novo cliente
+url: http://localhost:8080/api/cliente
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nome": "Carlos José Santos",
+      "cpf": "98765432100",
+      "email": "carlos.santos@email.com",
+      "telefone": "11988888888",
+      "senha": "ClienteSenha@456"
+    }
+order: 1000

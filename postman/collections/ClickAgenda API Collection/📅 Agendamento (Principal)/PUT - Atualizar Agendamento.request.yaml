@@ -1,0 +1,18 @@
+$kind: http-request
+description: Atualizar dados de um agendamento
+url: http://localhost:8080/api/agendamento/1
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "profissionalId": 1,
+      "clienteId": 2,
+      "servicoId": 1,
+      "dataHora": "2026-03-23T15:00:00",
+      "obs": "Corte e barba com desenho",
+      "valor": 95.50
+    }
+order: 4000

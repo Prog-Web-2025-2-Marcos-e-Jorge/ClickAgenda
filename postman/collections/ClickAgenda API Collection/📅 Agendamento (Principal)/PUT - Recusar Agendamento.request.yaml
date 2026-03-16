@@ -1,0 +1,7 @@
+$kind: http-request
+description: Profissional recusa um agendamento pendente (PENDENTE -> CANCELADO)
+url: http://localhost:8080/api/agendamento/1/recusar?idProfissional=1
+method: PUT
+queryParams:
+  idProfissional: "1"
+order: 6000

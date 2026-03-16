@@ -4,13 +4,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import br.iff.edu.ccc.clickagenda.dto.AgendamentoDTO;
-import br.iff.edu.ccc.clickagenda.model.Agendamento;
-import br.iff.edu.ccc.clickagenda.model.Cliente;
-import br.iff.edu.ccc.clickagenda.model.Profissional;
-import br.iff.edu.ccc.clickagenda.model.Servico;
+import br.iff.edu.ccc.clickagenda.dto.request.AgendamentoRequestDTO;
+import br.iff.edu.ccc.clickagenda.dto.response.AgendamentoResponseDTO;
 import br.iff.edu.ccc.clickagenda.service.AgendamentoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/agendamento")
@@ -20,36 +19,28 @@ public class AgendamentoRestController {
     private final AgendamentoService agendamentoService;
 
     @PostMapping
-    public ResponseEntity<AgendamentoDTO> agendar(@RequestBody AgendamentoDTO dto) {
-        Agendamento agendamento = new Agendamento();
-        agendamento.setDataHora(dto.getDataHora());
-        agendamento.setObservacoes(dto.getObservacoes());
+    public ResponseEntity<AgendamentoResponseDTO> agendar(@Valid @RequestBody AgendamentoRequestDTO dto) {
+        AgendamentoResponseDTO response = agendamentoService.agendar(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
 
-        if (dto.getCliente() != null) {
-            Cliente cliente = new Cliente();
-            cliente.setId(dto.getCliente().getId());
-            agendamento.setCliente(cliente);
-        }
-        if (dto.getProfissional() != null) {
-            Profissional prof = new Profissional();
-            prof.setId(dto.getProfissional().getId());
-            agendamento.setProfissional(prof);
-        }
-        if (dto.getServico() != null) {
-            Servico serv = new Servico();
-            serv.setId(dto.getServico().getId());
-            agendamento.setServico(serv);
-        }
+    @GetMapping
+    public ResponseEntity<List<AgendamentoResponseDTO>> listarTodos() {
+        List<AgendamentoResponseDTO> agendamentos = agendamentoService.listarTodos();
+        return ResponseEntity.ok(agendamentos);
+    }
 
-        Agendamento salvo = agendamentoService.agendar(agendamento);
+    @GetMapping("/{id}")
+    public ResponseEntity<AgendamentoResponseDTO> buscarPorId(@PathVariable Long id) {
+        AgendamentoResponseDTO agendamento = agendamentoService.buscarPorId(id);
+        return ResponseEntity.ok(agendamento);
+    }
 
-        AgendamentoDTO responseDTO = new AgendamentoDTO();
-        responseDTO.setId(salvo.getId());
-        responseDTO.setDataHora(salvo.getDataHora());
-        responseDTO.setValor(salvo.getValor());
-        responseDTO.setObservacoes(salvo.getObservacoes());
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+    @PutMapping("/{id}")
+    public ResponseEntity<AgendamentoResponseDTO> atualizar(@PathVariable Long id,
+            @Valid @RequestBody AgendamentoRequestDTO dto) {
+        AgendamentoResponseDTO response = agendamentoService.atualizar(id, dto);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
@@ -57,8 +48,23 @@ public class AgendamentoRestController {
             @PathVariable Long id,
             @RequestParam Long idUsuarioSolicitante,
             @RequestParam String tipoUsuario) {
-
         agendamentoService.cancelarAgendamento(id, idUsuarioSolicitante, tipoUsuario);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/confirmar")
+    public ResponseEntity<AgendamentoResponseDTO> confirmarAgendamento(
+            @PathVariable Long id,
+            @RequestParam Long idProfissional) {
+        AgendamentoResponseDTO response = agendamentoService.confirmarAgendamento(id, idProfissional);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{id}/recusar")
+    public ResponseEntity<AgendamentoResponseDTO> recusarAgendamento(
+            @PathVariable Long id,
+            @RequestParam Long idProfissional) {
+        AgendamentoResponseDTO response = agendamentoService.recusarAgendamento(id, idProfissional);
+        return ResponseEntity.ok(response);
     }
 }

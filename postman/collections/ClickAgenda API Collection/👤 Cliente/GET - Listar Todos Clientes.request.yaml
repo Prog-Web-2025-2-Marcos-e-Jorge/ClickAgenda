@@ -1,0 +1,7 @@
+$kind: http-request
+description: Lista todos os clientes cadastrados
+url: http://localhost:8080/api/cliente
+method: GET
+headers:
+  Accept: application/json
+order: 2000
