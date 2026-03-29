@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{baseLayout :: baseHead}"></head>
+
+<body>
+
+    <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
+
+    <header th:replace="~{baseLayout :: baseTopbar}"></header>
+
+    <main>
+        <h1>Olá, funcionou</h1>
+
+        <!-- Hero -->
+        <section>
+            <h2>Encontre e agende os melhores profissionais perto de você</h2>
+            <form th:action="@{/buscar}" method="get">
+                <input type="text" name="q" placeholder="Buscar por serviços ou profissionais"/>
+            </form>
+        </section>
+
+        <!-- Categorias -->
+        <section>
+            <h2>Categorias</h2>
+            <ul>
+                <li th:each="categoria : ${categorias}">
+                    <a th:href="@{/categorias/{id}(id=${categoria.id})}"
+                       th:text="${categoria.nome}">Categoria</a>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Profissionais em Destaque -->
+        <section>
+            <h2>Profissionais em Destaque</h2>
+            <ul>
+                <li th:each="prof : ${profissionaisDestaque}">
+                    <a th:href="@{/profissionais/{id}(id=${prof.id})}"
+                       th:text="${prof.nome}">Profissional</a>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+</body>
+</html>
