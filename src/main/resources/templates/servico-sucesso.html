@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{baseLayout :: baseHead}"></head>
+
+  <body>
+    <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
+
+    <header th:replace="~{baseLayout :: baseTopbar}"></header>
+
+    <main>
+      <h1>Serviço Cadastrado com Sucesso!</h1>
+      <p>
+        O serviço foi adicionado ao sistema e está pronto para agendamentos.
+      </p>
+
+      <div>
+        <a th:href="@{/}">Voltar ao Início</a>
+        <a th:href="@{/servico/novo}">Cadastrar Outro Serviço</a>
+      </div>
+    </main>
+  </body>
+</html>
