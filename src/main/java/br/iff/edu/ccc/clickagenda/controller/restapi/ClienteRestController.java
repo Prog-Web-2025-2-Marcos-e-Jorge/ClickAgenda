@@ -2,6 +2,7 @@ package br.iff.edu.ccc.clickagenda.controller.restapi;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import br.iff.edu.ccc.clickagenda.dto.request.ClienteRequestDTO;
@@ -19,6 +20,7 @@ public class ClienteRestController {
     private final ClienteService clienteService;
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ClienteResponseDTO> criarCliente(@Valid @RequestBody ClienteRequestDTO dto) {
         ClienteResponseDTO response = clienteService.salvar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -37,6 +39,7 @@ public class ClienteRestController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ClienteResponseDTO> atualizar(@PathVariable Long id,
             @Valid @RequestBody ClienteRequestDTO dto) {
         ClienteResponseDTO response = clienteService.atualizar(id, dto);
@@ -44,6 +47,7 @@ public class ClienteRestController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         clienteService.deletar(id);
         return ResponseEntity.noContent().build();

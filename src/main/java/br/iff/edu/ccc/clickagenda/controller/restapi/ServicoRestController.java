@@ -3,6 +3,7 @@ package br.iff.edu.ccc.clickagenda.controller.restapi;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import br.iff.edu.ccc.clickagenda.dto.request.ServicoRequestDTO;
@@ -19,6 +20,7 @@ public class ServicoRestController {
     private final ServicoService servicoService;
 
     @PostMapping
+    @PreAuthorize("hasRole('PROFISSIONAL')")
     public ResponseEntity<ServicoResponseDTO> criarServico(@Valid @RequestBody ServicoRequestDTO dto) {
         ServicoResponseDTO response = servicoService.salvar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -37,6 +39,7 @@ public class ServicoRestController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('PROFISSIONAL')")
     public ResponseEntity<ServicoResponseDTO> atualizar(@PathVariable Long id,
             @Valid @RequestBody ServicoRequestDTO dto) {
         ServicoResponseDTO response = servicoService.atualizar(id, dto);
@@ -44,6 +47,7 @@ public class ServicoRestController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFISSIONAL')")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         servicoService.deletar(id);
         return ResponseEntity.noContent().build();

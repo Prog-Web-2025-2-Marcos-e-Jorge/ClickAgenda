@@ -47,6 +47,8 @@ public abstract class Usuario {
     @NotNull(message = "Perfil não pode ser nulo")
     protected Perfil perfil;
 
+    protected boolean ativo = true;
+
     protected Usuario(String nome, String cpf, String email, String telefone, String senha) {
         this.nome = nome;
         this.cpf = cpf;

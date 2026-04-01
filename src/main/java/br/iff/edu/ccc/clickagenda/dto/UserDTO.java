@@ -1,0 +1,21 @@
+package br.iff.edu.ccc.clickagenda.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserDTO {
+
+    private Long id;
+    private String nome;
+    private String cpf;
+    private String email;
+    private String telefone;
+    private String perfil;
+    private boolean ativo;
+}

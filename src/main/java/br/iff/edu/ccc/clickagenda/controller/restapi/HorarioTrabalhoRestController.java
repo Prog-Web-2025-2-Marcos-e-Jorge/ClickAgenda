@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import br.iff.edu.ccc.clickagenda.dto.request.HorarioTrabalhoRequestDTO;
@@ -20,6 +21,7 @@ public class HorarioTrabalhoRestController {
     private final HorarioTrabalhoService horarioTrabalhoService;
 
     @PostMapping
+    @PreAuthorize("hasRole('PROFISSIONAL')")
     public ResponseEntity<HorarioTrabalhoResponseDTO> criar(@Valid @RequestBody HorarioTrabalhoRequestDTO dto) {
         HorarioTrabalhoResponseDTO response = horarioTrabalhoService.salvar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -44,6 +46,7 @@ public class HorarioTrabalhoRestController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('PROFISSIONAL')")
     public ResponseEntity<HorarioTrabalhoResponseDTO> atualizar(@PathVariable Long id,
             @Valid @RequestBody HorarioTrabalhoRequestDTO dto) {
         HorarioTrabalhoResponseDTO response = horarioTrabalhoService.atualizar(id, dto);
@@ -51,6 +54,7 @@ public class HorarioTrabalhoRestController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFISSIONAL')")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         horarioTrabalhoService.deletar(id);
         return ResponseEntity.noContent().build();
