@@ -1,7 +1,9 @@
 package br.iff.edu.ccc.clickagenda.model;
 
 import br.iff.edu.ccc.clickagenda.enums.Perfil;
+import jakarta.persistence.Entity;
 
+@Entity
 public class Admin extends Usuario {
 
     public Admin() {

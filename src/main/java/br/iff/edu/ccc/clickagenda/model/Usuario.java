@@ -3,6 +3,7 @@ package br.iff.edu.ccc.clickagenda.model;
 import org.hibernate.validator.constraints.br.CPF;
 
 import br.iff.edu.ccc.clickagenda.enums.Perfil;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,6 +14,7 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -47,6 +49,8 @@ public abstract class Usuario {
     @NotNull(message = "Perfil não pode ser nulo")
     protected Perfil perfil;
 
+    @Column(nullable = false)
+    @ColumnDefault("true")
     protected boolean ativo = true;
 
     protected Usuario(String nome, String cpf, String email, String telefone, String senha) {

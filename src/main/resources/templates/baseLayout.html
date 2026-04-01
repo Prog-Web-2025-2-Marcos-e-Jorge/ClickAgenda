@@ -20,10 +20,19 @@
     <!-- Fragmento: Topbar -->
     <header th:fragment="baseTopbar">
       <span>Click Agenda</span>
-      <span
-        th:text="${usuario != null} ? 'Olá, ' + ${usuario.nome} + '!' : 'Olá, Usuário!'"
-        >Olá, Usuário!</span
-      >
+      <span th:if="${session.usuarioNome != null}">
+        Olá, <span th:text="${session.usuarioNome}">Usuário</span>!
+        <a
+          th:href="@{/logout}"
+          style="margin-left: 20px; color: #666; text-decoration: none"
+          >Sair</a
+        >
+      </span>
+      <span th:if="${session.usuarioNome == null}">
+        <a th:href="@{/login}" style="color: #666; text-decoration: none"
+          >Login</a
+        >
+      </span>
     </header>
   </body>
 </html>

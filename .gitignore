@@ -88,4 +88,4 @@ build/
 
 ### VS Code ###
 .vscode/
-data/
+db/

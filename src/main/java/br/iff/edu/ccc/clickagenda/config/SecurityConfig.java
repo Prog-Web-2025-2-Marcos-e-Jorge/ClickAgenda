@@ -48,17 +48,22 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
 
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
 
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/auth/register").permitAll()
                         .requestMatchers("/api/auth/health").permitAll()
+
+                        .requestMatchers("/", "/index.html").permitAll()
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/registro").permitAll()
+                        .requestMatchers("/logout").permitAll()
+
+                        .requestMatchers("/static/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
 
-                        .requestMatchers("GET", "/api/**").permitAll()
-
-                        .anyRequest().authenticated())
+                        .anyRequest().hasAnyRole("ADMIN", "CLIENTE", "PROFISSIONAL"))
 
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
 
