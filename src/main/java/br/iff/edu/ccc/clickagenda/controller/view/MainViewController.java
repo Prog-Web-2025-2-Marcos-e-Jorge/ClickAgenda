@@ -1,5 +1,7 @@
 package br.iff.edu.ccc.clickagenda.controller.view;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,12 +19,10 @@ public class MainViewController {
 
     @GetMapping()
     public String index(Model model) {
-        // Buscar o primeiro usuário disponível
-        var usuarios = usuarioRepository.findAll();
+        List<Usuario> usuarios = usuarioRepository.findAll();
         if (!usuarios.isEmpty()) {
             model.addAttribute("usuario", usuarios.get(0));
         } else {
-            // Se não há usuários, criar um objeto vazio para evitar NullPointerException
             model.addAttribute("usuario", new Usuario() {
                 @Override
                 public String toString() {
