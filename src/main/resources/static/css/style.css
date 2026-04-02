@@ -88,3 +88,70 @@ body {
   border: 1px solid #e5e7eb;
   text-align: center;
 }
+
+/* Hero */
+.hero {
+  margin-bottom: 40px;
+}
+
+.hero h2 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  max-width: 600px;
+}
+
+/* Cards de categoria */
+.category-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+
+.category-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.category-card i {
+  color: #2563eb;
+  font-size: 22px;
+}
+
+/* Cards de profissional */
+.professionals-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.professional-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+.professional-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.professional-card .card-info {
+  padding: 12px;
+}
+
+.professional-card .card-info h4 {
+  margin-bottom: 4px;
+}
+
+.professional-card .card-info .rating {
+  color: #f59e0b;
+  font-size: 13px;
+}
