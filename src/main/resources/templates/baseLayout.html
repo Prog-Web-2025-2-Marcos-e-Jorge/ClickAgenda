@@ -21,6 +21,30 @@
         <a th:href="@{/agenda}"><i class="bi bi-calendar"></i> Agenda</a>
         <a th:href="@{/favoritos}"><i class="bi bi-heart"></i> Favoritos</a>
         <a th:href="@{/perfil}"><i class="bi bi-person"></i> Perfil</a>
+
+        <!-- Menu Administração (apenas para ADMIN) -->
+        <div
+          th:if="${session.usuarioPerfil == 'ADMIN'}"
+          style="
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+          "
+        >
+          <p
+            style="
+              font-size: 12px;
+              color: #999;
+              margin-bottom: 10px;
+              text-transform: uppercase;
+            "
+          >
+            Administração
+          </p>
+          <a th:href="@{/categoria/novo}"
+            ><i class="bi bi-folder-plus"></i> Cadastrar Categoria</a
+          >
+        </div>
       </nav>
     </aside>
 

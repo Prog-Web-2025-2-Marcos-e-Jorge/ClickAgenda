@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{baseLayout :: baseHead}"></head>
+
+  <body>
+    <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
+
+    <header th:replace="~{baseLayout :: baseTopbar}"></header>
+
+    <main>
+      <h1>Cadastrar Nova Categoria</h1>
+
+      <div th:if="${erro}" role="alert" class="alert alert-error">
+        <p th:text="${erro}">Ocorreu um erro ao salvar a categoria</p>
+      </div>
+
+      <form
+        th:action="@{/categoria}"
+        th:object="${categoria}"
+        method="POST"
+        class="form-container"
+      >
+        <div class="form-group">
+          <label for="nome">Nome da Categoria:</label>
+          <input
+            type="text"
+            id="nome"
+            th:field="*{nome}"
+            placeholder="Ex: Barbeiro, Manicure, Cabeleireiro..."
+            required
+          />
+          <small
+            th:if="${#fields.hasErrors('nome')}"
+            th:errors="*{nome}"
+            class="error-message"
+          ></small>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            Salvar Categoria
+          </button>
+          <a th:href="@{/}" class="btn btn-secondary">Cancelar</a>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>

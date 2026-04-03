@@ -38,4 +38,9 @@ public class RegisterRequest {
 
     @NotBlank(message = "Confirmação de senha não pode ser vazia")
     private String senhaConfirmacao;
+
+    @NotBlank(message = "Tipo de usuário não pode ser vazio")
+    private String userType;
+
+    private java.util.List<Long> categoriaIds;
 }

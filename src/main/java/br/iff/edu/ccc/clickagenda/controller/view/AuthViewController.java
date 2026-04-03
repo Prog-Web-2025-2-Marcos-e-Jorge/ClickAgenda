@@ -3,11 +3,19 @@ package br.iff.edu.ccc.clickagenda.controller.view;
 import br.iff.edu.ccc.clickagenda.dto.LoginRequest;
 import br.iff.edu.ccc.clickagenda.dto.LoginResponse;
 import br.iff.edu.ccc.clickagenda.dto.RegisterRequest;
+import br.iff.edu.ccc.clickagenda.repository.CategoriaRepository;
 import br.iff.edu.ccc.clickagenda.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +27,9 @@ import org.springframework.web.bind.annotation.*;
 public class AuthViewController {
 
     private final AuthService authService;
+    private final CategoriaRepository categoriaRepository;
+    private final AuthenticationManager authenticationManager;
+    private final SecurityContextRepository securityContextRepository;
 
     @GetMapping("/login")
     public String showLoginPage(@RequestParam(required = false) String error, Model model) {
@@ -30,17 +41,28 @@ public class AuthViewController {
 
     @PostMapping("/login")
     public String handleLogin(@Valid @ModelAttribute LoginRequest loginRequest,
-            Model model, HttpSession session) {
+            Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         try {
             log.info("Login solicitado para: {}", loginRequest.getEmail());
 
-            LoginResponse response = authService.login(loginRequest);
+            LoginResponse loginResponse = authService.login(loginRequest);
 
-            session.setAttribute("token", response.getToken());
-            session.setAttribute("usuarioId", response.getId());
-            session.setAttribute("usuarioEmail", response.getEmail());
-            session.setAttribute("usuarioNome", response.getNome());
-            session.setAttribute("usuarioPerfil", response.getPerfil());
+            session.setAttribute("token", loginResponse.getToken());
+            session.setAttribute("usuarioId", loginResponse.getId());
+            session.setAttribute("usuarioEmail", loginResponse.getEmail());
+            session.setAttribute("usuarioNome", loginResponse.getNome());
+            session.setAttribute("usuarioPerfil", loginResponse.getPerfil());
+
+            // Autenticar e SALVAR NA SESSÃO
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getEmail(),
+                            loginRequest.getSenha()));
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            // Persistir autenticação na sessão HTTP explicitamente
+            securityContextRepository.saveContext(SecurityContextHolder.getContext(), request, response);
 
             log.info("Login bem-sucedido para: {}", loginRequest.getEmail());
 
@@ -56,22 +78,34 @@ public class AuthViewController {
     @GetMapping("/registro")
     public String showRegisterPage(Model model) {
         model.addAttribute("registerRequest", new RegisterRequest());
+        model.addAttribute("categorias", categoriaRepository.findAll());
         return "registro";
     }
 
     @PostMapping("/registro")
     public String handleRegister(@Valid @ModelAttribute RegisterRequest registerRequest,
-            Model model, HttpSession session) {
+            Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         try {
             log.info("Registro solicitado para: {}", registerRequest.getEmail());
 
-            LoginResponse response = authService.register(registerRequest);
+            LoginResponse loginResponse = authService.register(registerRequest);
 
-            session.setAttribute("token", response.getToken());
-            session.setAttribute("usuarioId", response.getId());
-            session.setAttribute("usuarioEmail", response.getEmail());
-            session.setAttribute("usuarioNome", response.getNome());
-            session.setAttribute("usuarioPerfil", response.getPerfil());
+            session.setAttribute("token", loginResponse.getToken());
+            session.setAttribute("usuarioId", loginResponse.getId());
+            session.setAttribute("usuarioEmail", loginResponse.getEmail());
+            session.setAttribute("usuarioNome", loginResponse.getNome());
+            session.setAttribute("usuarioPerfil", loginResponse.getPerfil());
+
+            // Autenticar e SALVAR NA SESSÃO
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            registerRequest.getEmail(),
+                            registerRequest.getSenha()));
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            // Persistir autenticação na sessão HTTP explicitamente
+            securityContextRepository.saveContext(SecurityContextHolder.getContext(), request, response);
 
             log.info("Registro bem-sucedido para: {}", registerRequest.getEmail());
 
@@ -88,6 +122,7 @@ public class AuthViewController {
     public String handleLogout(HttpSession session) {
         log.info("Logout solicitado");
         session.invalidate();
+        SecurityContextHolder.clearContext();
         return "redirect:/login";
     }
 }

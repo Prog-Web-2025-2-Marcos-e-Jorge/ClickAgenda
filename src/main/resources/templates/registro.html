@@ -87,6 +87,53 @@
             />
           </div>
 
+          <div class="form-group">
+            <label>Tipo de Conta</label>
+            <div class="user-type-options">
+              <label class="radio-option">
+                <input
+                  type="radio"
+                  name="userType"
+                  value="CLIENTE"
+                  id="tipo-cliente"
+                  required
+                  onchange="toggleCategorias()"
+                />
+                <span>Cliente</span>
+              </label>
+              <label class="radio-option">
+                <input
+                  type="radio"
+                  name="userType"
+                  value="PROFISSIONAL"
+                  id="tipo-profissional"
+                  required
+                  onchange="toggleCategorias()"
+                />
+                <span>Profissional</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group" id="categorias-grupo" style="display: none">
+            <label for="categoriaIds">Categorias (Especialidades)</label>
+            <select
+              id="categoriaIds"
+              name="categoriaIds"
+              multiple
+              placeholder="Selecione suas especialidades"
+            >
+              <option
+                th:each="categoria : ${categorias}"
+                th:value="${categoria.id}"
+                th:text="${categoria.nome}"
+              ></option>
+            </select>
+            <small class="form-text-small"
+              >Selecione pelo menos uma categoria</small
+            >
+          </div>
+
           <button type="submit" class="btn btn-primary">Criar Conta</button>
         </form>
 
@@ -95,5 +142,48 @@
         </div>
       </div>
     </main>
+
+    <script>
+      function toggleCategorias() {
+        const tipoProf = document.getElementById("tipo-profissional").checked;
+        const categoriasGrupo = document.getElementById("categorias-grupo");
+        const categoriasSelect = document.getElementById("categoriaIds");
+
+        if (tipoProf) {
+          categoriasGrupo.style.display = "block";
+          categoriasSelect.required = true;
+        } else {
+          categoriasGrupo.style.display = "none";
+          categoriasSelect.required = false;
+          // Limpar seleções quando mudar para Cliente
+          categoriasSelect.value = null;
+        }
+      }
+
+      // Validação do formulário
+      document
+        .querySelector(".register-form")
+        .addEventListener("submit", function (e) {
+          const userType = document.querySelector(
+            'input[name="userType"]:checked',
+          );
+          if (!userType) {
+            e.preventDefault();
+            alert("Por favor, selecione um tipo de conta");
+            return false;
+          }
+
+          if (userType.value === "PROFISSIONAL") {
+            const categorias = document.getElementById("categoriaIds");
+            if (!categorias.value || categorias.selectedOptions.length === 0) {
+              e.preventDefault();
+              alert(
+                "Profissionais devem selecionar pelo menos uma categoria de especialidade",
+              );
+              return false;
+            }
+          }
+        });
+    </script>
   </body>
 </html>
