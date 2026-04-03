@@ -35,7 +35,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {
                 String email = jwtTokenProvider.getEmailFromToken(token);
-                @SuppressWarnings("unchecked")
                 List<String> roles = jwtTokenProvider.getRolesFromToken(token);
 
                 List<SimpleGrantedAuthority> authorities = roles.stream()

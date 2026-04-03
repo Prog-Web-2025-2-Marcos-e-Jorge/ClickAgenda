@@ -2,7 +2,6 @@ package br.iff.edu.ccc.clickagenda.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +45,7 @@ public class JwtTokenProvider {
                 .claim("roles", roles)
                 .issuedAt(now)
                 .expiration(expiryDate)
-                .signWith(jwtSecret, SignatureAlgorithm.HS512)
+                .signWith(jwtSecret)
                 .compact();
     }
 
