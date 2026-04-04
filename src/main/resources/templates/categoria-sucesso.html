@@ -3,20 +3,26 @@
   <head th:replace="~{baseLayout :: baseHead}"></head>
 
   <body>
-    <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
+    <div class="app">
+      <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
+      <div class="main">
+        <header th:replace="~{baseLayout :: baseTopbar}"></header>
+        <div class="content">
+          <main>
+            <h1>Categoria Cadastrada com Sucesso!</h1>
+            <p>
+              A categoria foi adicionada ao sistema e está disponível para uso.
+            </p>
 
-    <header th:replace="~{baseLayout :: baseTopbar}"></header>
-
-    <main>
-      <h1>Categoria Cadastrada com Sucesso!</h1>
-      <p>A categoria foi adicionada ao sistema e está disponível para uso.</p>
-
-      <div class="success-actions">
-        <a th:href="@{/}" class="btn btn-primary">Voltar ao Início</a>
-        <a th:href="@{/categoria/novo}" class="btn btn-secondary"
-          >Cadastrar Outra Categoria</a
-        >
+            <div class="success-actions">
+              <a th:href="@{/}" class="btn btn-primary">Voltar ao Início</a>
+              <a th:href="@{/categoria/novo}" class="btn btn-secondary"
+                >Cadastrar Outra Categoria</a
+              >
+            </div>
+          </main>
+        </div>
       </div>
-    </main>
+    </div>
   </body>
 </html>

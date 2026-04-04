@@ -12,9 +12,6 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    /**
-     * Trata exceções de validação de argumentos (Bean Validation)
-     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidationException(MethodArgumentNotValidException ex) {
         Map<String, Object> response = new HashMap<>();
@@ -30,9 +27,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-    /**
-     * Trata exceções de recurso não encontrado (404)
-     */
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleNotFoundException(NotFoundException ex) {
         Map<String, Object> response = new HashMap<>();
@@ -42,9 +36,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
-    /**
-     * Trata exceções de acesso negado (403)
-     */
     @ExceptionHandler({ ForbiddenException.class, SecurityException.class })
     public ResponseEntity<Map<String, Object>> handleForbiddenException(Exception ex) {
         Map<String, Object> response = new HashMap<>();
@@ -54,9 +45,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 
-    /**
-     * Trata exceções de requisição inválida (400)
-     */
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<Map<String, Object>> handleBadRequestException(BadRequestException ex) {
         Map<String, Object> response = new HashMap<>();
@@ -66,9 +54,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-    /**
-     * Trata exceções de argumento ilegal (400)
-     */
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, Object>> handleIllegalArgumentException(IllegalArgumentException ex) {
         Map<String, Object> response = new HashMap<>();
@@ -78,9 +63,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-    /**
-     * Trata exceções genéricas
-     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
         Map<String, Object> response = new HashMap<>();

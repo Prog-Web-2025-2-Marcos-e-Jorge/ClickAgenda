@@ -3,46 +3,50 @@
   <head th:replace="~{baseLayout :: baseHead}"></head>
 
   <body>
-    <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
+    <div class="app">
+      <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
+      <div class="main">
+        <header th:replace="~{baseLayout :: baseTopbar}"></header>
+        <div class="content">
+          <main>
+            <h1>Cadastrar Nova Categoria</h1>
 
-    <header th:replace="~{baseLayout :: baseTopbar}"></header>
+            <div th:if="${erro}" role="alert" class="alert alert-error">
+              <p th:text="${erro}">Ocorreu um erro ao salvar a categoria</p>
+            </div>
 
-    <main>
-      <h1>Cadastrar Nova Categoria</h1>
+            <form
+              th:action="@{/categoria}"
+              th:object="${categoria}"
+              method="POST"
+              class="form-container"
+            >
+              <div class="form-group">
+                <label for="nome">Nome da Categoria:</label>
+                <input
+                  type="text"
+                  id="nome"
+                  th:field="*{nome}"
+                  placeholder="Ex: Barbeiro, Manicure, Cabeleireiro..."
+                  required
+                />
+                <small
+                  th:if="${#fields.hasErrors('nome')}"
+                  th:errors="*{nome}"
+                  class="error-message"
+                ></small>
+              </div>
 
-      <div th:if="${erro}" role="alert" class="alert alert-error">
-        <p th:text="${erro}">Ocorreu um erro ao salvar a categoria</p>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                  Salvar Categoria
+                </button>
+                <a th:href="@{/}" class="btn btn-secondary">Cancelar</a>
+              </div>
+            </form>
+          </main>
+        </div>
       </div>
-
-      <form
-        th:action="@{/categoria}"
-        th:object="${categoria}"
-        method="POST"
-        class="form-container"
-      >
-        <div class="form-group">
-          <label for="nome">Nome da Categoria:</label>
-          <input
-            type="text"
-            id="nome"
-            th:field="*{nome}"
-            placeholder="Ex: Barbeiro, Manicure, Cabeleireiro..."
-            required
-          />
-          <small
-            th:if="${#fields.hasErrors('nome')}"
-            th:errors="*{nome}"
-            class="error-message"
-          ></small>
-        </div>
-
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary">
-            Salvar Categoria
-          </button>
-          <a th:href="@{/}" class="btn btn-secondary">Cancelar</a>
-        </div>
-      </form>
-    </main>
+    </div>
   </body>
 </html>
