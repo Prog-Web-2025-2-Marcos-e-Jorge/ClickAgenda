@@ -3,71 +3,80 @@
   <head th:replace="~{baseLayout :: baseHead}"></head>
 
   <body>
-    <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
+    <div class="app">
+      <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
+      <div class="main">
+        <header th:replace="~{baseLayout :: baseTopbar}"></header>
+        <main>
+          <div class="servico-container">
+            <a th:href="@{/}" class="btn-voltar">← Voltar</a>
 
-    <header th:replace="~{baseLayout :: baseTopbar}"></header>
+            <section class="servico-detalhes">
+              <h1 th:text="${servico.nome}">Nome do Serviço</h1>
 
-    <main>
-      <div class="servico-container">
-        <a th:href="@{/}" class="btn-voltar">← Voltar</a>
+              <div class="servico-info">
+                <div class="info-item" th:if="${servico.categoria}">
+                  <label>Categoria:</label>
+                  <span th:text="${servico.categoria.nome}">Categoria</span>
+                </div>
 
-        <section class="servico-detalhes">
-          <h1 th:text="${servico.nome}">Nome do Serviço</h1>
+                <div class="info-item" th:if="${servico.valor}">
+                  <label>Valor:</label>
+                  <span
+                    class="preco"
+                    th:text="'R$ ' + ${#numbers.formatDecimal(servico.valor, 1, 'COMMA', 2, 'POINT')}"
+                    >R$ 0,00</span
+                  >
+                </div>
 
-          <div class="servico-info">
-            <div class="info-item" th:if="${servico.categoria}">
-              <label>Categoria:</label>
-              <span th:text="${servico.categoria.nome}">Categoria</span>
-            </div>
+                <div class="info-item" th:if="${servico.duracaoMinutos}">
+                  <label>Duração:</label>
+                  <span th:text="${servico.duracaoMinutos} + ' minutos'"
+                    >30 minutos</span
+                  >
+                </div>
+              </div>
 
-            <div class="info-item" th:if="${servico.valor}">
-              <label>Valor:</label>
-              <span
-                class="preco"
-                th:text="'R$ ' + ${#numbers.formatDecimal(servico.valor, 1, 'COMMA', 2, 'POINT')}"
-                >R$ 0,00</span
+              <section
+                class="profissional-info"
+                th:if="${servico.profissional}"
               >
-            </div>
+                <h2>Profissional</h2>
+                <div class="profissional-card">
+                  <h3 th:text="${servico.profissional.nome}">
+                    Nome do Profissional
+                  </h3>
+                  <p th:if="${servico.categoria}">
+                    <label>Especialidade:</label>
+                    <span th:text="${servico.categoria.nome}"
+                      >Especialidade</span
+                    >
+                  </p>
+                  <p th:if="${servico.profissional.telefone}">
+                    <label>Telefone:</label>
+                    <span th:text="${servico.profissional.telefone}"
+                      >Telefone</span
+                    >
+                  </p>
+                  <p th:if="${servico.profissional.email}">
+                    <label>Email:</label>
+                    <span th:text="${servico.profissional.email}">Email</span>
+                  </p>
+                </div>
+              </section>
 
-            <div class="info-item" th:if="${servico.duracaoMinutos}">
-              <label>Duração:</label>
-              <span th:text="${servico.duracaoMinutos} + ' minutos'"
-                >30 minutos</span
-              >
-            </div>
+              <section class="acoes">
+                <a
+                  th:href="@{/agendamento/novo(servicoId=${servico.id})}"
+                  class="btn btn-primary"
+                >
+                  Agendar Serviço
+                </a>
+              </section>
+            </section>
           </div>
-
-          <section class="profissional-info" th:if="${servico.profissional}">
-            <h2>Profissional</h2>
-            <div class="profissional-card">
-              <h3 th:text="${servico.profissional.nome}">
-                Nome do Profissional
-              </h3>
-              <p th:if="${servico.categoria}">
-                <label>Especialidade:</label>
-                <span th:text="${servico.categoria.nome}">Especialidade</span>
-              </p>
-              <p th:if="${servico.profissional.telefone}">
-                <label>Telefone:</label>
-                <span th:text="${servico.profissional.telefone}">Telefone</span>
-              </p>
-              <p th:if="${servico.profissional.email}">
-                <label>Email:</label>
-                <span th:text="${servico.profissional.email}">Email</span>
-              </p>
-            </div>
-          </section>
-
-          <section class="acoes">
-            <a
-              th:href="@{/agendamento/novo(servicoId=${servico.id})}"
-              class="btn btn-primary"
-            >
-              Agendar Serviço
-            </a>
-          </section>
-        </section>
+        </main>
       </div>
-    </main>
+    </div>
   </body>
 </html>
