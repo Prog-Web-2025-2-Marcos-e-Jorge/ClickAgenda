@@ -3,95 +3,101 @@
   <head th:replace="~{baseLayout :: baseHead(null)}"></head>
 
   <body>
-    <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
+    <div class="app">
+      <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
+      <div class="main">
+        <header th:replace="~{baseLayout :: baseTopbar}"></header>
+        <div class="content">
+          <main>
+            <h1>Cadastrar Novo Serviço</h1>
 
-    <header th:replace="~{baseLayout :: baseTopbar}"></header>
+            <div th:if="${erro}" role="alert">
+              <p th:text="${erro}">Ocorreu um erro ao salvar o serviço</p>
+            </div>
 
-    <main>
-      <h1>Cadastrar Novo Serviço</h1>
+            <form th:action="@{/servico}" th:object="${servico}" method="POST">
+              <div>
+                <label for="nome">Nome do Serviço:</label>
+                <input type="text" id="nome" th:field="*{nome}" required />
+                <small
+                  th:if="${#fields.hasErrors('nome')}"
+                  th:errors="*{nome}"
+                ></small>
+              </div>
 
-      <div th:if="${erro}" role="alert">
-        <p th:text="${erro}">Ocorreu um erro ao salvar o serviço</p>
+              <div>
+                <label for="valor">Valor (R$):</label>
+                <input
+                  type="number"
+                  id="valor"
+                  th:field="*{valor}"
+                  step="0.01"
+                  min="0.1"
+                  required
+                />
+                <small
+                  th:if="${#fields.hasErrors('valor')}"
+                  th:errors="*{valor}"
+                ></small>
+              </div>
+
+              <div>
+                <label for="duracaoMinutos">Duração (minutos):</label>
+                <input
+                  type="number"
+                  id="duracaoMinutos"
+                  th:field="*{duracaoMinutos}"
+                  min="15"
+                  required
+                />
+                <small
+                  th:if="${#fields.hasErrors('duracaoMinutos')}"
+                  th:errors="*{duracaoMinutos}"
+                ></small>
+              </div>
+
+              <div>
+                <label for="profissionalId">Profissional:</label>
+                <select
+                  id="profissionalId"
+                  th:field="*{profissionalId}"
+                  required
+                >
+                  <option value="">-- Selecione um profissional --</option>
+                  <option
+                    th:each="prof : ${profissionais}"
+                    th:value="${prof.id}"
+                    th:text="${prof.nome}"
+                  ></option>
+                </select>
+                <small
+                  th:if="${#fields.hasErrors('profissionalId')}"
+                  th:errors="*{profissionalId}"
+                ></small>
+              </div>
+              <div>
+                <label for="categoriaId">Categoria:</label>
+                <select id="categoriaId" th:field="*{categoriaId}" required>
+                  <option value="">-- Selecione uma categoria --</option>
+                  <option
+                    th:each="cat : ${categorias}"
+                    th:value="${cat.id}"
+                    th:text="${cat.nome}"
+                  ></option>
+                </select>
+                <small
+                  th:if="${#fields.hasErrors('categoriaId')}"
+                  th:errors="*{categoriaId}"
+                ></small>
+              </div>
+              <div>
+                <button type="submit">Salvar Serviço</button>
+                <a th:href="@{/}">Cancelar</a>
+              </div>
+            </form>
+          </main>
+        </div>
       </div>
-
-      <form th:action="@{/servico}" th:object="${servico}" method="POST">
-        <div>
-          <label for="nome">Nome do Serviço:</label>
-          <input type="text" id="nome" th:field="*{nome}" required />
-          <small
-            th:if="${#fields.hasErrors('nome')}"
-            th:errors="*{nome}"
-          ></small>
-        </div>
-
-        <div>
-          <label for="valor">Valor (R$):</label>
-          <input
-            type="number"
-            id="valor"
-            th:field="*{valor}"
-            step="0.01"
-            min="0.1"
-            required
-          />
-          <small
-            th:if="${#fields.hasErrors('valor')}"
-            th:errors="*{valor}"
-          ></small>
-        </div>
-
-        <div>
-          <label for="duracaoMinutos">Duração (minutos):</label>
-          <input
-            type="number"
-            id="duracaoMinutos"
-            th:field="*{duracaoMinutos}"
-            min="15"
-            required
-          />
-          <small
-            th:if="${#fields.hasErrors('duracaoMinutos')}"
-            th:errors="*{duracaoMinutos}"
-          ></small>
-        </div>
-
-        <div>
-          <label for="profissionalId">Profissional:</label>
-          <select id="profissionalId" th:field="*{profissionalId}" required>
-            <option value="">-- Selecione um profissional --</option>
-            <option
-              th:each="prof : ${profissionais}"
-              th:value="${prof.id}"
-              th:text="${prof.nome}"
-            ></option>
-          </select>
-          <small
-            th:if="${#fields.hasErrors('profissionalId')}"
-            th:errors="*{profissionalId}"
-          ></small>
-        </div>
-
-        <div>
-          <label for="categoriaId">Categoria:</label>
-          <select id="categoriaId" th:field="*{categoriaId}" required>
-            <option value="">-- Selecione uma categoria --</option>
-            <option
-              th:each="cat : ${categorias}"
-              th:value="${cat.id}"
-              th:text="${cat.nome}"
-            ></option>
-          </select>
-          <small
-            th:if="${#fields.hasErrors('categoriaId')}"
-            th:errors="*{categoriaId}"
-          ></small>
-        </div>
-
-        <div>
-          <button type="submit">Salvar Serviço</button>
-          <a th:href="@{/}">Cancelar</a>
-        </div>
-      </form>
-    </main>
+    </div>
   </body>
 </html>

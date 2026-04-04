@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="PR-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{baseLayout :: baseHead(null)}"> </head>
+  <body>
+    <div class="app">
+      <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
+      <div class="main">
+        <header th:replace="~{baseLayout :: baseTopbar}"></header>
+        <div class="content">
+          <main>
+            <h1>Cadastrar Novo Agendamento</h1>
+
+            <div th:if="${erro}" role="alert">
+              <p th:text="${erro}">Ocorreu um erro ao salvar o Agendamento</p>
+            </div>
+
+            <form
+              th:action="@{/agendamento/novo}"
+              th:object="${agendamentoDto}"
+              method="POST"
+            ></form>
+          </main>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

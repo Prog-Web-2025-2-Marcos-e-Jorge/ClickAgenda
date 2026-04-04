@@ -1,9 +1,9 @@
 package br.iff.edu.ccc.clickagenda.service;
 
-import br.iff.edu.ccc.clickagenda.dto.LoginRequest;
-import br.iff.edu.ccc.clickagenda.dto.LoginResponse;
-import br.iff.edu.ccc.clickagenda.dto.RegisterRequest;
-import br.iff.edu.ccc.clickagenda.dto.UserDTO;
+import br.iff.edu.ccc.clickagenda.dto.request.LoginRequest;
+import br.iff.edu.ccc.clickagenda.dto.request.RegisterRequest;
+import br.iff.edu.ccc.clickagenda.dto.response.LoginResponse;
+import br.iff.edu.ccc.clickagenda.dto.response.UserResponseDTO;
 import br.iff.edu.ccc.clickagenda.enums.Perfil;
 import br.iff.edu.ccc.clickagenda.model.Categoria;
 import br.iff.edu.ccc.clickagenda.model.Cliente;
@@ -134,8 +134,8 @@ public class AuthService {
         return login(new LoginRequest(registerRequest.getEmail(), registerRequest.getSenha()));
     }
 
-    public UserDTO convertToDTO(Usuario usuario) {
-        UserDTO dto = new UserDTO();
+    public UserResponseDTO convertToDTO(Usuario usuario) {
+        UserResponseDTO dto = new UserResponseDTO();
         dto.setId(usuario.getId());
         dto.setNome(usuario.getNome());
         dto.setCpf(usuario.getCpf());
@@ -147,7 +147,7 @@ public class AuthService {
     }
 
     @Transactional(readOnly = true)
-    public UserDTO getCurrentUser() {
+    public UserResponseDTO getCurrentUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));

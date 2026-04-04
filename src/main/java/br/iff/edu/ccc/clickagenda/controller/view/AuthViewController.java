@@ -1,8 +1,8 @@
 package br.iff.edu.ccc.clickagenda.controller.view;
 
-import br.iff.edu.ccc.clickagenda.dto.LoginRequest;
-import br.iff.edu.ccc.clickagenda.dto.LoginResponse;
-import br.iff.edu.ccc.clickagenda.dto.RegisterRequest;
+import br.iff.edu.ccc.clickagenda.dto.request.LoginRequest;
+import br.iff.edu.ccc.clickagenda.dto.request.RegisterRequest;
+import br.iff.edu.ccc.clickagenda.dto.response.LoginResponse;
 import br.iff.edu.ccc.clickagenda.repository.CategoriaRepository;
 import br.iff.edu.ccc.clickagenda.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;

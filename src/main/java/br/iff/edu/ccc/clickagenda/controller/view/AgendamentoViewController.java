@@ -36,13 +36,13 @@ public class AgendamentoViewController {
     }
 
     @PostMapping("/novo")
-    public String agendar(@Valid AgendamentoRequestDTO agendamentoDto,
+    public String agendar(@Valid AgendamentoRequestDTO agendamento,
             @RequestParam Long servicoId,
             HttpSession session,
             Model model,
             RedirectAttributes redirectAttributes) {
         try {
-            agendamentoService.agendar(agendamentoDto);
+            agendamentoService.agendar(agendamento);
             redirectAttributes.addFlashAttribute("sucesso", "Agendamento realizado com sucesso!");
             return "redirect:/perfil";
         } catch (Exception e) {

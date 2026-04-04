@@ -1,9 +1,9 @@
 package br.iff.edu.ccc.clickagenda.controller.restapi;
 
-import br.iff.edu.ccc.clickagenda.dto.LoginRequest;
-import br.iff.edu.ccc.clickagenda.dto.LoginResponse;
-import br.iff.edu.ccc.clickagenda.dto.RegisterRequest;
-import br.iff.edu.ccc.clickagenda.dto.UserDTO;
+import br.iff.edu.ccc.clickagenda.dto.request.LoginRequest;
+import br.iff.edu.ccc.clickagenda.dto.request.RegisterRequest;
+import br.iff.edu.ccc.clickagenda.dto.response.LoginResponse;
+import br.iff.edu.ccc.clickagenda.dto.response.UserResponseDTO;
 import br.iff.edu.ccc.clickagenda.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +37,8 @@ public class AuthRestController {
 
     @GetMapping("/me")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<UserDTO> getCurrentUser() {
-        UserDTO userDTO = authService.getCurrentUser();
+    public ResponseEntity<UserResponseDTO> getCurrentUser() {
+        UserResponseDTO userDTO = authService.getCurrentUser();
         return ResponseEntity.ok(userDTO);
     }
 

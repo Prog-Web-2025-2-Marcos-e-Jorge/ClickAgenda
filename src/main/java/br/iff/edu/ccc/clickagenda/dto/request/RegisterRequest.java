@@ -1,4 +1,4 @@
-package br.iff.edu.ccc.clickagenda.dto;
+package br.iff.edu.ccc.clickagenda.dto.request;
 
 import org.hibernate.validator.constraints.br.CPF;
 import jakarta.validation.constraints.Email;

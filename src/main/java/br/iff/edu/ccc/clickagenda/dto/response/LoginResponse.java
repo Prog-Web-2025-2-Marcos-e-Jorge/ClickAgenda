@@ -1,4 +1,4 @@
-package br.iff.edu.ccc.clickagenda.dto;
+package br.iff.edu.ccc.clickagenda.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

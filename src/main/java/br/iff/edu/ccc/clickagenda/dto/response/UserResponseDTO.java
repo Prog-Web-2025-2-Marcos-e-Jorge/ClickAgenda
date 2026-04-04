@@ -1,4 +1,4 @@
-package br.iff.edu.ccc.clickagenda.dto;
+package br.iff.edu.ccc.clickagenda.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
+public class UserResponseDTO {
 
     private Long id;
     private String nome;

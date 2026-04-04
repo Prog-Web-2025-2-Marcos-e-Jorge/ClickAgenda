@@ -1,4 +1,4 @@
-package br.iff.edu.ccc.clickagenda.dto;
+package br.iff.edu.ccc.clickagenda.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
