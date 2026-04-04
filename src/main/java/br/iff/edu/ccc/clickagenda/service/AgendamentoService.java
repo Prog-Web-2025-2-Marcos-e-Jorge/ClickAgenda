@@ -215,6 +215,12 @@ public class AgendamentoService {
         agendamentoRepository.delete(agendamento);
     }
 
+    public List<AgendamentoResponseDTO> listarPorCliente(Long clienteId) {
+        return agendamentoRepository.findByClienteId(clienteId).stream()
+                .map(this::converterResponseDTO)
+                .toList();
+    }
+
     public List<AgendamentoResponseDTO> listarTodos() {
         return agendamentoRepository.findAll().stream()
                 .map(this::converterResponseDTO)

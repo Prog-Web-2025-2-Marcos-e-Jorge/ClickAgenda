@@ -1,6 +1,7 @@
 <!doctype html>
-<html lang="PR-BR" xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="~{baseLayout :: baseHead(null)}"> </head>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{baseLayout :: baseHead(null)}"></head>
+
   <body>
     <div class="app">
       <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
@@ -8,17 +9,88 @@
         <header th:replace="~{baseLayout :: baseTopbar}"></header>
         <div class="content">
           <main>
-            <h1>Cadastrar Novo Agendamento</h1>
+            <a th:href="@{/profissionais}" class="btn btn-secondary"
+              >← Voltar</a
+            >
+            <h1>Realizar Agendamento</h1>
 
-            <div th:if="${erro}" role="alert">
-              <p th:text="${erro}">Ocorreu um erro ao salvar o Agendamento</p>
+            <!-- Resumo do serviço -->
+            <div class="form-container" style="margin-bottom: 30px">
+              <p>
+                <strong>Serviço:</strong>
+                <span th:text="${servico.nome}">Nome</span>
+              </p>
+              <p>
+                <strong>Profissional:</strong>
+                <span th:text="${servico.profissional.nome}">Profissional</span>
+              </p>
+              <p>
+                <strong>Duração:</strong>
+                <span th:text="${servico.duracaoMinutos} + ' minutos'"
+                  >30 minutos</span
+                >
+              </p>
+              <p>
+                <strong>Valor:</strong>
+                <span
+                  th:text="'R$ ' + ${#numbers.formatDecimal(servico.valor, 1, 'COMMA', 2, 'POINT')}"
+                  >R$ 0,00</span
+                >
+              </p>
             </div>
 
+            <!-- Alerta de erro -->
+            <div th:if="${erro}" class="alert alert-error">
+              <p th:text="${erro}">Erro</p>
+            </div>
+
+            <!-- Formulário -->
             <form
               th:action="@{/agendamento/novo}"
-              th:object="${agendamentoDto}"
-              method="POST"
-            ></form>
+              method="post"
+              class="form-container"
+            >
+              <!-- Campos escondidos -->
+              <input type="hidden" name="servicoId" th:value="${servico.id}" />
+              <input type="hidden" name="clienteId" th:value="${clienteId}" />
+              <input
+                type="hidden"
+                name="profissionalId"
+                th:value="${servico.profissional.id}"
+              />
+              <input type="hidden" name="valor" th:value="${servico.valor}" />
+
+              <!-- Data e hora -->
+              <div class="form-group">
+                <label for="dataHora">Data e Horário</label>
+                <input
+                  type="datetime-local"
+                  id="dataHora"
+                  name="dataHora"
+                  required
+                />
+              </div>
+
+              <!-- Observações -->
+              <div class="form-group">
+                <label for="obs">Observações (opcional)</label>
+                <textarea
+                  id="obs"
+                  name="obs"
+                  rows="3"
+                  placeholder="Alguma observação para o profissional?"
+                ></textarea>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                  Confirmar Agendamento
+                </button>
+                <a th:href="@{/profissionais}" class="btn btn-secondary"
+                  >Cancelar</a
+                >
+              </div>
+            </form>
           </main>
         </div>
       </div>

@@ -11,12 +11,14 @@ import br.iff.edu.ccc.clickagenda.model.Agendamento;
 
 public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> {
 
-    List<Agendamento> findByProfissionalId(Long id);
+        List<Agendamento> findByProfissionalId(Long id);
 
-    @Query("SELECT a FROM Agendamento a WHERE a.profissional.id = :profissionalId " +
-            "AND a.dataHora >= :inicioDia AND a.dataHora < :fimDia")
-    List<Agendamento> findAgendamentosDoDia(
-            @Param("profissionalId") Long profissionalId,
-            @Param("inicioDia") LocalDateTime inicioDia,
-            @Param("fimDia") LocalDateTime fimDia);
+        List<Agendamento> findByClienteId(Long clienteId);
+
+        @Query("SELECT a FROM Agendamento a WHERE a.profissional.id = :profissionalId " +
+                        "AND a.dataHora >= :inicioDia AND a.dataHora < :fimDia")
+        List<Agendamento> findAgendamentosDoDia(
+                        @Param("profissionalId") Long profissionalId,
+                        @Param("inicioDia") LocalDateTime inicioDia,
+                        @Param("fimDia") LocalDateTime fimDia);
 }
