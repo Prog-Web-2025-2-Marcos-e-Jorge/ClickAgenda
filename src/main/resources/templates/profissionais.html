@@ -19,6 +19,13 @@
               <div th:each="prof : ${profissionais}" class="professional-card">
                 <div class="card-info">
                   <h4 th:text="${prof.nome}">Nome</h4>
+                  <a
+                    th:href="@{/profissionais/{id}(id=${prof.id})}"
+                    class="btn btn-primary"
+                    style="margin-top: 10px"
+                  >
+                    Ver Perfil
+                  </a>
                   <span class="rating">
                     <i class="bi bi-star-fill"></i>
                     <!-- a avaliação virá do objeto prof quando tiver dados -->
