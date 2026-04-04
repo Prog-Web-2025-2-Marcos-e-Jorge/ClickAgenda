@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="~{baseLayout :: baseHead}"></head>
+  <head th:replace="~{baseLayout :: baseHead(null)}"></head>
 
   <body>
     <div class="app">
@@ -9,17 +9,14 @@
         <header th:replace="~{baseLayout :: baseTopbar}"></header>
         <div class="content">
           <main>
-            <title>Profissionais</title>
+            <h1>Profissionais</h1>
 
-            <p th:unless="${not #lists.isEmpty(profissionaisDestaque)}">
+            <p th:unless="${not #lists.isEmpty(profissionais)}">
               Nenhum profissional encontrado.
             </p>
 
             <div class="professionals-grid">
-              <div
-                th:each="prof : ${profissionaisDestaque}"
-                class="professional-card"
-              >
+              <div th:each="prof : ${profissionais}" class="professional-card">
                 <div class="card-info">
                   <h4 th:text="${prof.nome}">Nome</h4>
                   <span class="rating">
