@@ -18,11 +18,34 @@
       </div>
       <nav class="menu">
         <a th:href="@{/}"><i class="bi bi-house"></i> Início</a>
-        <a th:href="@{/agenda}"><i class="bi bi-calendar"></i> Agenda</a>
-        <a th:href="@{/favoritos}"><i class="bi bi-heart"></i> Favoritos</a>
-        <a th:href="@{/perfil}"><i class="bi bi-person"></i> Perfil</a>
+        <a th:href="@{/profissionais}"><i class="bi bi-search"></i> Explorar</a>
+        <a th:href="@{/perfil}"><i class="bi bi-person"></i> Meu Perfil</a>
 
-        <!-- Menu Administração (apenas para ADMIN) -->
+        <!-- Menu Profissional -->
+        <div
+          th:if="${session.usuarioPerfil == 'PROFISSIONAL'}"
+          style="
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+          "
+        >
+          <p
+            style="
+              font-size: 12px;
+              color: #999;
+              margin-bottom: 10px;
+              text-transform: uppercase;
+            "
+          >
+            Meus Serviços
+          </p>
+          <a th:href="@{/servico/novo}">
+            <i class="bi bi-plus-circle"></i> Cadastrar Serviço
+          </a>
+        </div>
+
+        <!-- Menu Administração -->
         <div
           th:if="${session.usuarioPerfil == 'ADMIN'}"
           style="
@@ -41,14 +64,16 @@
           >
             Administração
           </p>
-          <a th:href="@{/categoria/novo}"
-            ><i class="bi bi-folder-plus"></i> Cadastrar Categoria</a
-          >
+          <a th:href="@{/categoria/novo}">
+            <i class="bi bi-folder-plus"></i> Cadastrar Categoria
+          </a>
+          <a th:href="@{/servico/novo}" style="margin-top: 8px">
+            <i class="bi bi-plus-circle"></i> Cadastrar Serviço
+          </a>
         </div>
       </nav>
     </aside>
 
-    <!-- Fragmento: Topbar -->
     <header class="header" th:fragment="baseTopbar">
       <span>Click Agenda</span>
       <span th:if="${session.usuarioNome != null}">
@@ -56,13 +81,14 @@
         <a
           th:href="@{/logout}"
           style="margin-left: 20px; color: #666; text-decoration: none"
-          >Sair</a
         >
+          Sair
+        </a>
       </span>
       <span th:if="${session.usuarioNome == null}">
-        <a th:href="@{/login}" style="color: #666; text-decoration: none"
-          >Login</a
-        >
+        <a th:href="@{/login}" style="color: #666; text-decoration: none">
+          Login
+        </a>
       </span>
     </header>
   </body>

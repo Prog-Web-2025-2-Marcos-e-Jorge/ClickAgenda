@@ -11,64 +11,93 @@
 
         <div class="content">
           <main>
-            <h1>Olá, funcionou</h1>
 
             <!-- Hero -->
-            <section>
-              <h2>Encontre e agende os melhores profissionais perto de você</h2>
-              <form th:action="@{/buscar}" method="get">
-                <input
-                  type="text"
-                  name="q"
-                  placeholder="Buscar por serviços ou profissionais"
-                />
-              </form>
+            <section style="margin-bottom: 40px">
+              <h1>Encontre e agende os melhores profissionais perto de você</h1>
+              <p style="color: #6b7280; margin: 10px 0 20px">
+                Saúde, beleza, aulas e muito mais — tudo em um só lugar.
+              </p>
+              <a th:href="@{/profissionais}" class="btn btn-primary">
+                <i class="bi bi-search"></i> Explorar Profissionais
+              </a>
             </section>
 
             <!-- Categorias -->
-            <section>
-              <h2>Categorias</h2>
+            <section style="margin-bottom: 40px">
+              <h2 style="margin-bottom: 15px">Categorias</h2>
 
-              <p th:unless="${not #lists.isEmpty(categorias)}">
+              <p th:if="${#lists.isEmpty(categorias)}">
                 Nenhuma categoria encontrada.
               </p>
 
-              <div class="categories" th:if="${not #lists.isEmpty(categorias)}">
-                <a
+              <div class="categories" th:unless="${#lists.isEmpty(categorias)}">
+                
                   th:each="categoria : ${categorias}"
-                  th:href="@{/categorias/{id}(id=${categoria.id})}"
+                  th:href="@{/profissionais}"
                   class="category-card"
+                  style="text-decoration: none; color: inherit"
                 >
-                  <i class="bi bi-heart-pulse"></i>
+                  <i class="bi bi-heart-pulse" style="color: #2563eb; font-size: 22px"></i>
                   <span th:text="${categoria.nome}">Categoria</span>
+                </a>
+              </div>
+
+              <!-- Categorias fixas quando lista estiver vazia -->
+              <div class="categories" th:if="${#lists.isEmpty(categorias)}">
+                <a th:href="@{/profissionais}" class="category-card"
+                   style="text-decoration: none; color: inherit">
+                  <i class="bi bi-heart-pulse" style="color: #2563eb; font-size: 22px"></i>
+                  <span>Saúde</span>
+                </a>
+                <a th:href="@{/profissionais}" class="category-card"
+                   style="text-decoration: none; color: inherit">
+                  <i class="bi bi-stars" style="color: #2563eb; font-size: 22px"></i>
+                  <span>Beleza</span>
+                </a>
+                <a th:href="@{/profissionais}" class="category-card"
+                   style="text-decoration: none; color: inherit">
+                  <i class="bi bi-house" style="color: #2563eb; font-size: 22px"></i>
+                  <span>Casa</span>
+                </a>
+                <a th:href="@{/profissionais}" class="category-card"
+                   style="text-decoration: none; color: inherit">
+                  <i class="bi bi-mortarboard" style="color: #2563eb; font-size: 22px"></i>
+                  <span>Aulas</span>
                 </a>
               </div>
             </section>
 
             <!-- Profissionais em Destaque -->
             <section>
-              <h2>Profissionais em Destaque</h2>
+              <h2 style="margin-bottom: 15px">Profissionais em Destaque</h2>
 
-              <p th:unless="${not #lists.isEmpty(profissionaisDestaque)}">
+              <p th:if="${#lists.isEmpty(profissionaisDestaque)}">
                 Nenhum profissional encontrado.
+                <a th:href="@{/profissionais}">Ver todos os profissionais</a>
               </p>
 
-              <div class="professionals-grid">
-                <div
-                  th:each="prof : ${profissionaisDestaque}"
-                  class="professional-card"
-                >
+              <div class="professionals-grid"
+                   th:unless="${#lists.isEmpty(profissionaisDestaque)}">
+                <div th:each="prof : ${profissionaisDestaque}"
+                     class="professional-card">
                   <div class="card-info">
                     <h4 th:text="${prof.nome}">Nome</h4>
-                    <span class="rating">
-                      <i class="bi bi-star-fill"></i>
-                      <!-- a avaliação virá do objeto prof quando tiver dados -->
-                      5.0
-                    </span>
+                    <p th:if="${not #lists.isEmpty(prof.categorias)}"
+                       th:text="${prof.categorias[0].nome}"
+                       style="color: #6b7280; font-size: 13px; margin: 4px 0">
+                      Especialidade
+                    </p>
+                    <a th:href="@{/profissionais/{id}(id=${prof.id})}"
+                       class="btn btn-primary"
+                       style="margin-top: 8px; font-size: 13px; padding: 8px 16px">
+                      Ver Perfil
+                    </a>
                   </div>
                 </div>
               </div>
             </section>
+
           </main>
         </div>
       </div>

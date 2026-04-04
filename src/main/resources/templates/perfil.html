@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{baseLayout :: baseHead(null)}"></head>
+
+  <body>
+    <div class="app">
+      <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
+      <div class="main">
+        <header th:replace="~{baseLayout :: baseTopbar}"></header>
+        <div class="content">
+          <main>
+            <h1>Meu Perfil</h1>
+
+            <!-- Dados do usuário -->
+            <div class="form-container" style="margin-bottom: 30px">
+              <p>
+                <strong>Nome:</strong>
+                <span th:text="${session.usuarioNome}">Usuário</span>
+              </p>
+              <p>
+                <strong>Email:</strong>
+                <span th:text="${session.usuarioEmail}">email</span>
+              </p>
+              <p>
+                <strong>Perfil:</strong>
+                <span th:text="${session.usuarioPerfil}">perfil</span>
+              </p>
+            </div>
+
+            <!-- Flash de sucesso -->
+            <div th:if="${sucesso}" class="alert alert-success">
+              <p th:text="${sucesso}">Operação realizada com sucesso!</p>
+            </div>
+
+            <!-- Agendamentos -->
+            <h2 style="margin-bottom: 20px">Meus Agendamentos</h2>
+
+            <p th:if="${#lists.isEmpty(agendamentos)}">
+              Você ainda não possui agendamentos.
+              <a th:href="@{/profissionais}">Encontrar profissionais</a>
+            </p>
+
+            <div th:unless="${#lists.isEmpty(agendamentos)}">
+              <div
+                th:each="agendamento : ${agendamentos}"
+                class="form-container"
+                style="margin-bottom: 15px"
+              >
+                <p>
+                  <strong>Serviço:</strong>
+                  <span th:text="${agendamento.servico.nome}">Serviço</span>
+                </p>
+                <p>
+                  <strong>Profissional:</strong>
+                  <span th:text="${agendamento.profissional.nome}"
+                    >Profissional</span
+                  >
+                </p>
+                <p>
+                  <strong>Data e Hora:</strong>
+                  <span
+                    th:text="${#temporals.format(agendamento.dataHora, 'dd/MM/yyyy HH:mm')}"
+                  >
+                    01/01/2024 14:30
+                  </span>
+                </p>
+                <p>
+                  <strong>Valor:</strong>
+                  <span
+                    th:text="'R$ ' + ${#numbers.formatDecimal(agendamento.valor, 1, 'COMMA', 2, 'POINT')}"
+                  >
+                    R$ 0,00
+                  </span>
+                </p>
+                <p>
+                  <strong>Status:</strong>
+                  <span
+                    th:text="${agendamento.status}"
+                    th:classappend="${agendamento.status.name() == 'CONFIRMADO'} ? 'status-confirmado' :
+                                        (${agendamento.status.name() == 'CANCELADO'} ? 'status-cancelado' :
+                                        'status-pendente')"
+                  >
+                    PENDENTE
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div style="margin-top: 20px">
+              <a th:href="@{/profissionais}" class="btn btn-primary">
+                Agendar novo serviço
+              </a>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.iff.edu.ccc.clickagenda.dto.request.ServicoRequestDTO;
-import jakarta.validation.Valid;
 import br.iff.edu.ccc.clickagenda.dto.response.CategoriaResponseDTO;
 import br.iff.edu.ccc.clickagenda.dto.response.ProfissionalResponseDTO;
 import br.iff.edu.ccc.clickagenda.dto.response.ServicoResponseDTO;
 import br.iff.edu.ccc.clickagenda.service.CategoriaService;
 import br.iff.edu.ccc.clickagenda.service.ProfissionalService;
 import br.iff.edu.ccc.clickagenda.service.ServicoService;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/servico")
@@ -33,11 +34,19 @@ public class ServicoViewController {
     private CategoriaService categoriaService;
 
     @GetMapping("/novo")
-    public String mostrarFormularioCadastro(Model model) {
+    public String mostrarFormularioCadastro(HttpSession session, Model model) {
         List<ProfissionalResponseDTO> profissionais = profissionalService.listarTodos();
         List<CategoriaResponseDTO> categorias = categoriaService.listarTodas();
 
-        model.addAttribute("servico", new ServicoRequestDTO());
+        ServicoRequestDTO servico = new ServicoRequestDTO();
+
+        String perfil = (String) session.getAttribute("usuarioPerfil");
+        if ("PROFISSIONAL".equals(perfil)) {
+            Long profissionalId = (Long) session.getAttribute("usuarioId");
+            servico.setProfissionalId(profissionalId);
+        }
+
+        model.addAttribute("servico", servico);
         model.addAttribute("profissionais", profissionais);
         model.addAttribute("categorias", categorias);
 
@@ -45,8 +54,16 @@ public class ServicoViewController {
     }
 
     @PostMapping
-    public String salvarServico(@Valid ServicoRequestDTO servico, Model model) {
+    public String salvarServico(@Valid ServicoRequestDTO servico,
+            HttpSession session,
+            Model model) {
         try {
+            // Se for profissional, garante que o ID dele está no DTO
+            String perfil = (String) session.getAttribute("usuarioPerfil");
+            if ("PROFISSIONAL".equals(perfil)) {
+                servico.setProfissionalId((Long) session.getAttribute("usuarioId"));
+            }
+
             servicoService.salvar(servico);
             return "redirect:/servico/sucesso";
         } catch (Exception e) {
@@ -63,7 +80,7 @@ public class ServicoViewController {
     }
 
     @GetMapping("/sucesso")
-    public String mostrarPaginaSucesso(Model model) {
+    public String mostrarPaginaSucesso() {
         return "servico-sucesso";
     }
 

@@ -11,22 +11,36 @@
           <main>
             <h1>Cadastrar Novo Serviço</h1>
 
-            <div th:if="${erro}" role="alert">
+            <div th:if="${erro}" class="alert alert-error">
               <p th:text="${erro}">Ocorreu um erro ao salvar o serviço</p>
             </div>
 
-            <form th:action="@{/servico}" th:object="${servico}" method="POST">
-              <div>
-                <label for="nome">Nome do Serviço:</label>
-                <input type="text" id="nome" th:field="*{nome}" required />
+            <form
+              th:action="@{/servico}"
+              th:object="${servico}"
+              method="POST"
+              class="form-container"
+            >
+              <!-- Nome -->
+              <div class="form-group">
+                <label for="nome">Nome do Serviço</label>
+                <input
+                  type="text"
+                  id="nome"
+                  th:field="*{nome}"
+                  placeholder="Ex: Corte de Cabelo, Massagem..."
+                  required
+                />
                 <small
                   th:if="${#fields.hasErrors('nome')}"
                   th:errors="*{nome}"
+                  class="error-message"
                 ></small>
               </div>
 
-              <div>
-                <label for="valor">Valor (R$):</label>
+              <!-- Valor -->
+              <div class="form-group">
+                <label for="valor">Valor (R$)</label>
                 <input
                   type="number"
                   id="valor"
@@ -38,11 +52,13 @@
                 <small
                   th:if="${#fields.hasErrors('valor')}"
                   th:errors="*{valor}"
+                  class="error-message"
                 ></small>
               </div>
 
-              <div>
-                <label for="duracaoMinutos">Duração (minutos):</label>
+              <!-- Duração -->
+              <div class="form-group">
+                <label for="duracaoMinutos">Duração (minutos)</label>
                 <input
                   type="number"
                   id="duracaoMinutos"
@@ -53,11 +69,16 @@
                 <small
                   th:if="${#fields.hasErrors('duracaoMinutos')}"
                   th:errors="*{duracaoMinutos}"
+                  class="error-message"
                 ></small>
               </div>
 
-              <div>
-                <label for="profissionalId">Profissional:</label>
+              <!-- Profissional: select para ADMIN, campo oculto para PROFISSIONAL -->
+              <div
+                class="form-group"
+                th:if="${session.usuarioPerfil == 'ADMIN'}"
+              >
+                <label for="profissionalId">Profissional</label>
                 <select
                   id="profissionalId"
                   th:field="*{profissionalId}"
@@ -73,10 +94,31 @@
                 <small
                   th:if="${#fields.hasErrors('profissionalId')}"
                   th:errors="*{profissionalId}"
+                  class="error-message"
                 ></small>
               </div>
-              <div>
-                <label for="categoriaId">Categoria:</label>
+
+              <div th:unless="${session.usuarioPerfil == 'ADMIN'}">
+                <input type="hidden" th:field="*{profissionalId}" />
+                <div class="form-group">
+                  <label>Profissional</label>
+                  <p
+                    th:text="${session.usuarioNome}"
+                    style="
+                      padding: 12px;
+                      background: #f9fafb;
+                      border: 1px solid #d1d5db;
+                      border-radius: 6px;
+                    "
+                  >
+                    Nome
+                  </p>
+                </div>
+              </div>
+
+              <!-- Categoria -->
+              <div class="form-group">
+                <label for="categoriaId">Categoria</label>
                 <select id="categoriaId" th:field="*{categoriaId}" required>
                   <option value="">-- Selecione uma categoria --</option>
                   <option
@@ -88,11 +130,15 @@
                 <small
                   th:if="${#fields.hasErrors('categoriaId')}"
                   th:errors="*{categoriaId}"
+                  class="error-message"
                 ></small>
               </div>
-              <div>
-                <button type="submit">Salvar Serviço</button>
-                <a th:href="@{/}">Cancelar</a>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                  Salvar Serviço
+                </button>
+                <a th:href="@{/}" class="btn btn-secondary">Cancelar</a>
               </div>
             </form>
           </main>
