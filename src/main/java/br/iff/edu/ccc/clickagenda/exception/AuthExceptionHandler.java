@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-@RestControllerAdvice
+@RestControllerAdvice(basePackages = "br.iff.edu.ccc.clickagenda.controller.restapi")
 public class AuthExceptionHandler {
 
     @ExceptionHandler(UsernameNotFoundException.class)
