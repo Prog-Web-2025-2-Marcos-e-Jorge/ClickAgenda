@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.iff.edu.ccc.clickagenda.dto.request.AgendamentoRequestDTO;
+import br.iff.edu.ccc.clickagenda.dto.response.AgendamentoResponseDTO;
 import br.iff.edu.ccc.clickagenda.dto.response.ServicoResponseDTO;
 import br.iff.edu.ccc.clickagenda.repository.ProfissionalRepository;
 import br.iff.edu.ccc.clickagenda.service.AgendamentoService;
@@ -68,6 +69,45 @@ public class AgendamentoViewController {
         }
 
         return "agendamento";
+    }
+
+    @GetMapping("/{id}")
+    public String verDetalhe(@PathVariable Long id,
+            HttpSession session,
+            Model model) {
+        AgendamentoResponseDTO agendamento = agendamentoService.buscarPorId(id);
+        model.addAttribute("agendamento", agendamento);
+        return "agendamento-detalhe";
+    }
+
+    @PostMapping("/{id}/confirmar")
+    public String confirmar(@PathVariable Long id,
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
+        try {
+            Long profissionalId = (Long) session.getAttribute("usuarioId");
+            agendamentoService.confirmarAgendamento(id, profissionalId);
+            redirectAttributes.addFlashAttribute("sucesso",
+                    "Agendamento confirmado com sucesso!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("erro", e.getMessage());
+        }
+        return "redirect:/perfil";
+    }
+
+    @PostMapping("/{id}/recusar")
+    public String recusar(@PathVariable Long id,
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
+        try {
+            Long profissionalId = (Long) session.getAttribute("usuarioId");
+            agendamentoService.recusarAgendamento(id, profissionalId);
+            redirectAttributes.addFlashAttribute("sucesso",
+                    "Agendamento recusado.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("erro", e.getMessage());
+        }
+        return "redirect:/perfil";
     }
 
 }

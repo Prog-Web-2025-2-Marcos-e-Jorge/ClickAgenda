@@ -28,6 +28,12 @@
         >
           <i class="bi bi-plus-circle"></i> Cadastrar Serviço
         </a>
+        <a
+          th:if="${session.usuarioPerfil == 'PROFISSIONAL'}"
+          th:href="@{/horario/novo}"
+        >
+          <i class="bi bi-clock"></i> Meus Horários
+        </a>
 
         <!-- Menu Administração -->
         <a

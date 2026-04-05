@@ -233,6 +233,12 @@ public class AgendamentoService {
         return converterResponseDTO(agendamento);
     }
 
+    public List<AgendamentoResponseDTO> listarPorProfissional(Long profissionalId) {
+        return agendamentoRepository.findByProfissionalId(profissionalId).stream()
+                .map(this::converterResponseDTO)
+                .toList();
+    }
+
     private DiaSemana converterDayOfWeek(java.time.DayOfWeek dayOfWeek) {
         return switch (dayOfWeek) {
             case MONDAY -> DiaSemana.SEGUNDA;

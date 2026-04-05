@@ -9,54 +9,179 @@
         <header th:replace="~{baseLayout :: baseTopbar}"></header>
         <div class="content">
           <main>
-            <h1>Meu Perfil</h1>
+            <!-- VISUALIZAÇÃO PARA PROFISSIONAL -->
+            <div th:if="${session.usuarioPerfil == 'PROFISSIONAL'}">
+              <h1>Meus Agendamentos</h1>
 
-            <!-- Dados do usuário -->
-            <div class="form-container" style="margin-bottom: 30px">
-              <p>
-                <strong>Nome:</strong>
-                <span th:text="${session.usuarioNome}">Usuário</span>
-              </p>
-              <p>
-                <strong>Email:</strong>
-                <span th:text="${session.usuarioEmail}">email</span>
-              </p>
-              <p>
-                <strong>Perfil:</strong>
-                <span th:text="${session.usuarioPerfil}">perfil</span>
-              </p>
+              <!-- Agendamentos Pendentes -->
+              <section style="margin-bottom: 40px">
+                <h2>Agendamentos Pendentes</h2>
+                <div
+                  th:if="${#lists.isEmpty(agendamentosPendentes)}"
+                  class="alert alert-info"
+                >
+                  <p>Nenhum agendamento pendente no momento.</p>
+                </div>
+                <div
+                  th:each="agendamento : ${agendamentosPendentes}"
+                  class="form-container"
+                  style="margin-bottom: 20px"
+                >
+                  <p style="margin-bottom: 8px">
+                    <strong>Serviço:</strong>
+                    <span th:text="${agendamento.servico.nome}">Serviço</span>
+                  </p>
+                  <p style="margin-bottom: 8px">
+                    <strong>Cliente:</strong>
+                    <span th:text="${agendamento.cliente.nome}">Cliente</span>
+                  </p>
+                  <p style="margin-bottom: 8px">
+                    <strong>Data e Hora:</strong>
+                    <span
+                      th:text="${#temporals.format(agendamento.dataHora, 'dd/MM/yyyy HH:mm')}"
+                    >
+                      01/01/2024 14:30
+                    </span>
+                  </p>
+                  <p style="margin-bottom: 8px">
+                    <strong>Valor:</strong>
+                    <span
+                      th:text="'R$ ' + ${#numbers.formatDecimal(agendamento.valor, 1, 'COMMA', 2, 'POINT')}"
+                    >
+                      R$ 0,00
+                    </span>
+                  </p>
+                  <p style="margin-bottom: 20px">
+                    <strong>Status:</strong>
+                    <span
+                      class="badge"
+                      style="
+                        background: #f59e0b;
+                        color: white;
+                        padding: 4px 8px;
+                        border-radius: 4px;
+                      "
+                    >
+                      PENDENTE
+                    </span>
+                  </p>
+
+                  <div class="form-actions">
+                    <form
+                      th:action="@{/agendamento/{id}/confirmar(id=${agendamento.id})}"
+                      method="post"
+                    >
+                      <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-circle"></i> Confirmar
+                      </button>
+                    </form>
+                    <form
+                      th:action="@{/agendamento/{id}/recusar(id=${agendamento.id})}"
+                      method="post"
+                    >
+                      <button
+                        type="submit"
+                        class="btn btn-secondary"
+                        style="background: #dc2626"
+                        onclick="
+                          return confirm(
+                            'Tem certeza que deseja recusar este agendamento?',
+                          );
+                        "
+                      >
+                        <i class="bi bi-x-circle"></i> Recusar
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Agendamentos Confirmados -->
+              <section>
+                <h2>Agendamentos Confirmados</h2>
+                <div
+                  th:if="${#lists.isEmpty(agendamentosConfirmados)}"
+                  class="alert alert-info"
+                >
+                  <p>Nenhum agendamento confirmado.</p>
+                </div>
+                <div
+                  th:each="agendamento : ${agendamentosConfirmados}"
+                  class="form-container"
+                  style="margin-bottom: 20px"
+                >
+                  <p style="margin-bottom: 8px">
+                    <strong>Serviço:</strong>
+                    <span th:text="${agendamento.servico.nome}">Serviço</span>
+                  </p>
+                  <p style="margin-bottom: 8px">
+                    <strong>Cliente:</strong>
+                    <span th:text="${agendamento.cliente.nome}">Cliente</span>
+                  </p>
+                  <p style="margin-bottom: 8px">
+                    <strong>Data e Hora:</strong>
+                    <span
+                      th:text="${#temporals.format(agendamento.dataHora, 'dd/MM/yyyy HH:mm')}"
+                    >
+                      01/01/2024 14:30
+                    </span>
+                  </p>
+                  <p style="margin-bottom: 8px">
+                    <strong>Valor:</strong>
+                    <span
+                      th:text="'R$ ' + ${#numbers.formatDecimal(agendamento.valor, 1, 'COMMA', 2, 'POINT')}"
+                    >
+                      R$ 0,00
+                    </span>
+                  </p>
+                  <p style="margin-bottom: 20px">
+                    <strong>Status:</strong>
+                    <span
+                      class="badge"
+                      th:classappend="${agendamento.status.name() == 'CONFIRMADO'} ? 'status-confirmado' : 'status-cancelado'"
+                      style="
+                        display: inline-block;
+                        padding: 4px 8px;
+                        border-radius: 4px;
+                        color: white;
+                      "
+                    >
+                      <span th:text="${agendamento.status.name()}"
+                        >CONFIRMADO</span
+                      >
+                    </span>
+                  </p>
+                </div>
+              </section>
             </div>
 
-            <!-- Flash de sucesso -->
-            <div th:if="${sucesso}" class="alert alert-success">
-              <p th:text="${sucesso}">Operação realizada com sucesso!</p>
-            </div>
+            <!-- VISUALIZAÇÃO PARA CLIENTE -->
+            <div th:if="${session.usuarioPerfil == 'CLIENTE'}">
+              <h1>Meus Agendamentos</h1>
 
-            <!-- Agendamentos -->
-            <h2 style="margin-bottom: 20px">Meus Agendamentos</h2>
+              <div
+                th:if="${#lists.isEmpty(agendamentos)}"
+                class="alert alert-info"
+              >
+                <p>Você ainda não tem agendamentos.</p>
+              </div>
 
-            <p th:if="${#lists.isEmpty(agendamentos)}">
-              Você ainda não possui agendamentos.
-              <a th:href="@{/profissionais}">Encontrar profissionais</a>
-            </p>
-
-            <div th:unless="${#lists.isEmpty(agendamentos)}">
               <div
                 th:each="agendamento : ${agendamentos}"
                 class="form-container"
-                style="margin-bottom: 15px"
+                style="margin-bottom: 20px"
               >
-                <p>
-                  <strong>Serviço:</strong>
-                  <span th:text="${agendamento.servico.nome}">Serviço</span>
-                </p>
-                <p>
+                <p style="margin-bottom: 8px">
                   <strong>Profissional:</strong>
                   <span th:text="${agendamento.profissional.nome}"
                     >Profissional</span
                   >
                 </p>
-                <p>
+                <p style="margin-bottom: 8px">
+                  <strong>Serviço:</strong>
+                  <span th:text="${agendamento.servico.nome}">Serviço</span>
+                </p>
+                <p style="margin-bottom: 8px">
                   <strong>Data e Hora:</strong>
                   <span
                     th:text="${#temporals.format(agendamento.dataHora, 'dd/MM/yyyy HH:mm')}"
@@ -64,7 +189,7 @@
                     01/01/2024 14:30
                   </span>
                 </p>
-                <p>
+                <p style="margin-bottom: 8px">
                   <strong>Valor:</strong>
                   <span
                     th:text="'R$ ' + ${#numbers.formatDecimal(agendamento.valor, 1, 'COMMA', 2, 'POINT')}"
@@ -72,24 +197,24 @@
                     R$ 0,00
                   </span>
                 </p>
-                <p>
+                <p style="margin-bottom: 20px">
                   <strong>Status:</strong>
                   <span
-                    th:text="${agendamento.status}"
-                    th:classappend="${agendamento.status.name() == 'CONFIRMADO'} ? 'status-confirmado' :
-                                        (${agendamento.status.name() == 'CANCELADO'} ? 'status-cancelado' :
-                                        'status-pendente')"
+                    class="badge"
+                    th:classappend="${agendamento.status.name() == 'PENDENTE'} ? 'status-pendente' :
+                                      (${agendamento.status.name() == 'CONFIRMADO'} ? 'status-confirmado' :
+                                      'status-cancelado')"
+                    style="
+                      display: inline-block;
+                      padding: 4px 8px;
+                      border-radius: 4px;
+                      color: white;
+                    "
                   >
-                    PENDENTE
+                    <span th:text="${agendamento.status.name()}">PENDENTE</span>
                   </span>
                 </p>
               </div>
-            </div>
-
-            <div style="margin-top: 20px">
-              <a th:href="@{/profissionais}" class="btn btn-primary">
-                Agendar novo serviço
-              </a>
             </div>
           </main>
         </div>

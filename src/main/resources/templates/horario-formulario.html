@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{baseLayout :: baseHead(null)}"></head>
+
+  <body>
+    <div class="app">
+      <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
+      <div class="main">
+        <header th:replace="~{baseLayout :: baseTopbar}"></header>
+        <div class="content">
+          <main>
+            <a th:href="@{/perfil}" class="btn btn-secondary">← Voltar</a>
+            <h1>Meus Horários de Trabalho</h1>
+
+            <div th:if="${erro}" class="alert alert-error">
+              <p th:text="${erro}">Erro</p>
+            </div>
+
+            <form
+              th:action="@{/horario/novo}"
+              th:object="${horarioForm}"
+              method="post"
+              class="form-container"
+            >
+              <p style="color: #6b7280; margin-bottom: 20px">
+                Marque os dias que você trabalha e defina os horários. Deixe em
+                branco os dias que não atende.
+              </p>
+
+              <div
+                th:each="horario, idx : *{horarios}"
+                style="
+                  border: 1px solid #e5e7eb;
+                  border-radius: 8px;
+                  padding: 15px;
+                  margin-bottom: 12px;
+                  background: #f9fafb;
+                "
+              >
+                <!-- Nome do dia -->
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                  "
+                >
+                  <strong
+                    th:text="*{horarios[__${idx.index}__].diaSemana}"
+                    style="min-width: 100px; font-size: 15px"
+                  >
+                    Dia
+                  </strong>
+
+                  <!-- Campos escondidos obrigatórios -->
+                  <input
+                    type="hidden"
+                    th:field="*{horarios[__${idx.index}__].diaSemana}"
+                  />
+                  <input
+                    type="hidden"
+                    th:field="*{horarios[__${idx.index}__].profissionalId}"
+                  />
+
+                  <!-- Dia de folga -->
+                  <label
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 6px;
+                      cursor: pointer;
+                    "
+                  >
+                    <input
+                      type="checkbox"
+                      th:field="*{horarios[__${idx.index}__].diaFolga}"
+                      th:id="'folga-' + ${idx.index}"
+                      style="width: 16px; height: 16px; accent-color: #dc2626"
+                    />
+                    <span style="color: #dc2626; font-size: 14px"
+                      >Dia de folga</span
+                    >
+                  </label>
+
+                  <!-- Horários -->
+                  <div style="display: flex; align-items: center; gap: 10px">
+                    <div>
+                      <label style="font-size: 13px; color: #6b7280"
+                        >Início</label
+                      >
+                      <input
+                        type="time"
+                        th:field="*{horarios[__${idx.index}__].horarioInicio}"
+                        style="
+                          display: block;
+                          padding: 8px;
+                          border: 1px solid #d1d5db;
+                          border-radius: 6px;
+                          font-size: 14px;
+                        "
+                      />
+                    </div>
+                    <div>
+                      <label style="font-size: 13px; color: #6b7280">Fim</label>
+                      <input
+                        type="time"
+                        th:field="*{horarios[__${idx.index}__].horarioFim}"
+                        style="
+                          display: block;
+                          padding: 8px;
+                          border: 1px solid #d1d5db;
+                          border-radius: 6px;
+                          font-size: 14px;
+                        "
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                  <i class="bi bi-check-circle"></i> Salvar Horários
+                </button>
+                <a th:href="@{/perfil}" class="btn btn-secondary">Cancelar</a>
+              </div>
+            </form>
+          </main>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
