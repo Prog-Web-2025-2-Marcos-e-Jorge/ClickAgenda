@@ -1,14 +1,22 @@
 package br.iff.edu.ccc.clickagenda.controller.view;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import jakarta.servlet.http.HttpSession;
 
+import br.iff.edu.ccc.clickagenda.service.CategoriaService;
+import br.iff.edu.ccc.clickagenda.service.ProfissionalService;
+
 @Slf4j
 @Controller
-public class HomeController {
+@RequiredArgsConstructor
+public class HomeViewController {
+
+    private final CategoriaService categoriaService;
+    private final ProfissionalService profissionalService;
 
     @GetMapping("/")
     public String home(HttpSession session, Model model) {
@@ -18,18 +26,8 @@ public class HomeController {
             return "redirect:/login";
         }
 
-        Object usuarioNome = session.getAttribute("usuarioNome");
-        Object usuarioPerfil = session.getAttribute("usuarioPerfil");
-
-        if (usuarioNome != null) {
-            model.addAttribute("usuarioNome", usuarioNome);
-        }
-        if (usuarioPerfil != null) {
-            model.addAttribute("usuarioPerfil", usuarioPerfil);
-        }
-
-        model.addAttribute("categorias", java.util.List.of());
-        model.addAttribute("profissionaisDestaque", java.util.List.of());
+        model.addAttribute("categorias", categoriaService.listarTodas());
+        model.addAttribute("profissionaisDestaque", profissionalService.listarTodos());
 
         return "index";
     }

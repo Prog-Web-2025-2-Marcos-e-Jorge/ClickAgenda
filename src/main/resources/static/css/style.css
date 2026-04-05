@@ -300,3 +300,11 @@ main h1 {
   color: #dc2626;
   font-weight: bold;
 }
+
+.menu a + a {
+  display: block;
+}
+
+.menu a[style*="border-top"] {
+  margin-top: 10px;
+}

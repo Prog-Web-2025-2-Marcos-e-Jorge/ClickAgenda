@@ -22,72 +22,50 @@
         <a th:href="@{/perfil}"><i class="bi bi-person"></i> Meu Perfil</a>
 
         <!-- Menu Profissional -->
-        <div
+        <a
           th:if="${session.usuarioPerfil == 'PROFISSIONAL'}"
-          style="
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #e5e7eb;
-          "
+          th:href="@{/servico/novo}"
         >
-          <p
-            style="
-              font-size: 12px;
-              color: #999;
-              margin-bottom: 10px;
-              text-transform: uppercase;
-            "
-          >
-            Meus Serviços
-          </p>
-          <a th:href="@{/servico/novo}">
-            <i class="bi bi-plus-circle"></i> Cadastrar Serviço
-          </a>
-        </div>
+          <i class="bi bi-plus-circle"></i> Cadastrar Serviço
+        </a>
 
         <!-- Menu Administração -->
-        <div
+        <a
           th:if="${session.usuarioPerfil == 'ADMIN'}"
+          th:href="@{/categoria/novo}"
+        >
+          <i class="bi bi-folder-plus"></i> Cadastrar Categoria
+        </a>
+        <a
+          th:if="${session.usuarioPerfil == 'ADMIN'}"
+          th:href="@{/servico/novo}"
+        >
+          <i class="bi bi-plus-circle"></i> Cadastrar Serviço
+        </a>
+
+        <!-- Sair -->
+        <a
+          th:href="@{/logout}"
           style="
             margin-top: 20px;
-            padding-top: 20px;
             border-top: 1px solid #e5e7eb;
+            padding-top: 20px;
+            color: #dc2626;
           "
         >
-          <p
-            style="
-              font-size: 12px;
-              color: #999;
-              margin-bottom: 10px;
-              text-transform: uppercase;
-            "
-          >
-            Administração
-          </p>
-          <a th:href="@{/categoria/novo}">
-            <i class="bi bi-folder-plus"></i> Cadastrar Categoria
-          </a>
-          <a th:href="@{/servico/novo}" style="margin-top: 8px">
-            <i class="bi bi-plus-circle"></i> Cadastrar Serviço
-          </a>
-        </div>
+          <i class="bi bi-box-arrow-right"></i> Sair
+        </a>
       </nav>
     </aside>
 
     <header class="header" th:fragment="baseTopbar">
-      <span>Click Agenda</span>
       <span th:if="${session.usuarioNome != null}">
-        Olá, <span th:text="${session.usuarioNome}">Usuário</span>!
-        <form th:action="@{/logout}" method="post" style="display: inline; margin-left: 20px;">
-          <button type="submit" style="background: none; border: none; color: #666; cursor: pointer; padding: 0; font: inherit; text-decoration: none;">
-            Sair
-          </button>
-        </form>
+        Olá, <strong th:text="${session.usuarioNome}">Usuário</strong>!
       </span>
       <span th:if="${session.usuarioNome == null}">
-        <a th:href="@{/login}" style="color: #666; text-decoration: none">
-          Login
-        </a>
+        <a th:href="@{/login}" style="color: #666; text-decoration: none"
+          >Login</a
+        >
       </span>
     </header>
   </body>

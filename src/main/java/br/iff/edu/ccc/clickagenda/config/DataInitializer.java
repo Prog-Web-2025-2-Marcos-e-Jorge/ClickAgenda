@@ -42,6 +42,6 @@ public class DataInitializer implements CommandLineRunner {
         usuarioRepository.save(admin);
         log.info("✓ Usuário admin criado com sucesso!");
         log.info("  Email: admin@clickagenda.com.br");
-        log.info("  Senha: admin");
+        log.info("  Senha: AdminPass");
     }
 }
