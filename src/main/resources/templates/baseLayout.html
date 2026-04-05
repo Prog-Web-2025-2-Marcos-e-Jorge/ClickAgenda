@@ -78,12 +78,11 @@
       <span>Click Agenda</span>
       <span th:if="${session.usuarioNome != null}">
         Olá, <span th:text="${session.usuarioNome}">Usuário</span>!
-        <a
-          th:href="@{/logout}"
-          style="margin-left: 20px; color: #666; text-decoration: none"
-        >
-          Sair
-        </a>
+        <form th:action="@{/logout}" method="post" style="display: inline; margin-left: 20px;">
+          <button type="submit" style="background: none; border: none; color: #666; cursor: pointer; padding: 0; font: inherit; text-decoration: none;">
+            Sair
+          </button>
+        </form>
       </span>
       <span th:if="${session.usuarioNome == null}">
         <a th:href="@{/login}" style="color: #666; text-decoration: none">

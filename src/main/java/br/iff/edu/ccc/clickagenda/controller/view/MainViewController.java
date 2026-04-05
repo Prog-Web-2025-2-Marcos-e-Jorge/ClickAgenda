@@ -5,10 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import br.iff.edu.ccc.clickagenda.repository.UsuarioRepository;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import br.iff.edu.ccc.clickagenda.model.Usuario;
+import br.iff.edu.ccc.clickagenda.repository.UsuarioRepository;
 
 @Controller
 @RequestMapping(path = "principal")
@@ -16,6 +17,9 @@ public class MainViewController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private br.iff.edu.ccc.clickagenda.service.CategoriaService categoriaService;
 
     @GetMapping()
     public String index(Model model) {
@@ -30,6 +34,8 @@ public class MainViewController {
                 }
             });
         }
+        model.addAttribute("categorias", categoriaService.listarTodas());
+        model.addAttribute("profissionaisDestaque", List.of());
         return "index.html";
     }
 }

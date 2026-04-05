@@ -1,27 +1,31 @@
 package br.iff.edu.ccc.clickagenda.controller.view;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.iff.edu.ccc.clickagenda.dto.request.AgendamentoRequestDTO;
 import br.iff.edu.ccc.clickagenda.dto.response.ServicoResponseDTO;
+import br.iff.edu.ccc.clickagenda.repository.ProfissionalRepository;
 import br.iff.edu.ccc.clickagenda.service.AgendamentoService;
 import br.iff.edu.ccc.clickagenda.service.ServicoService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-
 @Controller
 @RequestMapping("/agendamento")
 @RequiredArgsConstructor
 public class AgendamentoViewController {
 
+    @Autowired
+    private ProfissionalRepository profissionalRepository;
     private final AgendamentoService agendamentoService;
     private final ServicoService servicoService;
 
@@ -52,6 +56,18 @@ public class AgendamentoViewController {
             model.addAttribute("erro", e.getMessage());
             return "agendamento";
         }
+    }
+
+    @GetMapping("/novo/{id}")
+    public String exibirFormulario(@PathVariable Long id, org.springframework.ui.Model model) {
+        var profissional = profissionalRepository.findById(id).orElse(null);
+
+        if (profissional != null) {
+            model.addAttribute("profissional", profissional);
+            model.addAttribute("servicos", profissional.getServicos());
+        }
+
+        return "agendamento";
     }
 
 }

@@ -26,44 +26,29 @@
             <!-- Categorias -->
             <section style="margin-bottom: 40px">
               <h2 style="margin-bottom: 15px">Categorias</h2>
-
-              <p th:if="${#lists.isEmpty(categorias)}">
-                Nenhuma categoria encontrada.
-              </p>
-
-              <div class="categories" th:unless="${#lists.isEmpty(categorias)}">
-                
-                  th:each="categoria : ${categorias}"
-                  th:href="@{/profissionais}"
-                  class="category-card"
-                  style="text-decoration: none; color: inherit"
-                >
-                  <i class="bi bi-heart-pulse" style="color: #2563eb; font-size: 22px"></i>
-                  <span th:text="${categoria.nome}">Categoria</span>
-                </a>
-              </div>
-
-              <!-- Categorias fixas quando lista estiver vazia -->
+            
               <div class="categories" th:if="${#lists.isEmpty(categorias)}">
-                <a th:href="@{/profissionais}" class="category-card"
-                   style="text-decoration: none; color: inherit">
+                <a th:href="@{/profissionais}" class="category-card" style="text-decoration: none; color: inherit">
                   <i class="bi bi-heart-pulse" style="color: #2563eb; font-size: 22px"></i>
                   <span>Saúde</span>
                 </a>
-                <a th:href="@{/profissionais}" class="category-card"
-                   style="text-decoration: none; color: inherit">
+                <a th:href="@{/profissionais}" class="category-card" style="text-decoration: none; color: inherit">
                   <i class="bi bi-stars" style="color: #2563eb; font-size: 22px"></i>
                   <span>Beleza</span>
                 </a>
-                <a th:href="@{/profissionais}" class="category-card"
-                   style="text-decoration: none; color: inherit">
+                <a th:href="@{/profissionais}" class="category-card" style="text-decoration: none; color: inherit">
                   <i class="bi bi-house" style="color: #2563eb; font-size: 22px"></i>
                   <span>Casa</span>
                 </a>
-                <a th:href="@{/profissionais}" class="category-card"
+              </div>
+            
+              <div class="categories" th:unless="${#lists.isEmpty(categorias)}">
+                <a th:each="categoria : ${categorias}" 
+                   th:href="@{/profissionais}" 
+                   class="category-card" 
                    style="text-decoration: none; color: inherit">
-                  <i class="bi bi-mortarboard" style="color: #2563eb; font-size: 22px"></i>
-                  <span>Aulas</span>
+                  <i class="bi bi-tag" style="color: #2563eb; font-size: 22px"></i>
+                  <span th:text="${categoria.nome}">Nome da Categoria</span>
                 </a>
               </div>
             </section>
