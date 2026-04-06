@@ -37,6 +37,7 @@ public class AgendamentoViewController {
         Long clienteId = (Long) session.getAttribute("usuarioId");
         model.addAttribute("servico", servico);
         model.addAttribute("clienteId", clienteId);
+        model.addAttribute("agendamento", new AgendamentoRequestDTO());
 
         return "agendamento";
     }
@@ -50,6 +51,10 @@ public class AgendamentoViewController {
             RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
+            ServicoResponseDTO servico = servicoService.buscarPorId(servicoId);
+            model.addAttribute("servico", servico);
+            model.addAttribute("clienteId", session.getAttribute("usuarioId"));
+            model.addAttribute("agendamento", agendamento);
             return "agendamento";
         }
 
@@ -61,6 +66,7 @@ public class AgendamentoViewController {
             ServicoResponseDTO servico = servicoService.buscarPorId(servicoId);
             model.addAttribute("servico", servico);
             model.addAttribute("clienteId", session.getAttribute("usuarioId"));
+            model.addAttribute("agendamento", agendamento);
             model.addAttribute("erro", e.getMessage());
             return "agendamento";
         }

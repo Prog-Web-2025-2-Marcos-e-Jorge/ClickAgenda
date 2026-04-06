@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -16,6 +18,7 @@ import br.iff.edu.ccc.clickagenda.dto.response.HorarioTrabalhoResponseDTO;
 import br.iff.edu.ccc.clickagenda.enums.DiaSemana;
 import br.iff.edu.ccc.clickagenda.service.HorarioTrabalhoService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -63,9 +66,41 @@ public class HorarioViewController {
     }
 
     @PostMapping("/novo")
-    public String salvarHorarios(HorarioTrabalhoFormDTO horarioForm,
+    public String salvarHorarios(@Valid @ModelAttribute HorarioTrabalhoFormDTO horarioForm,
+            BindingResult bindingResult,
             HttpSession session,
+            Model model,
             RedirectAttributes redirectAttributes) {
+
+        // Verificar erros de validação
+        if (bindingResult.hasErrors()) {
+            Long profissionalId = (Long) session.getAttribute("usuarioId");
+            List<HorarioTrabalhoResponseDTO> horariosExistentes = horarioTrabalhoService
+                    .listarPorProfissional(profissionalId);
+
+            List<HorarioTrabalhoRequestDTO> horarios = new ArrayList<>();
+            for (DiaSemana dia : DiaSemana.values()) {
+                HorarioTrabalhoRequestDTO dto = new HorarioTrabalhoRequestDTO();
+                dto.setDiaSemana(dia);
+                dto.setProfissionalId(profissionalId);
+
+                horariosExistentes.stream()
+                        .filter(h -> h.getDiaSemana() == dia)
+                        .findFirst()
+                        .ifPresent(h -> {
+                            dto.setHorarioInicio(h.getHorarioInicio());
+                            dto.setHorarioFim(h.getHorarioFim());
+                            dto.setDiaFolga(h.isDiaFolga());
+                        });
+
+                horarios.add(dto);
+            }
+
+            model.addAttribute("horarioForm", horarioForm);
+            model.addAttribute("diasSemana", DiaSemana.values());
+            return "horario-formulario";
+        }
+
         Long profissionalId = (Long) session.getAttribute("usuarioId");
 
         // Busca horários já existentes para deletar e recriar

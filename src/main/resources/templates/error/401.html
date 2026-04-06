@@ -11,8 +11,8 @@
             <div style="text-align: center; padding: 80px 40px">
               <div style="margin-bottom: 30px">
                 <i
-                  class="bi bi-exclamation-triangle"
-                  style="font-size: 80px; color: #dc2626"
+                  class="bi bi-lock"
+                  style="font-size: 80px; color: #ef4444"
                 ></i>
               </div>
               <h1
@@ -23,7 +23,7 @@
                   font-weight: 600;
                 "
               >
-                500
+                401
               </h1>
               <h2
                 style="
@@ -33,7 +33,7 @@
                   font-size: 24px;
                 "
               >
-                Erro interno do servidor
+                Não Autenticado
               </h2>
               <p
                 style="
@@ -45,8 +45,8 @@
                   margin-right: auto;
                 "
               >
-                Algo inesperado aconteceu. Nossa equipe foi notificada e estamos
-                trabalhando para resolver o problema.
+                Você precisa estar autenticado para acessar este recurso. Faça
+                login na sua conta para continuar.
               </p>
               <div
                 style="
@@ -56,11 +56,11 @@
                   flex-wrap: wrap;
                 "
               >
-                <a th:href="@{/}" class="btn btn-primary">
-                  <i class="bi bi-house"></i> Voltar ao Início
+                <a th:href="@{/login}" class="btn btn-primary">
+                  <i class="bi bi-box-arrow-in-right"></i> Fazer Login
                 </a>
-                <a th:href="@{/perfil}" class="btn btn-secondary">
-                  <i class="bi bi-person"></i> Meu Perfil
+                <a th:href="@{/registro}" class="btn btn-secondary">
+                  <i class="bi bi-person-plus"></i> Criar Conta
                 </a>
               </div>
             </div>

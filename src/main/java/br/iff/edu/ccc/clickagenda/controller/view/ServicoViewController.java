@@ -60,6 +60,12 @@ public class ServicoViewController {
             HttpSession session,
             Model model) {
         if (bindingResult.hasErrors()) {
+            List<ProfissionalResponseDTO> profissionais = profissionalService.listarTodos();
+            List<CategoriaResponseDTO> categorias = categoriaService.listarTodas();
+
+            model.addAttribute("servico", servico);
+            model.addAttribute("profissionais", profissionais);
+            model.addAttribute("categorias", categorias);
             return "servico-formulario";
         }
 

@@ -35,7 +35,10 @@
                   th:if="${#fields.hasErrors('nome')}"
                   th:errors="*{nome}"
                   class="error-message"
-                ></small>
+                  style="color: red; display: block; margin-top: 5px"
+                >
+                  Mensagem de erro
+                </small>
               </div>
 
               <!-- Valor -->
@@ -53,7 +56,10 @@
                   th:if="${#fields.hasErrors('valor')}"
                   th:errors="*{valor}"
                   class="error-message"
-                ></small>
+                  style="color: red; display: block; margin-top: 5px"
+                >
+                  Mensagem de erro
+                </small>
               </div>
 
               <!-- Duração -->
@@ -70,7 +76,10 @@
                   th:if="${#fields.hasErrors('duracaoMinutos')}"
                   th:errors="*{duracaoMinutos}"
                   class="error-message"
-                ></small>
+                  style="color: red; display: block; margin-top: 5px"
+                >
+                  Mensagem de erro
+                </small>
               </div>
 
               <!-- Profissional: select para ADMIN, campo oculto para PROFISSIONAL -->
@@ -95,7 +104,10 @@
                   th:if="${#fields.hasErrors('profissionalId')}"
                   th:errors="*{profissionalId}"
                   class="error-message"
-                ></small>
+                  style="color: red; display: block; margin-top: 5px"
+                >
+                  Mensagem de erro
+                </small>
               </div>
 
               <div th:unless="${session.usuarioPerfil == 'ADMIN'}">
@@ -131,7 +143,10 @@
                   th:if="${#fields.hasErrors('categoriaId')}"
                   th:errors="*{categoriaId}"
                   class="error-message"
-                ></small>
+                  style="color: red; display: block; margin-top: 5px"
+                >
+                  Mensagem de erro
+                </small>
               </div>
 
               <div class="form-actions">

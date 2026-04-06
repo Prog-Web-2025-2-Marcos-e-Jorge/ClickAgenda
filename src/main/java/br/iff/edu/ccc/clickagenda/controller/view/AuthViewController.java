@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -36,12 +37,22 @@ public class AuthViewController {
         if (error != null) {
             model.addAttribute("errorMessage", "Email ou senha inválidos");
         }
+        model.addAttribute("loginRequest", new LoginRequest());
         return "login";
     }
 
     @PostMapping("/login")
     public String handleLogin(@Valid @ModelAttribute LoginRequest loginRequest,
-            Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+            BindingResult bindingResult, Model model, HttpSession session, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        // Verificar erros de validação
+        if (bindingResult.hasErrors()) {
+            log.warn("Erros de validação no login: {}", bindingResult.getAllErrors());
+            model.addAttribute("loginRequest", loginRequest);
+            return "login";
+        }
+
         try {
             log.info("Login solicitado para: {}", loginRequest.getEmail());
 
@@ -71,6 +82,7 @@ public class AuthViewController {
         } catch (Exception ex) {
             log.warn("Falha no login: {}", ex.getMessage());
             model.addAttribute("error", "Email ou senha inválidos");
+            model.addAttribute("loginRequest", loginRequest);
             return "login";
         }
     }
@@ -84,7 +96,17 @@ public class AuthViewController {
 
     @PostMapping("/registro")
     public String handleRegister(@Valid @ModelAttribute RegisterRequest registerRequest,
-            Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+            BindingResult bindingResult, Model model, HttpSession session, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        // Verificar erros de validação
+        if (bindingResult.hasErrors()) {
+            log.warn("Erros de validação no registro: {}", bindingResult.getAllErrors());
+            model.addAttribute("registerRequest", registerRequest);
+            model.addAttribute("categorias", categoriaRepository.findAll());
+            return "registro";
+        }
+
         try {
             log.info("Registro solicitado para: {}", registerRequest.getEmail());
 
@@ -114,6 +136,8 @@ public class AuthViewController {
         } catch (RuntimeException ex) {
             log.warn("Falha no registro: {}", ex.getMessage());
             model.addAttribute("error", ex.getMessage());
+            model.addAttribute("registerRequest", registerRequest);
+            model.addAttribute("categorias", categoriaRepository.findAll());
             return "registro";
         }
     }

@@ -7,22 +7,63 @@
       <div class="main">
         <header th:replace="~{baseLayout :: baseTopbar}"></header>
         <div class="content">
-          <main style="text-align: center; padding: 60px 40px">
-            <i class="bi bi-search" style="font-size: 64px; color: #d1d5db"></i>
-            <h1 style="font-size: 48px; color: #1f2937; margin: 20px 0 10px">
-              404
-            </h1>
-            <h2
-              style="color: #6b7280; font-weight: normal; margin-bottom: 30px"
-            >
-              Página não encontrada
-            </h2>
-            <p style="color: #9ca3af; margin-bottom: 40px">
-              A página que você está procurando não existe ou foi removida.
-            </p>
-            <a th:href="@{/}" class="btn btn-primary">
-              <i class="bi bi-house"></i> Voltar ao Início
-            </a>
+          <main>
+            <div style="text-align: center; padding: 80px 40px">
+              <div style="margin-bottom: 30px">
+                <i
+                  class="bi bi-question-circle"
+                  style="font-size: 80px; color: #9ca3af"
+                ></i>
+              </div>
+              <h1
+                style="
+                  font-size: 56px;
+                  color: #1f2937;
+                  margin: 0 0 15px;
+                  font-weight: 600;
+                "
+              >
+                404
+              </h1>
+              <h2
+                style="
+                  color: #6b7280;
+                  font-weight: 500;
+                  margin: 0 0 15px;
+                  font-size: 24px;
+                "
+              >
+                Página não encontrada
+              </h2>
+              <p
+                style="
+                  color: #9ca3af;
+                  margin: 0 0 40px;
+                  line-height: 1.6;
+                  max-width: 500px;
+                  margin-left: auto;
+                  margin-right: auto;
+                "
+              >
+                A página que você está procurando não existe ou foi removida.
+                Verifique a URL e tente novamente.
+              </p>
+              <div
+                style="
+                  display: flex;
+                  gap: 12px;
+                  justify-content: center;
+                  flex-wrap: wrap;
+                "
+              >
+                <a th:href="@{/}" class="btn btn-primary">
+                  <i class="bi bi-house"></i> Voltar ao Início
+                </a>
+                <a th:href="@{/profissionais}" class="btn btn-secondary">
+                  <i class="bi bi-search"></i> Explorar
+                </a>
+              </div>
+            </div>
           </main>
         </div>
       </div>

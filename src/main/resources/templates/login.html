@@ -18,17 +18,30 @@
           th:text="${message}"
         ></div>
 
-        <form th:action="@{/login}" method="post" class="login-form">
+        <form
+          th:action="@{/login}"
+          method="post"
+          class="login-form"
+          th:object="${loginRequest}"
+        >
           <div class="form-group">
             <label for="email">Email</label>
             <input
               type="email"
               id="email"
-              name="email"
+              th:field="*{email}"
               placeholder="Digite seu email"
               required
               autofocus
             />
+            <small
+              th:if="${#fields.hasErrors('email')}"
+              th:errors="*{email}"
+              class="error-message"
+              style="color: red; display: block; margin-top: 5px"
+            >
+              Mensagem de erro
+            </small>
           </div>
 
           <div class="form-group">
@@ -36,10 +49,18 @@
             <input
               type="password"
               id="senha"
-              name="senha"
+              th:field="*{senha}"
               placeholder="Digite sua senha"
               required
             />
+            <small
+              th:if="${#fields.hasErrors('senha')}"
+              th:errors="*{senha}"
+              class="error-message"
+              style="color: red; display: block; margin-top: 5px"
+            >
+              Mensagem de erro
+            </small>
           </div>
 
           <button type="submit" class="btn btn-primary">Entrar</button>

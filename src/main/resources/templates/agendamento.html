@@ -49,6 +49,7 @@
               th:action="@{/agendamento/novo}"
               method="post"
               class="form-container"
+              th:object="${agendamento}"
             >
               <!-- Campos escondidos -->
               <input type="hidden" name="servicoId" th:value="${servico.id}" />
@@ -66,9 +67,16 @@
                 <input
                   type="datetime-local"
                   id="dataHora"
-                  name="dataHora"
+                  th:field="*{dataHora}"
                   required
                 />
+                <small
+                  th:if="${#fields.hasErrors('dataHora')}"
+                  th:errors="*{dataHora}"
+                  class="error-message"
+                  style="color: red; display: block; margin-top: 5px"
+                  >Mensagem de erro</small
+                >
               </div>
 
               <!-- Observações -->
@@ -76,10 +84,17 @@
                 <label for="obs">Observações (opcional)</label>
                 <textarea
                   id="obs"
-                  name="obs"
+                  th:field="*{obs}"
                   rows="3"
                   placeholder="Alguma observação para o profissional?"
                 ></textarea>
+                <small
+                  th:if="${#fields.hasErrors('obs')}"
+                  th:errors="*{obs}"
+                  class="error-message"
+                  style="color: red; display: block; margin-top: 5px"
+                  >Mensagem de erro</small
+                >
               </div>
 
               <div class="form-actions">
