@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,11 @@ public class CategoriaViewController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public String salvarCategoria(@Valid CategoriaRequestDTO categoria, Model model) {
+    public String salvarCategoria(@Valid CategoriaRequestDTO categoria, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "categoria-formulario";
+        }
+
         try {
             log.info("Tentando salvar categoria: {}", categoria.getNome());
             categoriaService.salvar(categoria);

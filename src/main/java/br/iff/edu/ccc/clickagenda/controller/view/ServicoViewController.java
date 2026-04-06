@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,8 +56,13 @@ public class ServicoViewController {
 
     @PostMapping
     public String salvarServico(@Valid ServicoRequestDTO servico,
+            BindingResult bindingResult,
             HttpSession session,
             Model model) {
+        if (bindingResult.hasErrors()) {
+            return "servico-formulario";
+        }
+
         try {
             // Se for profissional, garante que o ID dele está no DTO
             String perfil = (String) session.getAttribute("usuarioPerfil");
