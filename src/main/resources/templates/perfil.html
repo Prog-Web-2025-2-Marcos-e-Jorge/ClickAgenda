@@ -53,17 +53,7 @@
                   </p>
                   <p style="margin-bottom: 20px">
                     <strong>Status:</strong>
-                    <span
-                      class="badge"
-                      style="
-                        background: #f59e0b;
-                        color: white;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                      "
-                    >
-                      PENDENTE
-                    </span>
+                    <span class="badge status-pendente"> PENDENTE </span>
                   </p>
 
                   <div class="form-actions">
@@ -139,12 +129,6 @@
                     <span
                       class="badge"
                       th:classappend="${agendamento.status.name() == 'CONFIRMADO'} ? 'status-confirmado' : 'status-cancelado'"
-                      style="
-                        display: inline-block;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        color: white;
-                      "
                     >
                       <span th:text="${agendamento.status.name()}"
                         >CONFIRMADO</span
@@ -204,12 +188,6 @@
                     th:classappend="${agendamento.status.name() == 'PENDENTE'} ? 'status-pendente' :
                                       (${agendamento.status.name() == 'CONFIRMADO'} ? 'status-confirmado' :
                                       'status-cancelado')"
-                    style="
-                      display: inline-block;
-                      padding: 4px 8px;
-                      border-radius: 4px;
-                      color: white;
-                    "
                   >
                     <span th:text="${agendamento.status.name()}">PENDENTE</span>
                   </span>

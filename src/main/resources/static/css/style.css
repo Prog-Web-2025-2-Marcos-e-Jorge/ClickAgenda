@@ -289,16 +289,30 @@ main h1 {
 }
 
 .status-confirmado {
-  color: #16a34a;
+  background-color: #dcfce7;
+  color: #166534;
   font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
 }
+
 .status-pendente {
-  color: #d97706;
+  background-color: #fef3c7;
+  color: #92400e;
   font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
 }
+
 .status-cancelado {
-  color: #dc2626;
+  background-color: #fee2e2;
+  color: #991b1b;
   font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
 }
 
 .menu a + a {
