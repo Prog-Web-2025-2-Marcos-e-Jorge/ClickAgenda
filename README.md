@@ -197,102 +197,6 @@ curl -X POST http://localhost:8080/api/agendamento \
   -d '{"profissionalId":1,"clienteId":2,"servicoId":1,"dataHora":"2026-03-15T14:30:00","obs":"Corte","valor":85.50}'
 ```
 
----
-
-## 📁 Estrutura de Pastas (Projeto Atual)
-
-```
-MultiAgenda/
-├── src/
-│   ├── main/
-│   │   ├── java/br/iff/edu/ccc/clickagenda/
-│   │   │   ├── controller/
-│   │   │   │   └── restapi/
-│   │   │   │       ├── AgendamentoRestController.java
-│   │   │   │       ├── ClienteRestController.java
-│   │   │   │       ├── ProfissionalRestController.java
-│   │   │   │       ├── ServicoRestController.java
-│   │   │   │       ├── CategoriaRestController.java
-│   │   │   │       ├── HorarioTrabalhoRestController.java
-│   │   │   │       ├── AuthRestController.java
-│   │   │   │       └── RestMainApiController.java
-│   │   │   │
-│   │   │   ├── service/
-│   │   │   │   ├── AgendamentoService.java
-│   │   │   │   ├── ClienteService.java
-│   │   │   │   ├── ProfissionalService.java
-│   │   │   │   ├── ServicoService.java
-│   │   │   │   ├── CategoriaService.java
-│   │   │   │   └── HorarioTrabalhoService.java
-│   │   │   │
-│   │   │   ├── model/
-│   │   │   │   ├── Usuario.java (classe abstrata)
-│   │   │   │   ├── Profissional.java
-│   │   │   │   ├── Cliente.java
-│   │   │   │   ├── Agendamento.java
-│   │   │   │   ├── Servico.java
-│   │   │   │   ├── Categoria.java
-│   │   │   │   ├── HorarioTrabalho.java
-│   │   │   │   └── Admin.java
-│   │   │   │
-│   │   │   ├── repository/
-│   │   │   │   ├── UsuarioRepository.java
-│   │   │   │   ├── ProfissionalRepository.java
-│   │   │   │   ├── ClienteRepository.java
-│   │   │   │   ├── AgendamentoRepository.java
-│   │   │   │   ├── ServicoRepository.java
-│   │   │   │   ├── CategoriaRepository.java
-│   │   │   │   └── HorarioTrabalhoRepository.java
-│   │   │   │
-│   │   │   ├── dto/
-│   │   │   │   ├── request/
-│   │   │   │   │   ├── ProfissionalRequestDTO.java
-│   │   │   │   │   ├── ClienteRequestDTO.java
-│   │   │   │   │   ├── AgendamentoRequestDTO.java
-│   │   │   │   │   ├── ServicoRequestDTO.java
-│   │   │   │   │   ├── CategoriaRequestDTO.java
-│   │   │   │   │   └── HorarioTrabalhoRequestDTO.java
-│   │   │   │   │
-│   │   │   │   └── response/
-│   │   │   │       ├── ProfissionalResponseDTO.java
-│   │   │   │       ├── ClienteResponseDTO.java
-│   │   │   │       ├── AgendamentoResponseDTO.java
-│   │   │   │       ├── ServicoResponseDTO.java
-│   │   │   │       ├── CategoriaResponseDTO.java
-│   │   │   │       └── HorarioTrabalhoResponseDTO.java
-│   │   │   │
-│   │   │   ├── exception/
-│   │   │   │   ├── GlobalExceptionHandler.java
-│   │   │   │   ├── BadRequestException.java
-│   │   │   │   ├── ForbiddenException.java
-│   │   │   │   └── NotFoundException.java
-│   │   │   │
-│   │   │   ├── enums/
-│   │   │   │   ├── Status.java
-│   │   │   │   ├── Perfil.java
-│   │   │   │   └── DiaSemana.java
-│   │   │   │
-│   │   │   └── MultiAgendaApplication.java
-│   │   │
-│   │   └── resources/
-│   │       ├── application.properties
-│   │       ├── static/css/style.css
-│   │       └── templates/home.html
-│   │
-│   └── test/
-│       └── java/.../ClickAgendaApplicationTests.java
-│
-├── docs/
-│   └── postman-collection.json
-│
-├── pom.xml
-├── mvnw
-├── mvnw.cmd
-└── README.md
-```
-
----
-
 ## 🧪 API Endpoints - Resumo Rápido
 
 ### Profissional
@@ -527,7 +431,7 @@ Este guia apresenta as principais interfaces do sistema.
 
 **Caminho do arquivo no projeto**: `src/main/resources/templates/categoria/categoria-formulario.html`
 
-### 4️⃣ Página de Erro Customizada (404)
+### 4️⃣ Página de Erro Customizada (403)
 
 **Descrição**: Tela customizada para erros HTTP (4xx/5xx)  
 **URLs Exemplos**:
@@ -543,7 +447,7 @@ Este guia apresenta as principais interfaces do sistema.
 - Botões para navegação: "Voltar ao Início" ou "Voltar Atrás"
 - Design elegante e responsivo
 
-**📸 ADICIONAR AQUI O PRINT DA PÁGINA DE ERRO**
+**📸 PRINT DA PÁGINA DE ERRO**
 
 ![Tela-De-Erro-403](docs/images/403.png)
 
