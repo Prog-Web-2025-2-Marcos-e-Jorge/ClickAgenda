@@ -36,6 +36,6 @@ public class MainViewController {
         }
         model.addAttribute("categorias", categoriaService.listarTodas());
         model.addAttribute("profissionaisDestaque", List.of());
-        return "index.html";
+        return "index";
     }
 }

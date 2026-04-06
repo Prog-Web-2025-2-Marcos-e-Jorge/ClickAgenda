@@ -63,6 +63,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/error").permitAll()
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/auth/register").permitAll()
                         .requestMatchers("/api/auth/health").permitAll()
@@ -75,7 +76,7 @@ public class SecurityConfig {
                         .requestMatchers("/static/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
 
-                        .anyRequest().hasAnyRole("ADMIN", "CLIENTE", "PROFISSIONAL"))
+                        .anyRequest().authenticated())
 
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
 

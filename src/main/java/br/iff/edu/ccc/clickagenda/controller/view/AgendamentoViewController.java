@@ -39,7 +39,7 @@ public class AgendamentoViewController {
         model.addAttribute("clienteId", clienteId);
         model.addAttribute("agendamento", new AgendamentoRequestDTO());
 
-        return "agendamento";
+        return "agendamento/agendamento";
     }
 
     @PostMapping("/novo")
@@ -55,7 +55,7 @@ public class AgendamentoViewController {
             model.addAttribute("servico", servico);
             model.addAttribute("clienteId", session.getAttribute("usuarioId"));
             model.addAttribute("agendamento", agendamento);
-            return "agendamento";
+            return "agendamento/agendamento";
         }
 
         try {
@@ -68,7 +68,7 @@ public class AgendamentoViewController {
             model.addAttribute("clienteId", session.getAttribute("usuarioId"));
             model.addAttribute("agendamento", agendamento);
             model.addAttribute("erro", e.getMessage());
-            return "agendamento";
+            return "agendamento/agendamento";
         }
     }
 
@@ -81,7 +81,7 @@ public class AgendamentoViewController {
             model.addAttribute("servicos", profissional.getServicos());
         }
 
-        return "agendamento";
+        return "agendamento/agendamento";
     }
 
     @GetMapping("/{id}")
@@ -90,7 +90,7 @@ public class AgendamentoViewController {
             Model model) {
         AgendamentoResponseDTO agendamento = agendamentoService.buscarPorId(id);
         model.addAttribute("agendamento", agendamento);
-        return "agendamento-detalhe";
+        return "agendamento/agendamento-detalhe";
     }
 
     @PostMapping("/{id}/confirmar")

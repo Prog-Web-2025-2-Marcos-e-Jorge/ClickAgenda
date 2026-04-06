@@ -38,7 +38,7 @@ public class AuthViewController {
             model.addAttribute("errorMessage", "Email ou senha inválidos");
         }
         model.addAttribute("loginRequest", new LoginRequest());
-        return "login";
+        return "auth/login";
     }
 
     @PostMapping("/login")
@@ -50,7 +50,7 @@ public class AuthViewController {
         if (bindingResult.hasErrors()) {
             log.warn("Erros de validação no login: {}", bindingResult.getAllErrors());
             model.addAttribute("loginRequest", loginRequest);
-            return "login";
+            return "auth/login";
         }
 
         try {
@@ -83,7 +83,7 @@ public class AuthViewController {
             log.warn("Falha no login: {}", ex.getMessage());
             model.addAttribute("error", "Email ou senha inválidos");
             model.addAttribute("loginRequest", loginRequest);
-            return "login";
+            return "auth/login";
         }
     }
 
@@ -91,7 +91,7 @@ public class AuthViewController {
     public String showRegisterPage(Model model) {
         model.addAttribute("registerRequest", new RegisterRequest());
         model.addAttribute("categorias", categoriaRepository.findAll());
-        return "registro";
+        return "auth/registro";
     }
 
     @PostMapping("/registro")
@@ -104,7 +104,7 @@ public class AuthViewController {
             log.warn("Erros de validação no registro: {}", bindingResult.getAllErrors());
             model.addAttribute("registerRequest", registerRequest);
             model.addAttribute("categorias", categoriaRepository.findAll());
-            return "registro";
+            return "auth/registro";
         }
 
         try {
@@ -138,7 +138,7 @@ public class AuthViewController {
             model.addAttribute("error", ex.getMessage());
             model.addAttribute("registerRequest", registerRequest);
             model.addAttribute("categorias", categoriaRepository.findAll());
-            return "registro";
+            return "auth/registro";
         }
     }
 

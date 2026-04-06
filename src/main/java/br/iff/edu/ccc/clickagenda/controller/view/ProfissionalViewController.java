@@ -25,7 +25,7 @@ public class ProfissionalViewController {
 
         model.addAttribute("profissionais", profissionais);
 
-        return "profissionais";
+        return "profissional/profissionais";
     }
 
     @GetMapping("/{id}")
@@ -34,7 +34,7 @@ public class ProfissionalViewController {
 
         model.addAttribute("profissional", profissional);
 
-        return "profissional-perfil";
+        return "profissional/profissional-perfil";
     }
 
 }

@@ -51,7 +51,7 @@ public class ServicoViewController {
         model.addAttribute("profissionais", profissionais);
         model.addAttribute("categorias", categorias);
 
-        return "servico-formulario";
+        return "servico/servico-formulario";
     }
 
     @PostMapping
@@ -66,7 +66,7 @@ public class ServicoViewController {
             model.addAttribute("servico", servico);
             model.addAttribute("profissionais", profissionais);
             model.addAttribute("categorias", categorias);
-            return "servico-formulario";
+            return "servico/servico-formulario";
         }
 
         try {
@@ -87,13 +87,13 @@ public class ServicoViewController {
             model.addAttribute("categorias", categorias);
             model.addAttribute("erro", "Erro ao salvar: " + e.getMessage());
 
-            return "servico-formulario";
+            return "servico/servico-formulario";
         }
     }
 
     @GetMapping("/sucesso")
     public String mostrarPaginaSucesso() {
-        return "servico-sucesso";
+        return "servico/servico-sucesso";
     }
 
     @GetMapping("/{id}")
@@ -101,7 +101,7 @@ public class ServicoViewController {
         try {
             ServicoResponseDTO servico = servicoService.buscarPorId(id);
             model.addAttribute("servico", servico);
-            return "servico-detalhes";
+            return "servico/servico-detalhes";
         } catch (Exception e) {
             return "redirect:/";
         }

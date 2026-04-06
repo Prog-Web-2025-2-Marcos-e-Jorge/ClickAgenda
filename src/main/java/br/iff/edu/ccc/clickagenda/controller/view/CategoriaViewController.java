@@ -28,7 +28,7 @@ public class CategoriaViewController {
     public String mostrarFormularioCadastro(Model model) {
         log.info("Acessando formulário de cadastro de categoria");
         model.addAttribute("categoria", new CategoriaRequestDTO());
-        return "categoria-formulario";
+        return "categoria/categoria-formulario";
     }
 
     @PostMapping
@@ -37,7 +37,7 @@ public class CategoriaViewController {
             Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("categoria", categoria);
-            return "categoria-formulario";
+            return "categoria/categoria-formulario";
         }
 
         try {
@@ -49,13 +49,13 @@ public class CategoriaViewController {
             log.warn("Erro ao salvar categoria: {}", e.getMessage());
             model.addAttribute("categoria", categoria);
             model.addAttribute("erro", "Erro ao salvar: " + e.getMessage());
-            return "categoria-formulario";
+            return "categoria/categoria-formulario";
         }
     }
 
     @GetMapping("/sucesso")
     public String mostrarPaginaSucesso(Model model) {
         log.info("Exibindo página de sucesso de categoria");
-        return "categoria-sucesso";
+        return "categoria/categoria-sucesso";
     }
 }

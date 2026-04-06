@@ -62,7 +62,7 @@ public class HorarioViewController {
 
         model.addAttribute("horarioForm", form);
         model.addAttribute("diasSemana", DiaSemana.values());
-        return "horario-formulario";
+        return "profissional/horario-formulario";
     }
 
     @PostMapping("/novo")
@@ -98,7 +98,7 @@ public class HorarioViewController {
 
             model.addAttribute("horarioForm", horarioForm);
             model.addAttribute("diasSemana", DiaSemana.values());
-            return "horario-formulario";
+            return "profissional/horario-formulario";
         }
 
         Long profissionalId = (Long) session.getAttribute("usuarioId");
