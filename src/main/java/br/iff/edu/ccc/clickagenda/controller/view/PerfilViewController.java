@@ -32,9 +32,12 @@ public class PerfilViewController {
                     .toList());
 
             model.addAttribute("agendamentosConfirmados", todos.stream()
-                    .filter(a -> !a.getStatus().name().equals("PENDENTE"))
+                    .filter(a -> a.getStatus().name().equals("CONFIRMADO"))
                     .toList());
 
+            model.addAttribute("agendamentosRecusados", todos.stream()
+                    .filter(a -> a.getStatus().name().equals("CANCELADO"))
+                    .toList());
         } else if ("CLIENTE".equals(perfil)) {
             model.addAttribute("agendamentos",
                     agendamentoService.listarPorCliente(usuarioId));
