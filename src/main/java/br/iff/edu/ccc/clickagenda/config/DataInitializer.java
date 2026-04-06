@@ -24,13 +24,11 @@ public class DataInitializer implements CommandLineRunner {
     private void initializeAdminUser() {
         String adminEmail = "admin@clickagenda.com.br";
 
-        // Verifica se admin já existe
         if (usuarioRepository.findByEmail(adminEmail).isPresent()) {
             log.info("Usuário admin já existe no sistema");
             return;
         }
 
-        // Cria novo admin
         Admin admin = new Admin();
         admin.setNome("Administrador");
         admin.setCpf("11144477735");

@@ -2,7 +2,6 @@ package br.iff.edu.ccc.clickagenda.controller.view;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,25 +19,26 @@ import br.iff.edu.ccc.clickagenda.service.ProfissionalService;
 import br.iff.edu.ccc.clickagenda.service.ServicoService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/servico")
+@RequiredArgsConstructor
 public class ServicoViewController {
 
-    @Autowired
-    private ServicoService servicoService;
+    private final ServicoService servicoService;
+    private final ProfissionalService profissionalService;
+    private final CategoriaService categoriaService;
 
-    @Autowired
-    private ProfissionalService profissionalService;
-
-    @Autowired
-    private CategoriaService categoriaService;
+    private void carregarDadosFormulario(Model model) {
+        List<ProfissionalResponseDTO> profissionais = profissionalService.listarTodos();
+        List<CategoriaResponseDTO> categorias = categoriaService.listarTodas();
+        model.addAttribute("profissionais", profissionais);
+        model.addAttribute("categorias", categorias);
+    }
 
     @GetMapping("/novo")
     public String mostrarFormularioCadastro(HttpSession session, Model model) {
-        List<ProfissionalResponseDTO> profissionais = profissionalService.listarTodos();
-        List<CategoriaResponseDTO> categorias = categoriaService.listarTodas();
-
         ServicoRequestDTO servico = new ServicoRequestDTO();
 
         String perfil = (String) session.getAttribute("usuarioPerfil");
@@ -48,8 +48,7 @@ public class ServicoViewController {
         }
 
         model.addAttribute("servico", servico);
-        model.addAttribute("profissionais", profissionais);
-        model.addAttribute("categorias", categorias);
+        carregarDadosFormulario(model);
 
         return "servico/servico-formulario";
     }
@@ -60,17 +59,12 @@ public class ServicoViewController {
             HttpSession session,
             Model model) {
         if (bindingResult.hasErrors()) {
-            List<ProfissionalResponseDTO> profissionais = profissionalService.listarTodos();
-            List<CategoriaResponseDTO> categorias = categoriaService.listarTodas();
-
             model.addAttribute("servico", servico);
-            model.addAttribute("profissionais", profissionais);
-            model.addAttribute("categorias", categorias);
+            carregarDadosFormulario(model);
             return "servico/servico-formulario";
         }
 
         try {
-            // Se for profissional, garante que o ID dele está no DTO
             String perfil = (String) session.getAttribute("usuarioPerfil");
             if ("PROFISSIONAL".equals(perfil)) {
                 servico.setProfissionalId((Long) session.getAttribute("usuarioId"));
@@ -79,12 +73,8 @@ public class ServicoViewController {
             servicoService.salvar(servico);
             return "redirect:/servico/sucesso";
         } catch (Exception e) {
-            List<ProfissionalResponseDTO> profissionais = profissionalService.listarTodos();
-            List<CategoriaResponseDTO> categorias = categoriaService.listarTodas();
-
             model.addAttribute("servico", servico);
-            model.addAttribute("profissionais", profissionais);
-            model.addAttribute("categorias", categorias);
+            carregarDadosFormulario(model);
             model.addAttribute("erro", "Erro ao salvar: " + e.getMessage());
 
             return "servico/servico-formulario";

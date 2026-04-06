@@ -46,7 +46,6 @@ public class AuthViewController {
             BindingResult bindingResult, Model model, HttpSession session, HttpServletRequest request,
             HttpServletResponse response) {
 
-        // Verificar erros de validação
         if (bindingResult.hasErrors()) {
             log.warn("Erros de validação no login: {}", bindingResult.getAllErrors());
             model.addAttribute("loginRequest", loginRequest);
@@ -64,7 +63,6 @@ public class AuthViewController {
             session.setAttribute("usuarioNome", loginResponse.getNome());
             session.setAttribute("usuarioPerfil", loginResponse.getPerfil());
 
-            // Autenticar e SALVAR NA SESSÃO
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginRequest.getEmail(),
@@ -72,7 +70,6 @@ public class AuthViewController {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            // Persistir autenticação na sessão HTTP explicitamente
             securityContextRepository.saveContext(SecurityContextHolder.getContext(), request, response);
 
             log.info("Login bem-sucedido para: {}", loginRequest.getEmail());
@@ -99,7 +96,6 @@ public class AuthViewController {
             BindingResult bindingResult, Model model, HttpSession session, HttpServletRequest request,
             HttpServletResponse response) {
 
-        // Verificar erros de validação
         if (bindingResult.hasErrors()) {
             log.warn("Erros de validação no registro: {}", bindingResult.getAllErrors());
             model.addAttribute("registerRequest", registerRequest);
@@ -118,7 +114,6 @@ public class AuthViewController {
             session.setAttribute("usuarioNome", loginResponse.getNome());
             session.setAttribute("usuarioPerfil", loginResponse.getPerfil());
 
-            // Autenticar e SALVAR NA SESSÃO
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             registerRequest.getEmail(),
@@ -126,7 +121,6 @@ public class AuthViewController {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            // Persistir autenticação na sessão HTTP explicitamente
             securityContextRepository.saveContext(SecurityContextHolder.getContext(), request, response);
 
             log.info("Registro bem-sucedido para: {}", registerRequest.getEmail());
