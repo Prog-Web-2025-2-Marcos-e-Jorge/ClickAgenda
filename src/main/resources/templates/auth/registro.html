@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{baseLayout :: baseHead(@{/css/registro.css})}"></head>
+  <body>
+    <main class="register-container">
+      <div class="register-box">
+        <h1>Click Agenda</h1>
+        <p class="subtitle">Crie sua conta agora</p>
+
+        <div th:if="${param.error}" class="alert alert-error">
+          <p th:text="${param.error}">Erro ao registrar</p>
+        </div>
+
+        <div th:if="${error}" class="alert alert-error">
+          <p th:text="${error}">Erro ao registrar</p>
+        </div>
+
+        <form
+          th:action="@{/registro}"
+          method="post"
+          class="register-form"
+          th:object="${registerRequest}"
+        >
+          <div class="form-group">
+            <label for="nome">Nome Completo</label>
+            <input
+              type="text"
+              id="nome"
+              th:field="*{nome}"
+              placeholder="Digite seu nome completo"
+              required
+              autofocus
+            />
+            <small
+              th:if="${#fields.hasErrors('nome')}"
+              th:errors="*{nome}"
+              class="error-message"
+              style="color: red; display: block; margin-top: 5px"
+            >
+              Mensagem de erro
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input
+              type="text"
+              id="cpf"
+              th:field="*{cpf}"
+              placeholder="000.000.000-00"
+              required
+            />
+
+            <small
+              th:if="${#fields.hasErrors('cpf')}"
+              th:errors="*{cpf}"
+              class="error-message"
+              style="color: red; display: block; margin-top: 5px"
+            >
+              Mensagem de erro
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              th:field="*{email}"
+              placeholder="Digite seu email"
+              required
+            />
+
+            <small
+              th:if="${#fields.hasErrors('email')}"
+              th:errors="*{email}"
+              class="error-message"
+              style="color: red; display: block; margin-top: 5px"
+            >
+              Mensagem de erro
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input
+              type="tel"
+              id="telefone"
+              th:field="*{telefone}"
+              placeholder="(11) 99999-9999"
+              required
+            />
+
+            <small
+              th:if="${#fields.hasErrors('telefone')}"
+              th:errors="*{telefone}"
+              class="error-message"
+              style="color: red; display: block; margin-top: 5px"
+            >
+              Mensagem de erro
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="senha">Senha</label>
+            <input
+              type="password"
+              id="senha"
+              th:field="*{senha}"
+              placeholder="Mínimo 8 caracteres"
+              required
+            />
+
+            <small
+              th:if="${#fields.hasErrors('senha')}"
+              th:errors="*{senha}"
+              class="error-message"
+              style="color: red; display: block; margin-top: 5px"
+            >
+              Mensagem de erro
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="senhaConfirmacao">Confirmar Senha</label>
+            <input
+              type="password"
+              id="senhaConfirmacao"
+              th:field="*{senhaConfirmacao}"
+              placeholder="Confirme sua senha"
+              required
+            />
+
+            <small
+              th:if="${#fields.hasErrors('senhaConfirmacao')}"
+              th:errors="*{senhaConfirmacao}"
+              class="error-message"
+              style="color: red; display: block; margin-top: 5px"
+            >
+              Mensagem de erro
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label>Tipo de Conta</label>
+            <div class="user-type-options">
+              <label class="radio-option">
+                <input
+                  type="radio"
+                  th:field="*{userType}"
+                  value="CLIENTE"
+                  id="tipo-cliente"
+                  required
+                  onchange="toggleCategorias()"
+                />
+                <span>Cliente</span>
+              </label>
+              <label class="radio-option">
+                <input
+                  type="radio"
+                  th:field="*{userType}"
+                  value="PROFISSIONAL"
+                  id="tipo-profissional"
+                  required
+                  onchange="toggleCategorias()"
+                />
+                <span>Profissional</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group" id="categorias-grupo" style="display: none">
+            <label for="categoriaIds">Categorias (Especialidades)</label>
+            <select
+              id="categoriaIds"
+              th:field="*{categoriaIds}"
+              multiple
+              placeholder="Selecione suas especialidades"
+            >
+              <option
+                th:each="categoria : ${categorias}"
+                th:value="${categoria.id}"
+                th:text="${categoria.nome}"
+              ></option>
+            </select>
+            <small class="form-text-small"
+              >Selecione pelo menos uma categoria</small
+            >
+          </div>
+
+          <button type="submit" class="btn btn-primary">Criar Conta</button>
+        </form>
+
+        <div class="register-footer">
+          <p>Já tem uma conta? <a th:href="@{/login}">Fazer login</a></p>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      function toggleCategorias() {
+        const tipoProf = document.getElementById("tipo-profissional").checked;
+        const categoriasGrupo = document.getElementById("categorias-grupo");
+        const categoriasSelect = document.getElementById("categoriaIds");
+
+        if (tipoProf) {
+          categoriasGrupo.style.display = "block";
+          categoriasSelect.required = true;
+        } else {
+          categoriasGrupo.style.display = "none";
+          categoriasSelect.required = false;
+          // Limpar seleções quando mudar para Cliente
+          categoriasSelect.value = null;
+        }
+      }
+
+      // Validação do formulário
+      document
+        .querySelector(".register-form")
+        .addEventListener("submit", function (e) {
+          const userType = document.querySelector(
+            'input[name="userType"]:checked',
+          );
+          if (!userType) {
+            e.preventDefault();
+            alert("Por favor, selecione um tipo de conta");
+            return false;
+          }
+
+          if (userType.value === "PROFISSIONAL") {
+            const categorias = document.getElementById("categoriaIds");
+            if (!categorias.value || categorias.selectedOptions.length === 0) {
+              e.preventDefault();
+              alert(
+                "Profissionais devem selecionar pelo menos uma categoria de especialidade",
+              );
+              return false;
+            }
+          }
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{baseLayout :: baseHead(null)}"></head>
+
+  <body>
+    <div class="app">
+      <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
+      <div class="main">
+        <header th:replace="~{baseLayout :: baseTopbar}"></header>
+        <div class="content">
+          <main>
+            <h1>Categoria Cadastrada com Sucesso!</h1>
+            <p>
+              A categoria foi adicionada ao sistema e está disponível para uso.
+            </p>
+
+            <div class="success-actions">
+              <a th:href="@{/}" class="btn btn-primary">Voltar ao Início</a>
+              <a th:href="@{/categoria/novo}" class="btn btn-secondary"
+                >Cadastrar Outra Categoria</a
+              >
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

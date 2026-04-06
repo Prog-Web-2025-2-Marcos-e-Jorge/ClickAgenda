@@ -215,6 +215,12 @@ public class AgendamentoService {
         agendamentoRepository.delete(agendamento);
     }
 
+    public List<AgendamentoResponseDTO> listarPorCliente(Long clienteId) {
+        return agendamentoRepository.findByClienteId(clienteId).stream()
+                .map(this::converterResponseDTO)
+                .toList();
+    }
+
     public List<AgendamentoResponseDTO> listarTodos() {
         return agendamentoRepository.findAll().stream()
                 .map(this::converterResponseDTO)
@@ -225,6 +231,12 @@ public class AgendamentoService {
         Agendamento agendamento = agendamentoRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Agendamento não encontrado com ID: " + id));
         return converterResponseDTO(agendamento);
+    }
+
+    public List<AgendamentoResponseDTO> listarPorProfissional(Long profissionalId) {
+        return agendamentoRepository.findByProfissionalId(profissionalId).stream()
+                .map(this::converterResponseDTO)
+                .toList();
     }
 
     private DiaSemana converterDayOfWeek(java.time.DayOfWeek dayOfWeek) {

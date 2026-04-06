@@ -14,9 +14,6 @@ import java.time.ZoneId;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    /**
-     * Trata exceções de validação de argumentos (Bean Validation)
-     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ProblemDetail handleValidationException(HttpServletRequest req, MethodArgumentNotValidException ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Erro de validação");
@@ -32,9 +29,6 @@ public class GlobalExceptionHandler {
         return problemDetail;
     }
 
-    /**
-     * Trata exceções de recurso não encontrado (404)
-     */
     @ExceptionHandler(NotFoundException.class)
     public ProblemDetail handleNotFoundException(HttpServletRequest req, NotFoundException ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
@@ -50,9 +44,6 @@ public class GlobalExceptionHandler {
         return problemDetail;
     }
 
-    /**
-     * Trata exceções de acesso negado (403)
-     */
     @ExceptionHandler({ ForbiddenException.class, SecurityException.class })
     public ProblemDetail handleForbiddenException(HttpServletRequest req, Exception ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN, ex.getMessage());
@@ -68,9 +59,6 @@ public class GlobalExceptionHandler {
         return problemDetail;
     }
 
-    /**
-     * Trata exceções de requisição inválida (400)
-     */
     @ExceptionHandler(BadRequestException.class)
     public ProblemDetail handleBadRequestException(HttpServletRequest req, BadRequestException ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
@@ -86,9 +74,6 @@ public class GlobalExceptionHandler {
         return problemDetail;
     }
 
-    /**
-     * Trata exceções de argumento ilegal (400)
-     */
     @ExceptionHandler(IllegalArgumentException.class)
     public ProblemDetail handleIllegalArgumentException(HttpServletRequest req, IllegalArgumentException ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
@@ -104,9 +89,6 @@ public class GlobalExceptionHandler {
         return problemDetail;
     }
 
-    /**
-     * Trata exceções genéricas
-     */
     @ExceptionHandler(Exception.class)
     public ProblemDetail handleGenericException(HttpServletRequest req, Exception ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR,

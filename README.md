@@ -197,113 +197,17 @@ curl -X POST http://localhost:8080/api/agendamento \
   -d '{"profissionalId":1,"clienteId":2,"servicoId":1,"dataHora":"2026-03-15T14:30:00","obs":"Corte","valor":85.50}'
 ```
 
----
-
-## 📁 Estrutura de Pastas (Projeto Atual)
-
-```
-MultiAgenda/
-├── src/
-│   ├── main/
-│   │   ├── java/br/iff/edu/ccc/clickagenda/
-│   │   │   ├── controller/
-│   │   │   │   └── restapi/
-│   │   │   │       ├── AgendamentoRestController.java
-│   │   │   │       ├── ClienteRestController.java
-│   │   │   │       ├── ProfissionalRestController.java
-│   │   │   │       ├── ServicoRestController.java
-│   │   │   │       ├── CategoriaRestController.java
-│   │   │   │       ├── HorarioTrabalhoRestController.java
-│   │   │   │       ├── AuthRestController.java
-│   │   │   │       └── RestMainApiController.java
-│   │   │   │
-│   │   │   ├── service/
-│   │   │   │   ├── AgendamentoService.java
-│   │   │   │   ├── ClienteService.java
-│   │   │   │   ├── ProfissionalService.java
-│   │   │   │   ├── ServicoService.java
-│   │   │   │   ├── CategoriaService.java
-│   │   │   │   └── HorarioTrabalhoService.java
-│   │   │   │
-│   │   │   ├── model/
-│   │   │   │   ├── Usuario.java (classe abstrata)
-│   │   │   │   ├── Profissional.java
-│   │   │   │   ├── Cliente.java
-│   │   │   │   ├── Agendamento.java
-│   │   │   │   ├── Servico.java
-│   │   │   │   ├── Categoria.java
-│   │   │   │   ├── HorarioTrabalho.java
-│   │   │   │   └── Admin.java
-│   │   │   │
-│   │   │   ├── repository/
-│   │   │   │   ├── UsuarioRepository.java
-│   │   │   │   ├── ProfissionalRepository.java
-│   │   │   │   ├── ClienteRepository.java
-│   │   │   │   ├── AgendamentoRepository.java
-│   │   │   │   ├── ServicoRepository.java
-│   │   │   │   ├── CategoriaRepository.java
-│   │   │   │   └── HorarioTrabalhoRepository.java
-│   │   │   │
-│   │   │   ├── dto/
-│   │   │   │   ├── request/
-│   │   │   │   │   ├── ProfissionalRequestDTO.java
-│   │   │   │   │   ├── ClienteRequestDTO.java
-│   │   │   │   │   ├── AgendamentoRequestDTO.java
-│   │   │   │   │   ├── ServicoRequestDTO.java
-│   │   │   │   │   ├── CategoriaRequestDTO.java
-│   │   │   │   │   └── HorarioTrabalhoRequestDTO.java
-│   │   │   │   │
-│   │   │   │   └── response/
-│   │   │   │       ├── ProfissionalResponseDTO.java
-│   │   │   │       ├── ClienteResponseDTO.java
-│   │   │   │       ├── AgendamentoResponseDTO.java
-│   │   │   │       ├── ServicoResponseDTO.java
-│   │   │   │       ├── CategoriaResponseDTO.java
-│   │   │   │       └── HorarioTrabalhoResponseDTO.java
-│   │   │   │
-│   │   │   ├── exception/
-│   │   │   │   ├── GlobalExceptionHandler.java
-│   │   │   │   ├── BadRequestException.java
-│   │   │   │   ├── ForbiddenException.java
-│   │   │   │   └── NotFoundException.java
-│   │   │   │
-│   │   │   ├── enums/
-│   │   │   │   ├── Status.java
-│   │   │   │   ├── Perfil.java
-│   │   │   │   └── DiaSemana.java
-│   │   │   │
-│   │   │   └── MultiAgendaApplication.java
-│   │   │
-│   │   └── resources/
-│   │       ├── application.properties
-│   │       ├── static/css/style.css
-│   │       └── templates/home.html
-│   │
-│   └── test/
-│       └── java/.../ClickAgendaApplicationTests.java
-│
-├── docs/
-│   └── postman-collection.json
-│
-├── pom.xml
-├── mvnw
-├── mvnw.cmd
-└── README.md
-```
-
----
-
 ## 🧪 API Endpoints - Resumo Rápido
 
 ### Profissional
 
-| Método | Endpoint                     | Descrição                           |
-| :----- | :--------------------------- | :---------------------------------- |
-| POST   | `/api/profissional`          | Criar profissional                  |
-| GET    | `/api/profissional`          | Listar todos                        |
-| GET    | `/api/profissional/{id}`     | Buscar por ID                       |
-| PUT    | `/api/profissional/{id}`     | Atualizar                           |
-| DELETE | `/api/profissional/{id}`     | Deletar                             |
+| Método | Endpoint                            | Descrição                           |
+| :----- | :---------------------------------- | :---------------------------------- |
+| POST   | `/api/profissional`                 | Criar profissional                  |
+| GET    | `/api/profissional`                 | Listar todos                        |
+| GET    | `/api/profissional/{id}`            | Buscar por ID                       |
+| PUT    | `/api/profissional/{id}`            | Atualizar                           |
+| DELETE | `/api/profissional/{id}`            | Deletar                             |
 | POST   | `/api/profissional/{id}/categorias` | Vincular categorias ao profissional |
 
 ### Cliente
@@ -360,3 +264,216 @@ MultiAgenda/
 | DELETE | `/api/horario-trabalho/{id}`                          | Deletar                |
 
 ---
+
+## 📚 Manual de Execução Detalhado
+
+### Requisitos do Sistema
+
+- **Java 17+** (JDK): Certifique-se que está instalado com `java -version`
+- **Git**: Para clonar o repositório
+- **IDE com suporte a Java**: VS Code (com Extension Pack for Java), IntelliJ IDEA ou Eclipse
+- **Navegador moderno**: Chrome, Firefox, Safari ou Edge
+- **Porta 8080** disponível (ou configurável em `application.properties`)
+
+### Passo 1: Clonar o Repositório
+
+```bash
+# Clone via HTTPS
+git clone https://github.com/Prog-Web-2025-2-Marcos-e-Jorge/ClickAgenda.git
+
+# Ou via SSH
+git clone git@github.com:Prog-Web-2025-2-Marcos-e-Jorge/ClickAgenda.git
+
+# Entre no diretório
+cd ClickAgenda
+```
+
+### Passo 2: Abrir no VS Code
+
+1. Abra o VS Code
+2. **File → Open Folder** → Selecione a pasta `ClickAgenda`
+3. Aguarde a IDE indexar os arquivos (pode levar alguns minutos)
+4. Certifique-se que a extensão **Extension Pack for Java** está instalada
+
+### Passo 3: Configurar Variáveis de Ambiente (Opcional)
+
+Se desejar alterar a porta ou outras configurações:
+
+1. Abra `src/main/resources/application.properties`
+2. Modifique conforme necessário:
+   ```properties
+   server.port=8080                          # Porta do servidor
+   spring.datasource.url=jdbc:h2:mem:testdb  # URL do banco H2
+   spring.h2.console.enabled=true            # Console H2 habilitado
+   ```
+
+### Passo 4: Executar a Aplicação
+
+**Opção A: Pelo VS Code (Recomendado)**
+
+1. Localize o arquivo `src/main/java/br/iff/edu/ccc/clickagenda/ClickAgendaApplication.java`
+2. Você verá um botão **"Run"** acima do método `public static void main(String[] args)`
+3. Clique em **Run** (ou pressione `F5`)
+4. Aguarde a mensagem: `Tomcat started on port(s): 8080`
+
+**Opção B: Pelo Terminal**
+
+```bash
+# No Windows
+mvnw.cmd spring-boot:run
+
+# No Linux/Mac
+./mvnw spring-boot:run
+```
+
+**Opção C: Build e Execução Manual**
+
+```bash
+# Compilar o projeto
+mvnw clean compile
+
+# Empacotar em JAR
+mvnw package
+
+# Executar o JAR
+java -jar target/clickagenda-0.0.1-SNAPSHOT.jar
+```
+
+### Passo 5: Acessar a Aplicação
+
+- **URL Principal**: [http://localhost:8080](http://localhost:8080)
+- **Console H2 Database**: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+  - JDBC URL: `jdbc:h2:mem:testdb`
+  - Username: `sa`
+  - Password: (deixar em branco)
+
+### Passo 6: Dados de Teste
+
+No primeiro acesso, o banco de dados H2 estará vazio. Para popular com dados iniciais:
+
+1. Acesse `/categoria/novo` (login como admin) para criar categorias
+2. Depois crie profissionais e serviços
+
+### Troubleshooting Comum
+
+| Problema                         | Solução                                                                        |
+| -------------------------------- | ------------------------------------------------------------------------------ |
+| `Porta 8080 em uso`              | Mude em `application.properties`: `server.port=8081`                           |
+| `Erro "Cannot find module java"` | Instale o Extension Pack for Java no VS Code                                   |
+| `Erro de compilação Maven`       | Execute `mvnw clean install` para baixar dependências                          |
+| `H2 Console não abre`            | Verifique se `spring.h2.console.enabled=true` está em `application.properties` |
+
+---
+
+## 🖼️ Guia de Telas Principais
+
+Este guia apresenta as principais interfaces do sistema.
+
+---
+
+### 1️⃣ Tela Inicial (Home)
+
+**Descrição**: Página de boas-vindas com busca rápida de profissionais e categorias  
+**URL**: [http://localhost:8080](http://localhost:8080) (após login)
+
+**Funcionalidades Principais**:
+
+- Barra de navegação com opções de login/logout
+- Seção de categorias de serviços disponíveis
+- Lista de profissionais em destaque
+- Call-to-action para explorar profissionais
+- Hero section com busca rápida
+
+**📸 IMAGEM DA TELA INICIAL**
+
+![Tela-Inicial](docs/images/index.png)
+
+**Caminho do arquivo no projeto**: `src/main/resources/templates/index.html`
+
+---
+
+### 2️⃣ Listagem de Profissionais
+
+**Descrição**: Grid com todos os profissionais cadastrados  
+**URL**: [http://localhost:8080/profissionais](http://localhost:8080/profissionais)
+
+**Funcionalidades Principais**:
+
+- Nome do profissional
+- Avaliação (rating) em estrelas
+- Botão "Ver Perfil" para acessar detalhes
+- Grid responsivo com layout adaptável
+- Sem resultados quando lista vazia
+
+**📸 IMAGEM DA LISTAGEM DE PROFISSIONAIS**
+
+![Listagem-De-Profissionais](docs/images/profissionais.png)
+
+**Caminho do arquivo no projeto**: `src/main/resources/templates/profissional/profissionais.html`
+
+### 3️⃣ Formulário de Cadastro (Categoria)
+
+**Descrição**: Formulário para criar nova categoria de serviços  
+**URL**: [http://localhost:8080/categoria/novo](http://localhost:8080/categoria/novo)  
+**Requer**: Login com perfil ADMIN
+
+**Funcionalidades Principais**:
+
+- Campo de entrada para nome da categoria
+- Validação em tempo real com mensagens de erro
+- Mensagens em português customizadas
+- Botões: "Salvar Categoria" e "Cancelar"
+- Feedback visual de sucesso/erro
+
+**📸PRINT DO FORMULÁRIO DE CADASTRO**
+
+![Tela-De-Registro](docs/images/registro.png)
+
+**Caminho do arquivo no projeto**: `src/main/resources/templates/categoria/categoria-formulario.html`
+
+### 4️⃣ Página de Erro Customizada (403)
+
+**Descrição**: Tela customizada para erros HTTP (4xx/5xx)  
+**URLs Exemplos**:
+
+- `http://localhost:8080/pagina-inexistente` (404)
+- `http://localhost:8080/acesso-negado` (403)
+
+**Funcionalidades Principais**:
+
+- Ícone decorativo e significativo para cada tipo de erro
+- Número do erro em destaque
+- Mensagem clara e amigável em português
+- Botões para navegação: "Voltar ao Início" ou "Voltar Atrás"
+- Design elegante e responsivo
+
+**📸 PRINT DA PÁGINA DE ERRO**
+
+![Tela-De-Erro-403](docs/images/403.png)
+
+**Caminho dos arquivos no projeto**:
+
+- `src/main/resources/templates/error/404.html`
+- `src/main/resources/templates/error/403.html`
+- `src/main/resources/templates/error/400.html`
+- `src/main/resources/templates/error/500.html`
+
+**Tipos de Erros Customizados**:
+| Código | Mensagem | Ícone |
+|--------|----------|-------|
+| **404** | "Página não encontrada" | ❓ |
+| **403** | "Acesso Proibido" | 🔒 |
+| **400** | "Requisição Inválida" | ⚠️ |
+| **500** | "Erro Interno do Servidor" | 💥 |
+
+### Versão Atual: v2.0.0
+
+#### Principais Melhorias na v2.0:
+
+- ✅ Reorganização completa de estrutura de templates em pastas
+- ✅ Controllers de View separados de Controllers REST API
+- ✅ Telas com layout responsivo e design melhorado
+- ✅ Sistema de erros customizado (404, 403, 400, 500)
+- ✅ Suporte a múltiplos perfis de usuário (Cliente, Profissional, Admin)
+- ✅ Cadastro de horários de trabalho com validação completa
+- ✅ Agendamentos com confirmação e recusa

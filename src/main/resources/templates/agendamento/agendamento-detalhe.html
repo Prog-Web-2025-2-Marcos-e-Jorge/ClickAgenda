@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{baseLayout :: baseHead(null)}"></head>
+
+  <body>
+    <div class="app">
+      <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
+      <div class="main">
+        <header th:replace="~{baseLayout :: baseTopbar}"></header>
+        <div class="content">
+          <main>
+            <a th:href="@{/perfil}" class="btn btn-secondary">← Voltar</a>
+            <h1>Detalhes do Agendamento</h1>
+
+            <div class="form-container">
+              <p style="margin-bottom: 8px">
+                <strong>Serviço:</strong>
+                <span th:text="${agendamento.servico.nome}">Serviço</span>
+              </p>
+              <p style="margin-bottom: 8px">
+                <strong>Cliente:</strong>
+                <span th:text="${agendamento.cliente.nome}">Cliente</span>
+              </p>
+              <p style="margin-bottom: 8px">
+                <strong>Profissional:</strong>
+                <span th:text="${agendamento.profissional.nome}"
+                  >Profissional</span
+                >
+              </p>
+              <p style="margin-bottom: 8px">
+                <strong>Data e Hora:</strong>
+                <span
+                  th:text="${#temporals.format(agendamento.dataHora, 'dd/MM/yyyy HH:mm')}"
+                >
+                  01/01/2024 14:30
+                </span>
+              </p>
+              <p style="margin-bottom: 8px">
+                <strong>Valor:</strong>
+                <span
+                  th:text="'R$ ' + ${#numbers.formatDecimal(agendamento.valor, 1, 'COMMA', 2, 'POINT')}"
+                >
+                  R$ 0,00
+                </span>
+              </p>
+              <p style="margin-bottom: 20px">
+                <strong>Status:</strong>
+                <span
+                  th:text="${agendamento.status}"
+                  th:classappend="${agendamento.status.name() == 'CONFIRMADO'} ? 'status-confirmado' :
+                                      (${agendamento.status.name() == 'CANCELADO'} ? 'status-cancelado' :
+                                      'status-pendente')"
+                >
+                  PENDENTE
+                </span>
+              </p>
+
+              <!-- Botões apenas para PROFISSIONAL e agendamento PENDENTE -->
+              <div
+                th:if="${session.usuarioPerfil == 'PROFISSIONAL' and agendamento.status.name() == 'PENDENTE'}"
+                class="form-actions"
+              >
+                <form
+                  th:action="@{/agendamento/{id}/confirmar(id=${agendamento.id})}"
+                  method="post"
+                >
+                  <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i> Confirmar Agendamento
+                  </button>
+                </form>
+                <form
+                  th:action="@{/agendamento/{id}/recusar(id=${agendamento.id})}"
+                  method="post"
+                >
+                  <button
+                    type="submit"
+                    class="btn btn-secondary"
+                    style="background: #dc2626"
+                    onclick="
+                      return confirm(
+                        'Tem certeza que deseja recusar este agendamento?',
+                      );
+                    "
+                  >
+                    <i class="bi bi-x-circle"></i> Recusar Agendamento
+                  </button>
+                </form>
+              </div>
+
+              <!-- Mensagem quando já foi processado -->
+              <div
+                th:unless="${agendamento.status.name() == 'PENDENTE'}"
+                class="alert alert-success"
+                th:if="${agendamento.status.name() == 'CONFIRMADO'}"
+              >
+                <p>Este agendamento já foi confirmado.</p>
+              </div>
+              <div
+                th:if="${agendamento.status.name() == 'CANCELADO'}"
+                class="alert alert-error"
+              >
+                <p>Este agendamento foi cancelado/recusado.</p>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -147,6 +147,20 @@ public class ProfissionalService {
                             .toList());
         }
 
+        if (profissional.getServicos() != null) {
+            dto.setServicos(
+                    profissional.getServicos().stream()
+                            .map(s -> {
+                                var servicoDTO = new br.iff.edu.ccc.clickagenda.dto.response.ServicoResponseDTO();
+                                servicoDTO.setId(s.getId());
+                                servicoDTO.setNome(s.getNome());
+                                servicoDTO.setValor(s.getValor());
+                                servicoDTO.setDuracaoMinutos(s.getDuracaoMinutos());
+                                return servicoDTO;
+                            })
+                            .toList());
+        }
+
         return dto;
     }
 }

@@ -4,6 +4,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import br.iff.edu.ccc.clickagenda.dto.request.ServicoRequestDTO;
+import br.iff.edu.ccc.clickagenda.dto.response.CategoriaResponseDTO;
+import br.iff.edu.ccc.clickagenda.dto.response.ProfissionalResponseDTO;
 import br.iff.edu.ccc.clickagenda.dto.response.ServicoResponseDTO;
 import br.iff.edu.ccc.clickagenda.exception.BadRequestException;
 import br.iff.edu.ccc.clickagenda.exception.NotFoundException;
@@ -85,7 +87,6 @@ public class ServicoService {
             Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
                     .orElseThrow(() -> new NotFoundException("Categoria não encontrada"));
 
-            // Validar se o profissional atende essa categoria
             Profissional profissionalAtual = servico.getProfissional();
             if (profissionalAtual.getCategorias() == null ||
                     profissionalAtual.getCategorias().stream()
@@ -114,6 +115,20 @@ public class ServicoService {
         dto.setNome(servico.getNome());
         dto.setValor(servico.getValor());
         dto.setDuracaoMinutos(servico.getDuracaoMinutos());
+
+        if (servico.getProfissional() != null) {
+            ProfissionalResponseDTO profDto = new ProfissionalResponseDTO();
+            profDto.setId(servico.getProfissional().getId());
+            profDto.setNome(servico.getProfissional().getNome());
+            dto.setProfissional(profDto);
+        }
+
+        if (servico.getCategoria() != null) {
+            CategoriaResponseDTO catDto = new CategoriaResponseDTO();
+            catDto.setId(servico.getCategoria().getId());
+            catDto.setNome(servico.getCategoria().getNome());
+            dto.setCategoria(catDto);
+        }
         return dto;
     }
 }

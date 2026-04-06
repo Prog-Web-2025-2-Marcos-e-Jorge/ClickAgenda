@@ -2,6 +2,7 @@ package br.iff.edu.ccc.clickagenda.controller.restapi;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import br.iff.edu.ccc.clickagenda.dto.request.AgendamentoRequestDTO;
@@ -19,6 +20,7 @@ public class AgendamentoRestController {
     private final AgendamentoService agendamentoService;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('CLIENTE', 'PROFISSIONAL', 'ADMIN')")
     public ResponseEntity<AgendamentoResponseDTO> agendar(@Valid @RequestBody AgendamentoRequestDTO dto) {
         AgendamentoResponseDTO response = agendamentoService.agendar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -37,6 +39,7 @@ public class AgendamentoRestController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('CLIENTE', 'PROFISSIONAL', 'ADMIN')")
     public ResponseEntity<AgendamentoResponseDTO> atualizar(@PathVariable Long id,
             @Valid @RequestBody AgendamentoRequestDTO dto) {
         AgendamentoResponseDTO response = agendamentoService.atualizar(id, dto);
@@ -44,6 +47,7 @@ public class AgendamentoRestController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('CLIENTE', 'PROFISSIONAL', 'ADMIN')")
     public ResponseEntity<Void> cancelarAgendamento(
             @PathVariable Long id,
             @RequestParam Long idUsuarioSolicitante,
@@ -53,6 +57,7 @@ public class AgendamentoRestController {
     }
 
     @PutMapping("/{id}/confirmar")
+    @PreAuthorize("hasRole('PROFISSIONAL')")
     public ResponseEntity<AgendamentoResponseDTO> confirmarAgendamento(
             @PathVariable Long id,
             @RequestParam Long idProfissional) {
@@ -61,6 +66,7 @@ public class AgendamentoRestController {
     }
 
     @PutMapping("/{id}/recusar")
+    @PreAuthorize("hasRole('PROFISSIONAL')")
     public ResponseEntity<AgendamentoResponseDTO> recusarAgendamento(
             @PathVariable Long id,
             @RequestParam Long idProfissional) {

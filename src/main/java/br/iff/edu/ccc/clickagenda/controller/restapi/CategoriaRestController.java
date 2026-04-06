@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import br.iff.edu.ccc.clickagenda.dto.request.CategoriaRequestDTO;
@@ -25,6 +26,7 @@ public class CategoriaRestController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFISSIONAL')")
     public ResponseEntity<CategoriaResponseDTO> criarCategoria(@Valid @RequestBody CategoriaRequestDTO dto) {
         CategoriaResponseDTO response = categoriaService.salvar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -37,6 +39,7 @@ public class CategoriaRestController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFISSIONAL')")
     public ResponseEntity<CategoriaResponseDTO> atualizar(@PathVariable Long id,
             @Valid @RequestBody CategoriaRequestDTO dto) {
         CategoriaResponseDTO response = categoriaService.atualizar(id, dto);
@@ -44,6 +47,7 @@ public class CategoriaRestController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         categoriaService.deletar(id);
         return ResponseEntity.noContent().build();

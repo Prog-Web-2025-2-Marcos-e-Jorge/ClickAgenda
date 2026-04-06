@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{baseLayout :: baseHead(null)}"></head>
+  <body>
+    <div class="app">
+      <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
+      <div class="main">
+        <header th:replace="~{baseLayout :: baseTopbar}"></header>
+        <div class="content">
+          <main>
+            <div style="text-align: center; padding: 80px 40px">
+              <div style="margin-bottom: 30px">
+                <i
+                  class="bi bi-exclamation-triangle"
+                  style="font-size: 80px; color: #dc2626"
+                ></i>
+              </div>
+              <h1
+                style="
+                  font-size: 56px;
+                  color: #1f2937;
+                  margin: 0 0 15px;
+                  font-weight: 600;
+                "
+              >
+                500
+              </h1>
+              <h2
+                style="
+                  color: #6b7280;
+                  font-weight: 500;
+                  margin: 0 0 15px;
+                  font-size: 24px;
+                "
+              >
+                Erro interno do servidor
+              </h2>
+              <p
+                style="
+                  color: #9ca3af;
+                  margin: 0 0 40px;
+                  line-height: 1.6;
+                  max-width: 500px;
+                  margin-left: auto;
+                  margin-right: auto;
+                "
+              >
+                Algo inesperado aconteceu. Nossa equipe foi notificada e estamos
+                trabalhando para resolver o problema.
+              </p>
+              <div
+                style="
+                  display: flex;
+                  gap: 12px;
+                  justify-content: center;
+                  flex-wrap: wrap;
+                "
+              >
+                <a th:href="@{/}" class="btn btn-primary">
+                  <i class="bi bi-house"></i> Voltar ao Início
+                </a>
+                <a th:href="@{/perfil}" class="btn btn-secondary">
+                  <i class="bi bi-person"></i> Meu Perfil
+                </a>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

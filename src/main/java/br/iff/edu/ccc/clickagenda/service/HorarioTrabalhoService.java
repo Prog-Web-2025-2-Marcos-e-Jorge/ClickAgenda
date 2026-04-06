@@ -1,13 +1,16 @@
 package br.iff.edu.ccc.clickagenda.service;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.iff.edu.ccc.clickagenda.dto.request.HorarioTrabalhoFormDTO;
 import br.iff.edu.ccc.clickagenda.dto.request.HorarioTrabalhoRequestDTO;
 import br.iff.edu.ccc.clickagenda.dto.response.HorarioTrabalhoResponseDTO;
+import br.iff.edu.ccc.clickagenda.enums.DiaSemana;
 import br.iff.edu.ccc.clickagenda.exception.BadRequestException;
 import br.iff.edu.ccc.clickagenda.exception.NotFoundException;
 import br.iff.edu.ccc.clickagenda.model.HorarioTrabalho;
@@ -141,9 +144,32 @@ public class HorarioTrabalhoService {
         horarioTrabalhoRepository.delete(horario);
     }
 
-    /**
-     * Valida se os horários de trabalho são coerentes
-     */
+    public HorarioTrabalhoFormDTO carregarHorariosParaFormulario(Long profissionalId) {
+        List<HorarioTrabalhoResponseDTO> horariosExistentes = listarPorProfissional(profissionalId);
+
+        List<HorarioTrabalhoRequestDTO> horarios = new ArrayList<>();
+        for (DiaSemana dia : DiaSemana.values()) {
+            HorarioTrabalhoRequestDTO dto = new HorarioTrabalhoRequestDTO();
+            dto.setDiaSemana(dia);
+            dto.setProfissionalId(profissionalId);
+
+            horariosExistentes.stream()
+                    .filter(h -> h.getDiaSemana() == dia)
+                    .findFirst()
+                    .ifPresent(h -> {
+                        dto.setHorarioInicio(h.getHorarioInicio());
+                        dto.setHorarioFim(h.getHorarioFim());
+                        dto.setDiaFolga(h.isDiaFolga());
+                    });
+
+            horarios.add(dto);
+        }
+
+        HorarioTrabalhoFormDTO form = new HorarioTrabalhoFormDTO();
+        form.setHorarios(horarios);
+        return form;
+    }
+
     private void validarHorarios(LocalTime horarioInicio, LocalTime horarioFim, boolean diaFolga) {
         if (!diaFolga) {
             if (horarioInicio == null || horarioFim == null) {

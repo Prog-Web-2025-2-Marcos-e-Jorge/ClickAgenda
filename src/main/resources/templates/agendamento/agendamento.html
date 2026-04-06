@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{baseLayout :: baseHead(null)}"></head>
+
+  <body>
+    <div class="app">
+      <aside th:replace="~{baseLayout :: baseSidebar}"></aside>
+      <div class="main">
+        <header th:replace="~{baseLayout :: baseTopbar}"></header>
+        <div class="content">
+          <main>
+            <a th:href="@{/profissionais}" class="btn btn-secondary"
+              >← Voltar</a
+            >
+            <h1>Realizar Agendamento</h1>
+
+            <!-- Resumo do serviço -->
+            <div class="form-container" style="margin-bottom: 30px">
+              <p>
+                <strong>Serviço:</strong>
+                <span th:text="${servico.nome}">Nome</span>
+              </p>
+              <p>
+                <strong>Profissional:</strong>
+                <span th:text="${servico.profissional.nome}">Profissional</span>
+              </p>
+              <p>
+                <strong>Duração:</strong>
+                <span th:text="${servico.duracaoMinutos} + ' minutos'"
+                  >30 minutos</span
+                >
+              </p>
+              <p>
+                <strong>Valor:</strong>
+                <span
+                  th:text="'R$ ' + ${#numbers.formatDecimal(servico.valor, 1, 'COMMA', 2, 'POINT')}"
+                  >R$ 0,00</span
+                >
+              </p>
+            </div>
+
+            <!-- Alerta de erro -->
+            <div th:if="${erro}" class="alert alert-error">
+              <p th:text="${erro}">Erro</p>
+            </div>
+
+            <!-- Formulário -->
+            <form
+              th:action="@{/agendamento/novo}"
+              method="post"
+              class="form-container"
+              th:object="${agendamento}"
+            >
+              <!-- Campos escondidos -->
+              <input type="hidden" name="servicoId" th:value="${servico.id}" />
+              <input type="hidden" name="clienteId" th:value="${clienteId}" />
+              <input
+                type="hidden"
+                name="profissionalId"
+                th:value="${servico.profissional.id}"
+              />
+              <input type="hidden" name="valor" th:value="${servico.valor}" />
+
+              <!-- Data e hora -->
+              <div class="form-group">
+                <label for="dataHora">Data e Horário</label>
+                <input
+                  type="datetime-local"
+                  id="dataHora"
+                  th:field="*{dataHora}"
+                  required
+                />
+                <small
+                  th:if="${#fields.hasErrors('dataHora')}"
+                  th:errors="*{dataHora}"
+                  class="error-message"
+                  style="color: red; display: block; margin-top: 5px"
+                  >Mensagem de erro</small
+                >
+              </div>
+
+              <!-- Observações -->
+              <div class="form-group">
+                <label for="obs">Observações (opcional)</label>
+                <textarea
+                  id="obs"
+                  th:field="*{obs}"
+                  rows="3"
+                  placeholder="Alguma observação para o profissional?"
+                ></textarea>
+                <small
+                  th:if="${#fields.hasErrors('obs')}"
+                  th:errors="*{obs}"
+                  class="error-message"
+                  style="color: red; display: block; margin-top: 5px"
+                  >Mensagem de erro</small
+                >
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                  Confirmar Agendamento
+                </button>
+                <a th:href="@{/profissionais}" class="btn btn-secondary"
+                  >Cancelar</a
+                >
+              </div>
+            </form>
+          </main>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{baseLayout :: baseHead(@{/css/login.css})}"></head>
+
+  <body>
+    <main class="login-container">
+      <div class="login-box">
+        <h1>Click Agenda</h1>
+        <p class="subtitle">Faça login para continuar</p>
+
+        <div th:if="${param.error}" class="alert alert-error">
+          <p>Email ou senha inválidos</p>
+        </div>
+
+        <div
+          th:if="${message}"
+          class="alert alert-success"
+          th:text="${message}"
+        ></div>
+
+        <form
+          th:action="@{/login}"
+          method="post"
+          class="login-form"
+          th:object="${loginRequest}"
+        >
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              th:field="*{email}"
+              placeholder="Digite seu email"
+              required
+              autofocus
+            />
+            <small
+              th:if="${#fields.hasErrors('email')}"
+              th:errors="*{email}"
+              class="error-message"
+              style="color: red; display: block; margin-top: 5px"
+            >
+              Mensagem de erro
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="senha">Senha</label>
+            <input
+              type="password"
+              id="senha"
+              th:field="*{senha}"
+              placeholder="Digite sua senha"
+              required
+            />
+            <small
+              th:if="${#fields.hasErrors('senha')}"
+              th:errors="*{senha}"
+              class="error-message"
+              style="color: red; display: block; margin-top: 5px"
+            >
+              Mensagem de erro
+            </small>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Entrar</button>
+        </form>
+
+        <div class="login-footer">
+          <p>
+            Não tem uma conta? <a th:href="@{/registro}">Criar uma conta</a>
+          </p>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
